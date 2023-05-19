@@ -120,6 +120,12 @@
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="vitess.html">Vitess</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="spanner.html">Spanner</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="jdbc.html">Jdbc</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -139,6 +145,9 @@
     <a class="nav-link" href="../transformations/mongodb-event-flattening.html">MongoDB New Document State Extraction</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/event-changes.html">Event Changes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/outbox-event-router.html">Outbox Event Router</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -152,6 +161,15 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/applying-transformations-selectively.html">Using SMT Predicates to Selectively Apply Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/compute-partition.html">Compute Partition [Deprecated]</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/partition-routing.html">Partition Routing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/header-to-value.html">HeaderToValue</a>
   </li>
 </ul>
   </li>
@@ -233,10 +251,16 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
+          <a href="/documentation/reference/2.3/index.html">2.3</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.2/index.html">2.2</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.1/index.html">2.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.0/index.html">2.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
@@ -298,8 +322,10 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                 <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
+                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
+                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
                 <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
+                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
                 <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
                 <a class="version" href="/documentation/reference/1.8/index.html">1.8</a>
                 <a class="version" href="/documentation/reference/1.7/index.html">1.7</a>
@@ -336,6 +362,7 @@
 <li><a href="#vitess-overview">Overview</a></li>
 <li><a href="#how-the-vitess-connector-works">How the connector works</a>
 <ul class="sectlevel2">
+<li><a href="#vitess-snapshot">Snapshot</a></li>
 <li><a href="#vitess-streaming-changes">Streaming changes</a></li>
 <li><a href="#vitess-topic-names">Topics names</a></li>
 <li><a href="#vitess-transaction-metadata">Transaction metadata</a></li>
@@ -378,6 +405,7 @@
 <li><a href="#vitess-kafka-connect-process-crashes">Kafka Connect process crashes</a></li>
 <li><a href="#vitess-kafka-becomes-unavailable">Kafka becomes unavailable</a></li>
 <li><a href="#vitess-connector-is-stopped-for-a-duration">Connector is stopped for a duration</a></li>
+<li><a href="#vitess-connector-failed-before-finishing-the-snapshot">Connector fails before finishing the snapshot</a></li>
 <li><a href="#limitations-with-earlier-vitess-versions">Limitations with earlier Vitess versions</a></li>
 </ul>
 </li>
@@ -388,7 +416,11 @@
 For information about the Vitess versions that are compatible with this connector, see the <a href="https://debezium.io/releases/">Debezium release overview</a>.</p>
 </div>
 <div class="paragraph">
-<p>The connector does not support snapshot feature at the moment. The first time it connects to a Vitess cluster, it starts from the current VGTID location of the keyspace and continuously captures row-level changes that insert, update, and delete database content and that were committed to a Vitess keyspace. The connector generates data change event records and streams them to Kafka topics. For each table, the default behavior is that the connector streams all generated events to a separate Kafka topic for that table. Applications and services consume data change event records from that topic.</p>
+<p>When the connector first connects to a Vitess cluster, it takes a consistent snapshot of the keyspace.
+After that snapshot is complete, the connector continuously captures row-level changes that are committed to a Vitess keyspace to insert, update, or delete database content.
+The connector generates data change event records and streams them to Kafka topics.
+For each table, the default behavior is that the connector streams all generated events to a separate Kafka topic for that table.
+Applications and services can then consume data change event records from the resulting topic.</p>
 </div>
 </div>
 </div>
@@ -408,7 +440,18 @@ For information about the Vitess versions that are compatible with this connecto
 <p>The connector produces a change event for every row-level insert, update, and delete operation that was captured and sends change event records for each table in a separate Kafka topic. Client applications read the Kafka topics that correspond to the database tables of interest, and can react to every row-level event they receive from those topics.</p>
 </div>
 <div class="paragraph">
-<p>The connector is tolerant of failures. As the connector reads changes and produces events, it records the VGTID position for each event. If the connector stops for any reason (including communication failures, network problems, or crashes), upon restart the connector continues reading the WAL where it last left off.</p>
+<p>The underlying MySQL implementation in Vitess purges binary logs based on some configurable period of time.
+Because the contents of the binlog might not be complete, the connector requires another mechanism to ensure that it captures the complete content of a particular database.
+Thus, when the connector connects to a database for the first time, it performs a consistent snapshot of the database.
+After the connector completes the snapshot, it continues streaming changes from the exact point at which the snapshot was made.
+In this way, the connector starts with a consistent view of all of the data, and does not omit any changes that were made while the snapshot was being taken.</p>
+</div>
+<div class="paragraph">
+<p>The connector is tolerant of failures.
+As the connector reads changes and produces events, it records the VGTID position for each event.
+If the connector stops for any reason (including communication failures, network problems, or crashes), after the connectors restarts, it continues reading the WAL from the point at which it stopped.
+This behavior does not apply to snapshots. If the connector stops during a snapshot, after a restart, the connector does not continue performing snapshots where it last left off.
+We&#8217;ll talk later about how the connector behaves <a href="#vitess-when-things-go-wrong">when things go wrong</a>.</p>
 </div>
 </div>
 </div>
@@ -416,7 +459,31 @@ For information about the Vitess versions that are compatible with this connecto
 <h2 id="how-the-vitess-connector-works"><a class="anchor" href="#how-the-vitess-connector-works"></a>How the connector works</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To optimally configure and run a Debezium Vitess connector, it is helpful to understand how the connector streams change events, determines Kafka topic names, and uses metadata.</p>
+<p>To optimally configure and run a Debezium Vitess connector, it is helpful to understand how the connector performs snapshots, streams change events, determines Kafka topic names, and uses metadata.</p>
+</div>
+<div class="sect2">
+<h3 id="vitess-snapshot"><a class="anchor" href="#vitess-snapshot"></a>Snapshot</h3>
+<div class="paragraph">
+<p>Typically, a MySQL server is not configured to retain the complete history of the database in the binary logs.
+As a result, the connector is unable to read the entire history of the database from the binary logs.
+For this reason, the first time that the connector starts, it performs an initial consistent snapshot of the database.
+You can change this behavior by setting the <a href="#vitess-property-snapshot-mode"><code>snapshot.mode</code> connector configuration property</a> to a value other than <code>initial</code>.
+This snapshot feature is built on <a href="https://vitess.io/docs/design-docs/vreplication/vstream/vscopy/">VStream Copy</a> introduced in version 7.0.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Automatic retry of a failed snapshot is expected to be available in a future release.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="vitess-streaming-changes"><a class="anchor" href="#vitess-streaming-changes"></a>Streaming changes</h3>
@@ -1022,11 +1089,11 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "2.1.0.Alpha2",
+            "version": "2.3.0.Alpha1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": true,
+            "snapshot": false,
             "db": "",
             "keyspace": "commerce",
             "table": "customers",
@@ -1121,7 +1188,7 @@ However, by using the <a href="../configuration/avro.html" class="page">Avro con
 <p>Database (a.k.a keyspace) and table that contains the new row</p>
 </li>
 <li>
-<p>If the event was part of a snapshot</p>
+<p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
 <p>Offset of the operation in the database binlog</p>
@@ -1187,11 +1254,11 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.1.0.Alpha2",
+            "version": "2.3.0.Alpha1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": null,
+            "snapshot": false,
             "db": "",
             "keyspace": "commerce",
             "table": "customers",
@@ -1246,7 +1313,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <p>Database (a.k.a keyspace) and table that contains the new row</p>
 </li>
 <li>
-<p>If the event was part of a snapshot</p>
+<p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
 <p>Offset of the operation in the database log</p>
@@ -1308,11 +1375,11 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.1.0.Alpha2",
+            "version": "2.3.0.Alpha1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": null,
+            "snapshot": false,
             "db": "",
             "keyspace": "commerce",
             "table": "customers",
@@ -1367,7 +1434,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <p>Database (a.k.a keyspace) and table that contains the new row</p>
 </li>
 <li>
-<p>If the event was part of a snapshot</p>
+<p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
 <p>Offset of the operation in the database log</p>
@@ -1845,7 +1912,7 @@ GEOMETRYCOLLECTION</code></p>
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.1.0.Alpha2/debezium-connector-vitess-2.1.0.Alpha2-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
+<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.3.0.Alpha1/debezium-connector-vitess-2.3.0.Alpha1-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
 <p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Zookeeper, Kafka and Kafka Connect with the Vitess connector already installed and ready to run. You can also <a href="../operations/openshift.html" class="page">run Debezium on Kubernetes and OpenShift</a>.</p>
@@ -2554,7 +2621,82 @@ If <code>table_a</code> has a an <code>id</code> column, and <code>regex_1</code
 <li>
 <p><code>avro</code> replaces the characters that cannot be used in the Avro type name with underscore.<br></p>
 </li>
+<li>
+<p><code>avro_unicode</code> replaces the underscore or characters that cannot be used in the Avro type name with corresponding unicode like _uxxxx. Note: _ is an escape sequence like backslash in Java<br></p>
+</li>
 </ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-field-name-adjustment-mode"></a><a href="#vitess-property-field-name-adjustment-mode"><code>field.name.adjustment.mode</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>none</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies how field names should be adjusted for compatibility with the message converter used by the connector. Possible settings: <br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>none</code> does not apply any adjustment.<br></p>
+</li>
+<li>
+<p><code>avro</code> replaces the characters that cannot be used in the Avro type name with underscore.<br></p>
+</li>
+<li>
+<p><code>avro_unicode</code> replaces the underscore or characters that cannot be used in the Avro type name with corresponding unicode like _uxxxx. Note: _ is an escape sequence like backslash in Java<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See <a href="../configuration/avro.html#avro-naming" class="page">Avro naming</a> for more details.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-snapshot-mode"></a><a href="#vitess-property-snapshot-mode"><code>snapshot.mode</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>initial</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the criteria for performing a snapshot when the connector starts.
+Set the property to one of the following values:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>initial</code></dt>
+<dd>
+<p>When the connector starts, if it does not detect a value in its offsets topic, it performs a snapshot of the database.</p>
+</dd>
+<dt class="hdlist1"><code>never</code></dt>
+<dd>
+<p>When the connector starts, it skips the snapshot process and immediately begins to stream change events for operations that the database records to the binary logs.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-bigint-unsigned-handling-mode"></a><a href="#vitess-property-bigint-unsigned-handling-mode"><code>bigint.unsigned.handling.mode.mode</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>string</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specify how BIGINT UNSIGNED columns should be represented in change events.<br>
+Set the property to one of the following values:<br>
+<br>
+<code>string</code>::<br>
+represent values using Java&#8217;s <code>string</code><br>
+<br>
+<code>long</code>::<br>
+represents values using Java&#8217;s <code>long</code>, which may not offer the precision but will be far easier to use in consumers.<br>
+<br>
+<code>precise</code>::<br>
+represents values as precise (Java&#8217;s 'BigDecimal') values. This is precise but difficult to use.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -2687,19 +2829,7 @@ For example, if you set <code>max.queue.size=1000</code>, and <code>max.queue.si
 <p><code>500</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Positive integer value that specifies the number of milliseconds the connector should wait for new change events to appear before it starts processing a batch of events. Defaults to 1000 milliseconds, or 1 second.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="vitess-property-sanitize-field-names"></a><a href="#vitess-property-sanitize-field-names"><code>sanitize.field.names</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>true</code> if connector configuration sets the <code>key.converter</code> or <code>value.converter</code> property to the Avro converter.<br>
-<code>false</code> if not.</p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Indicates whether field names are sanitized to adhere to <a href="../configuration/avro.html#avro-naming" class="page">Avro naming requirements</a>.</p>
+<p>Positive integer value that specifies the number of milliseconds the connector should wait for new change events to appear before it starts processing a batch of events. Defaults to 500 milliseconds, or 0.5 second.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2950,6 +3080,16 @@ For example, if the topic prefix is <code>fulfillment</code>, the default topic 
 </div>
 </div>
 <div class="sect2">
+<h3 id="vitess-connector-failed-before-finishing-the-snapshot"><a class="anchor" href="#vitess-connector-failed-before-finishing-the-snapshot"></a>Connector fails before finishing the snapshot</h3>
+<div class="paragraph">
+<p>If a snapshot fails to complete, the connector does not automatically reattempt the snapshot.
+If the connector is restarted with the previous offset, the connector skips the snapshot process and immediately begins to stream change events.</p>
+</div>
+<div class="paragraph">
+<p>Consequently, to recover from the failure, <a href="https://debezium.io/documentation/faq/#how_to_remove_committed_offsets_for_a_connector/">remove the connector offsets manually</a> and start the connector.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="limitations-with-earlier-vitess-versions"><a class="anchor" href="#limitations-with-earlier-vitess-versions"></a>Limitations with earlier Vitess versions</h3>
 <div class="ulist">
 <div class="title">Vitess 8.0.0</div>
@@ -2979,7 +3119,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2022 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/feb36fa7e1d80c30b971ceaa948d3acb53ade76c">feb36fa7</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e91f483062b16dbf8ed75fbc8679a5295c9fd319">e91f4830</a></span>)
             
         </div>
     </footer>

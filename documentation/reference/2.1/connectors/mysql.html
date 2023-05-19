@@ -120,6 +120,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="vitess.html">Vitess</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="spanner.html">Spanner</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -233,10 +236,16 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
+          <a href="/documentation/reference/2.3/index.html">2.3</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.2/index.html">2.2</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.1/index.html">2.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.0/index.html">2.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
@@ -298,8 +307,10 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.1</button>
         <div class="version-menu">
                 <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
+                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
+                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
                 <a class="version is-current" href="/documentation/reference/2.1/index.html">2.1</a>
+                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
                 <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
                 <a class="version" href="/documentation/reference/1.8/index.html">1.8</a>
                 <a class="version" href="/documentation/reference/1.7/index.html">1.7</a>
@@ -322,8 +333,8 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
@@ -502,7 +513,7 @@ The connector needs to be configured to capture change to these helper tables.
 If consumers do not need the records generated for helper tables, then a single message transform can be applied to filter them out.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="#mysql-topic-names">default names for topics</a> that receive Debezium event records.</p>
+<p>For more information, see <a href="#mysql-topic-names">default names for topics</a> that receive Debezium event records.</p>
 </div>
 </div>
 <div class="sect2">
@@ -607,7 +618,7 @@ The message contains a logical representation of the table schema.</p>
   "schema": { },
   "payload": {
       "source": {  <i class="conum" data-value="1"></i><b>(1)</b>
-        "version": "2.1.0.Alpha2",
+        "version": "2.1.4.Final",
         "connector": "mysql",
         "name": "mysql",
         "ts_ms": 1651535750218, <i class="conum" data-value="2"></i><b>(2)</b>
@@ -822,13 +833,14 @@ In the case of a table rename, this identifier is a concatenation of <code><em>&
 </tbody>
 </table>
 <div class="paragraph">
-<p>See also: <a href="#mysql-schema-history-topic">schema history topic</a>.</p>
+<p>For more information, see <a href="#mysql-schema-history-topic">schema history topic</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="mysql-snapshots"><a class="anchor" href="#mysql-snapshots"></a>Snapshots</h3>
 <div class="paragraph">
-<p>When a Debezium MySQL connector is first started, it performs an initial <em>consistent snapshot</em> of your database. The following flow describes how the connector creates this snapshot. This flow is for the default snapshot mode, which is <code>initial</code>. For information about other snapshot modes, see the <a href="#mysql-property-snapshot-mode">MySQL connector <code>snapshot.mode</code> configuration property</a>.</p>
+<p>When a Debezium MySQL connector is first started, it performs an initial <em>consistent snapshot</em> of your database. The following flow describes how the connector creates this snapshot. This flow is for the default snapshot mode, which is <code>initial</code>.
+For information about other snapshot modes, see the <a href="#mysql-property-snapshot-mode">MySQL connector <code>snapshot.mode</code> configuration property</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Workflow for performing an initial snapshot with a global read lock</caption>
@@ -1058,7 +1070,7 @@ The format of the names is the same as for the <code>signal.data.collection</cod
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-condition</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional.Empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
 subset of the contents of the table(s).</p></td>
 </tr>
@@ -1152,19 +1164,27 @@ Debezium emits these remaining <code>READ</code> events to the table&#8217;s Kaf
 <div class="paragraph">
 <p>The connector repeats the process for each snapshot chunk.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="mysql-triggering-an-incremental-snapshot"><a class="anchor" href="#mysql-triggering-an-incremental-snapshot"></a>Triggering an incremental snapshot</h4>
 <div class="paragraph">
-<div class="title">Triggering an incremental snapshot</div>
-<p>Currently, the only way to initiate an incremental snapshot is to send an <a href="../configuration/signalling.html#debezium-signaling-ad-hoc-snapshots" class="page">ad hoc snapshot signal</a> to the signaling table on the source database.
-You submit signals to the table as SQL <code>INSERT</code> queries.
-After Debezium detects the change in the signaling table, it reads the signal, and runs the requested snapshot operation.</p>
+<p>Currently, the only way to initiate an incremental snapshot is to send an <a href="../configuration/signalling.html#debezium-signaling-ad-hoc-snapshots" class="page">ad hoc snapshot signal</a> to the signaling table on the source database.</p>
+</div>
+<div class="paragraph">
+<p>You submit a signal to the signaling table as SQL <code>INSERT</code> queries.</p>
+</div>
+<div class="paragraph">
+<p>After Debezium detects the change in the signaling table, it reads the signal, and runs the requested snapshot operation.</p>
 </div>
 <div class="paragraph">
 <p>The query that you submit specifies the tables to include in the snapshot, and, optionally, specifies the kind of snapshot operation.
 Currently, the only valid option for snapshots operations is the default value, <code>incremental</code>.</p>
 </div>
 <div class="paragraph">
-<p>To specify the tables to include in the snapshot, provide a <code>data-collections</code> array that lists the tables or an array of regular expressions used to match tables, for example,<br>
-<code>{"data-collections": ["public.MyFirstTable", "public.MySecondTable"]}</code><br></p>
+<p>To specify the tables to include in the snapshot, provide a <code>data-collections</code> array that lists the tables or an array of regular expressions used to match tables, for example,<br></p>
+</div>
+<div class="paragraph">
+<p><code>{"data-collections": ["public.MyFirstTable", "public.MySecondTable"]}</code><br></p>
 </div>
 <div class="paragraph">
 <p>The <code>data-collections</code> array for an incremental snapshot signal has no default value.
@@ -1211,7 +1231,7 @@ For example, to include a table that exists in the <code><strong>public</strong>
 <p>Send a SQL query to add the ad hoc incremental snapshot request to the signaling table:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO _&lt;signalTable&gt;_ (id, type, data) VALUES (_'&lt;id&gt;'_, _'&lt;snapshotType&gt;'_, '{"data-collections": ["_&lt;tableName&gt;_","_&lt;tableName&gt;_"],"type":"_&lt;snapshotType&gt;_"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-condition":"<em>&lt;additional-condition&gt;</em>"}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1219,33 +1239,42 @@ For example, to include a table that exists in the <code><strong>public</strong>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.table1", "schema2.table2"],"type":"incremental"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
+values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
+    'execute-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
+    '{"data-collections": ["schema1.table1", "schema2.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
+    "type":"incremental"}, <i class="conum" data-value="5"></i><b>(5)</b>
+    "additional-condition":"color=blue"}'); <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The values of the <code>id</code>,<code>type</code>, and <code>data</code> parameters in the command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="page">fields of the signaling table</a>.</p>
 </div>
 <div class="paragraph">
-<p>The following table describes the these parameters:</p>
+<p>The following table describes the parameters in the example:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 5. Descriptions of fields in a SQL command for sending an incremental snapshot signal to the signaling table</caption>
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
+<col style="width: 11.1111%;">
+<col style="width: 22.2222%;">
+<col style="width: 66.6667%;">
 </colgroup>
 <thead>
 <tr>
+<th class="tableblock halign-left valign-top">Item</th>
 <th class="tableblock halign-left valign-top">Value</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>myschema.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.<br>
 Use this string to identify logging messages to entries in the signaling table.
@@ -1253,85 +1282,95 @@ Debezium does not use this string.
 Rather, during the snapshot, Debezium generates its own <code>id</code> string as a watermarking signal.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>execute-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies <code>type</code> parameter specifies the operation that the signal is intended to trigger.<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>type</code> parameter specifies the operation that the signal is intended to trigger.<br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A required component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to include in the snapshot.<br>
 The array lists regular expressions which match tables by their fully-qualified names, using the same format as you use to specify the name of the connector&#8217;s signaling table in the <a href="#mysql-property-signal-data-collection"><code>signal.data.collection</code></a> configuration property.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional <code>type</code> component of the <code>data</code> field of a signal that specifies the kind of snapshot operation to run.<br>
 Currently, the only valid option is the default value, <code>incremental</code>.<br>
-Specifying a <code>type</code> value in the SQL query that you submit to the signaling table is optional.<br>
 If you do not specify a value, the connector runs an incremental snapshot.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-condition</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
-subset of the contents of the tables.</p></td>
+subset of the contents of the tables.
+For more information about the <code>additional-condition</code> parameter, see <a href="#mysql-incremental-snapshots-additional-condition">Ad hoc incremental snapshots with <code>additional-condition</code></a>.</p></td>
 </tr>
 </tbody>
 </table>
-<div class="ulist">
-<div class="title">Ad hoc incremental snapshots with additional-condition</div>
-<ul>
-<li>
-<p><code>additional-condition</code> is used to select a subset of a table&#8217;s content.</p>
-</li>
-<li>
-<p>To give an analogy how <code>additional-condition</code> is used:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>For a snapshot, the SQL query executed behind the scenes is something like:</p>
-<div class="paragraph">
-<p>SELECT * FROM <em>&lt;tableName&gt;</em> &#8230;&#8203;.</p>
-</div>
-</li>
-<li>
-<p>For a snapshot with a <code>additional-condition</code>, the <code>additional-condition</code> is appended to the SQL query, something like:</p>
-<div class="paragraph">
-<p>SELECT * FROM <em>&lt;tableName&gt;</em> WHERE <em>&lt;additional-condition&gt;</em> &#8230;&#8203;.</p>
-</div>
-</li>
-<li>
-<p>Send a SQL query to add the ad hoc incremental snapshot request to the signaling table:</p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO _&lt;signalTable&gt;_ (id, type, data) VALUES (_'&lt;id&gt;'_, _'&lt;snapshotType&gt;'_, '{"data-collections": ["_&lt;tableName&gt;_","_&lt;tableName&gt;_"],"type":"_&lt;snapshotType&gt;_","additional-condition":"_&lt;additional-condition&gt;_"}');</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Suppose there is a <code>products</code> table with columns <code>id</code> (primary key), <code>color</code> and <code>brand</code>.</p>
-<div class="paragraph">
-<p>To snapshot just the content of the <code>products</code> table where <code>color=blue</code></p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additonal-condition":"color=blue"}');</code></pre>
-</div>
-</div>
-</li>
-<li>
-<p><code>additional-condition</code> can be used to pass condition based on multiple columns.
-Using the same <code>products</code> table, to snapshot content of the <code>products</code> table where <code>color=blue</code> and <code>brand=foo</code></p>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additonal-condition":"color=blue AND brand=foo"}');</code></pre>
-</div>
-</div>
-</li>
-</ul>
-</div>
 </li>
 </ol>
+</div>
+<div id="mysql-incremental-snapshots-additional-condition" class="paragraph">
+<div class="title">Ad hoc incremental snapshots with <code>additional-condition</code></div>
+<p>If you want a snapshot to include only a subset of the content in a table, you can modify the signal request by appending an <code>additional-condition</code> parameter to the snapshot signal.</p>
+</div>
+<div class="paragraph">
+<p>The SQL query for a typical snapshot takes the following form:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT * FROM <em>&lt;tableName&gt;</em> ....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By adding an <code>additional-condition</code> parameter, you append a <code>WHERE</code> condition to the SQL query, as in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT * FROM <em>&lt;tableName&gt;</em> WHERE <em>&lt;additional-condition&gt;</em> ....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following example shows a SQL query to send an ad hoc incremental snapshot request with an additional condition to the signaling table:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-condition":"<em>&lt;additional-condition&gt;</em>"}');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For example, suppose you have a <code>products</code> table that contains the following columns:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>id</code> (primary key)</p>
+</li>
+<li>
+<p><code>color</code></p>
+</li>
+<li>
+<p><code>quantity</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If you want an incremental snapshot of the <code>products</code> table to include only the data items where <code>color=blue</code>, you can use the following SQL statement to trigger the snapshot:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-condition":"color=blue"}');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>additional-condition</code> parameter also enables you to pass conditions that are based on more than one column.
+For example, using the <code>products</code> table from the previous example, you can submit a query that triggers an incremental snapshot that includes the data of only those items for which <code>color=blue</code> and <code>quantity&gt;10</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-condition":"color=blue AND quantity&gt;10"}');</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The following example, shows the JSON for an incremental snapshot event that is captured by a connector.</p>
@@ -1385,11 +1424,15 @@ The value for snapshot events is <code>r</code>, signifying a <code>READ</code> 
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect3">
+<h4 id="mysql-stopping-an-incremental-snapshot"><a class="anchor" href="#mysql-stopping-an-incremental-snapshot"></a>Stopping an incremental snapshot</h4>
 <div class="paragraph">
-<div class="title">Stopping an incremental snapshot</div>
-<p>Incremental snapshots can also be stopped by sending a signal to the table on the source database.
-You submit signals to the table as SQL <code>INSERT</code> queries.
-After Debezium detects the change in the signaling table, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
+<p>You can also stop an incremental snapshot by sending a signal to the table on the source database.
+You submit a stop snapshot signal to the table by sending a SQL <code>INSERT</code> query.</p>
+</div>
+<div class="paragraph">
+<p>After Debezium detects the change in the signaling table, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
 </div>
 <div class="paragraph">
 <p>The query that you submit specifies the snapshot operation of <code>incremental</code>, and, optionally, the tables of the current running snapshot to be removed.</p>
@@ -1419,7 +1462,7 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 <p>Send a SQL query to stop the ad hoc incremental snapshot to the signaling table:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO _&lt;signalTable&gt;_ (id, type, data) values (_'&lt;id&gt;'_, 'stop-snapshot', '{"data-collections": ["_&lt;tableName&gt;_","_&lt;tableName&gt;_"],"type":"incremental"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) values (<em>'&lt;id&gt;'</em>, 'stop-snapshot', '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"incremental"}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1427,54 +1470,64 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, dat) values ('ad-hoc-1', 'stop-snapshot', '{"data-collections": ["schema1.table1", "schema2.table2"],"type":"incremental"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
+values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
+    'stop-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
+    '{"data-collections": ["schema1.table1", "schema2.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
+    "type":"incremental"}'); <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="page">fields of the signaling table</a>.</p>
+<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="page">fields of the signaling table</a>.</p>
 </div>
 <div class="paragraph">
-<p>The following table describes these parameters:</p>
+<p>The following table describes the parameters in the example:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 6. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
 <colgroup>
-<col style="width: 20%;">
-<col style="width: 80%;">
+<col style="width: 11.1111%;">
+<col style="width: 22.2222%;">
+<col style="width: 66.6667%;">
 </colgroup>
 <thead>
 <tr>
+<th class="tableblock halign-left valign-top">Item</th>
 <th class="tableblock halign-left valign-top">Value</th>
 <th class="tableblock halign-left valign-top">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>myschema.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.<br>
 Use this string to identify logging messages to entries in the signaling table.
 Debezium does not use this string.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>stop-snapshot</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies <code>type</code> parameter specifies the operation that the signal is intended to trigger.<br></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.<br>
 The array lists regular expressions which match tables by their fully-qualified names, using the same format as you use to specify the name of the connector&#8217;s signaling table in the <a href="#mysql-property-signal-data-collection"><code>signal.data.collection</code></a> configuration property.
 If this component of the <code>data</code> field is omitted, the signal stops the entire incremental snapshot that is in progress.</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">A required component of the <code>data</code> field of a signal that specifies the kind of snapshot operation that is to be stopped.<br>
 Currently, the only valid option is <code>incremental</code>.<br>
-Specifying a <code>type</code> value in the SQL query that you submit to the signaling table is required.<br>
-If you do not specify a value, the signal will not stop the incremental snapshot.</p></td>
+If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1559,7 +1612,7 @@ The format of the names is the same as for <a href="#mysql-property-signal-data-
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-condition</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional.Empty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
 subset of the contents of the table(s).</p></td>
 </tr>
@@ -2290,7 +2343,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
       "email": "annek@noanswer.org"
     },
     "source": { <i class="conum" data-value="10"></i><b>(10)</b>
-      "version": "2.1.0.Alpha2",
+      "version": "2.1.4.Final",
       "connector": "mysql",
       "name": "mysql-server-1",
       "ts_ms": 0,
@@ -2471,7 +2524,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
       "email": "annek@noanswer.org"
     },
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "2.1.0.Alpha2",
+      "version": "2.1.4.Final",
       "name": "mysql-server-1",
       "connector": "mysql",
       "name": "mysql-server-1",
@@ -2630,7 +2683,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
     },
     "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "2.1.0.Alpha2",
+      "version": "2.1.4.Final",
       "connector": "mysql",
       "name": "mysql-server-1",
       "ts_ms": 1465581902300,
@@ -2763,7 +2816,7 @@ The message key is <code>null</code> in this case, the message value looks like 
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "2.1.0.Alpha2",
+            "version": "2.1.4.Final",
             "name": "mysql-server-1",
             "connector": "mysql",
             "name": "mysql-server-1",
@@ -4184,7 +4237,7 @@ FROM performance_schema.global_variables WHERE variable_name='log_bin';</code></
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.1.0.Alpha2/debezium-connector-mysql-2.1.0.Alpha2-plugin.tar.gz">MySQL connector plug-in</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mysql/2.1.4.Final/debezium-connector-mysql-2.1.4.Final-plugin.tar.gz">MySQL connector plug-in</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -4935,7 +4988,7 @@ For example, if you set <code>max.queue.size=1000</code>, and <code>max.queue.si
 <p><code>500</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Positive integer value that specifies the number of milliseconds the connector should wait for new change events to appear before it starts processing a batch of events. Defaults to 1000 milliseconds, or 1 second.</p>
+<p>Positive integer value that specifies the number of milliseconds the connector should wait for new change events to appear before it starts processing a batch of events. Defaults to 500 milliseconds, or 0.5 second.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -5657,10 +5710,10 @@ For example, if the topic prefix is <code>fulfillment</code>, the default topic 
 <p><a id="mysql-property-database-history-kafka-recovery-attempts"></a><a href="#mysql-property-database-history-kafka-recovery-attempts"><code>schema.history.internal.kafka.recovery.attempts</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>4</code></p>
+<p><code>100</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The maximum number of times that the connector should try to read persisted history data before the connector recovery fails with an error. The maximum amount of time to wait after receiving no data is <code>recovery.attempts</code> x <code>recovery.poll.interval.ms</code>.</p>
+<p>The maximum number of times that the connector should try to read persisted history data before the connector recovery fails with an error. The maximum amount of time to wait after receiving no data is <code>recovery.attempts</code> × <code>recovery.poll.interval.ms</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -6144,7 +6197,9 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 <div class="sect2">
 <h3 id="mysql-streaming-metrics"><a class="anchor" href="#mysql-streaming-metrics"></a>Streaming metrics</h3>
 <div class="paragraph">
-<p>Transaction-related attributes are available only if binlog event buffering is enabled. See <a href="#mysql-property-binlog-buffer-size"><code>binlog.buffer.size</code></a> in the advanced connector configuration properties for more details.</p>
+<p>Transaction-related attributes are available only if binlog event buffering is enabled.
+See <a href="#mysql-property-binlog-buffer-size"><code>binlog.buffer.size</code></a> in the advanced connector configuration properties for more details.
+:leveloffset: +1</p>
 </div>
 <div class="paragraph">
 <p>The <strong>MBean</strong> is <code>debezium.mysql:type=connector-metrics,context=streaming,server=<em>&lt;mysql.server.name&gt;</em></code>.</p>
@@ -6639,7 +6694,7 @@ The values will incoporate any differences between the clocks on the machines wh
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2022 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e910c52d45cc4a167c1184d7ded7ac28a838c99c">e910c52d</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/1b9b7368280b9c4d5661ba751b409ff66adf3b1b">1b9b7368</a></span>)
             
         </div>
     </footer>
