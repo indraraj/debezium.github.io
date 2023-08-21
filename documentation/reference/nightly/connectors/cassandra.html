@@ -87,6 +87,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/signalling.html">Sending Signals to Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -155,6 +158,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/filtering.html">Message Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/schema-change-event-filter.html">Schema Change Event Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/content-based-routing.html">Content-Based Routing</a>
@@ -251,6 +257,9 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/2.4/index.html">2.4</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/2.3/index.html">2.3</a>
         </li>
         <li class="version">
@@ -322,6 +331,7 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                 <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
+                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
                 <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
                 <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
                 <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
@@ -1097,7 +1107,7 @@ VALUES (
   }
   },
   "source": {
-    "version": "2.3.0.Alpha1",
+    "version": "2.4.0.Alpha2",
     "connector": "cassandra",
     "cluster": "cassandra-cluster-1",
     "snapshot": false,
@@ -1148,7 +1158,7 @@ WHERE id = 1001 AND registration_date = 1562202942545</code></pre>
   }
   },
   "source": {
-    "version": "2.3.0.Alpha1",
+    "version": "2.4.0.Alpha2",
     "connector": "cassandra",
     "cluster": "cassandra-cluster-1",
     "snapshot": false,
@@ -1215,7 +1225,7 @@ WHERE id = 1001 AND registration_date = 1562202942545;</code></pre>
   "email": null
   },
   "source": {
-    "version": "2.3.0.Alpha1",
+    "version": "2.4.0.Alpha2",
     "connector": "cassandra",
     "cluster": "cassandra-cluster-1",
     "snapshot": false,
@@ -2673,6 +2683,28 @@ For example, if the database server name or topic prefix is <code>fulfillment</c
 <p>See <a href="../configuration/avro.html#avro-naming" class="page">Avro naming</a> for more details.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="cassandra-property-custom-metric-tags"></a><a href="#cassandra-property-custom-metric-tags"><code>custom.metric.tags</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>No default</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The custom metric tags will accept key-value pairs to customize the MBean object name which should be appended the end of regular name, each key would represent a tag for the MBean object name, and the corresponding value would be the value of that tag the key is. For example: <code>k1=v1,k2=v2</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="cassandra-property-errors-max-retires"></a><a href="#cassandra-property-errors-max-retires"><code>errors.max.retries</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>-1</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of retries on retriable errors (e.g. connection errors) before failing (-1 = no limit, 0 = disabled, &gt; 0 = num of retries).</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -2756,7 +2788,7 @@ com.blueapron.connect.protobuf.ProtobufConverter</code></pre>
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e91f483062b16dbf8ed75fbc8679a5295c9fd319">e91f4830</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/6f5732b70771e07c90d7d29875e4c576645b456b">6f5732b7</a></span>)
             
         </div>
     </footer>

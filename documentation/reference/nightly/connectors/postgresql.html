@@ -87,6 +87,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/signalling.html">Sending Signals to Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -155,6 +158,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/filtering.html">Message Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/schema-change-event-filter.html">Schema Change Event Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/content-based-routing.html">Content-Based Routing</a>
@@ -251,6 +257,9 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/2.4/index.html">2.4</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/2.3/index.html">2.3</a>
         </li>
         <li class="version">
@@ -322,6 +331,7 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                 <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
+                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
                 <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
                 <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
                 <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
@@ -620,6 +630,14 @@ You can change this behavior by setting the <a href="#postgresql-property-snapsh
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>initial</code> (default)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The connector performs a database snapshot when no Kafka offsets topic exists. After the database snapshot completes the Kafka offsets topic is written. If there is a previously stored LSN in the Kafka offsets topic, the connector continues streaming changes from that position.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>initial_only</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -654,7 +672,7 @@ Any future change event data that the connector captures comes in through the st
 <div class="paragraph">
 <p>However, in some situations the data that the connector obtained during the initial snapshot might become stale, lost, or incomplete.
 To provide a mechanism for recapturing table data, Debezium includes an option to perform ad hoc snapshots.
-The following changes in a database might be cause for performing an ad hoc snapshot:</p>
+You might want to perform an ad hoc snapshot after any of the following changes occur in your Debezium environment:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -685,7 +703,7 @@ Also, the snapshot can capture a subset of the contents of the table(s) in the d
 </div>
 <div class="paragraph">
 <p>You specify the tables to capture by sending an <code>execute-snapshot</code> message to the signaling table.
-Set the type of the <code>execute-snapshot</code> signal to <code>incremental</code>, and provide the names of the tables to include in the snapshot, as described in the following table:</p>
+Set the type of the <code>execute-snapshot</code> signal to <code>incremental</code> or <code>blocking</code>, and provide the names of the tables to include in the snapshot, as described in the following table:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 2. Example of an ad hoc <code>execute-snapshot</code> signal record</caption>
@@ -705,39 +723,95 @@ Set the type of the <code>execute-snapshot</code> signal to <code>incremental</c
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the type of snapshot that you want to run.<br>
-Setting the type is optional.
-Currently, you can request only <code>incremental</code> snapshots.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the type of snapshot that you want to run.<br>
+Currently, you can request <code>incremental</code> or <code>blocking</code> snapshots.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array that contains regular expressions matching the fully-qualified names of the table to be snapshotted.<br>
-The format of the names is the same as for the <code>signal.data.collection</code> configuration option.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An array that contains regular expressions matching the fully-qualified names of the table to be snapshotted.<br>
+The format of the names is the same as for the <code>signal.data.collection</code> configuration option.</p>
+</div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-condition</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="line-through">additional-condition</span></code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
-subset of the contents of the table(s).</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
+subset of the contents of the table(s).<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This property is deprecated.
+To specify criteria for defining the subset of data that you want the snapshot to capture, use the <code>additional-conditions</code> parameter.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.<br>
+Each additional condition is an object that specifies the criteria for filtering the data that an ad hoc snapshot captures.
+You can set the following parameters for each additional condition:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>data-collection</code></dt>
+<dd>
+<p>The fully-qualified name of the table that the filter applies to.
+You can apply different filters to each table.</p>
+</dd>
+<dt class="hdlist1"><code>filter</code></dt>
+<dd>
+<p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
+<br>
+The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.
+In earlier Debezium releases, an explicit <code>filter</code> parameter was not defined for snapshot signals; instead, filter criteria were implied by the values that were specified for the now deprecated  <code>additional-condition</code> parameter.</p>
+</dd>
+</dl>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>surrogate-key</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional string that specifies the column name that the connector uses as the primary key of a table during the snapshot process.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional string that specifies the column name that the connector uses as the primary key of a table during the snapshot process.</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<div class="title">Triggering an ad hoc snapshot</div>
-<p>You initiate an ad hoc snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling table.
+<div class="title">Triggering an ad hoc incremental snapshot</div>
+<p>You initiate an ad hoc incremental snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling table.
 After the connector processes the message, it begins the snapshot operation.
 The snapshot process reads the first and last primary key values and uses those values as the start and end point for each table.
 Based on the number of entries in the table, and the configured chunk size, Debezium divides the table into chunks, and proceeds to snapshot each chunk, in succession, one at a time.</p>
 </div>
 <div class="paragraph">
-<p>Currently, the <code>execute-snapshot</code> action type triggers <a href="../configuration/signalling.html#debezium-signaling-incremental-snapshots" class="page">incremental snapshots</a> only.
-For more information, see <a href="#postgresql-incremental-snapshots">Incremental snapshots</a>.</p>
+<p>For more information, see <a href="#postgresql-incremental-snapshots">Incremental snapshots</a>.</p>
+</div>
+<div class="paragraph">
+<div class="title">Triggering an ad hoc blocking snapshot</div>
+<p>You initiate an ad hoc blocking snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling table.
+After the connector processes the message, it begins the snapshot operation.
+The connector temporarily stops streaming, and then initiates a snapshot of the specified table, following the same process that it uses during an initial snapshot.
+After the snapshot completes, the connector resumes streaming.</p>
+</div>
+<div class="paragraph">
+<p>For more information, see <a href="#postgresql-blocking-snapshots">Blocking snapshots</a>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -751,7 +825,7 @@ Incremental snapshots are based on the <a href="https://github.com/debezium/debe
 <p>In an incremental snapshot, instead of capturing the full state of a database all at once, as in an initial snapshot, Debezium captures each table in phases, in a series of configurable chunks.
 You can specify the tables that you want the snapshot to capture and the <a href="#postgresql-property-incremental-snapshot-chunk-size">size of each chunk</a>.
 The chunk size determines the number of rows that the snapshot collects during each fetch operation on the database.
-The default chunk size for incremental snapshots is 1 KB.</p>
+The default chunk size for incremental snapshots is 1024 rows.</p>
 </div>
 <div class="paragraph">
 <p>As an incremental snapshot proceeds, Debezium uses watermarks to track its progress, maintaining a record of each table row that it captures.
@@ -877,7 +951,7 @@ For example, to include a table that exists in the <code><strong>public</strong>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-signaling" class="page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="page">Signaling is enabled</a>.<br></p>
 <div class="ulist">
 <ul>
 <li>
@@ -892,13 +966,13 @@ For example, to include a table that exists in the <code><strong>public</strong>
 </ul>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure</div>
+<div class="title">Using a source signaling channel to trigger an incremental snapshot</div>
 <ol class="arabic">
 <li>
 <p>Send a SQL query to add the ad hoc incremental snapshot request to the signaling table:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-condition":"<em>&lt;additional-condition&gt;</em>"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-conditions":[{"data-collection": "<em>&lt;tableName&gt;</em>", "filter": "<em>&lt;additional-condition&gt;</em>"}]}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -911,7 +985,7 @@ values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
     'execute-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
     '{"data-collections": ["schema1.table1", "schema2.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
     "type":"incremental"}, <i class="conum" data-value="5"></i><b>(5)</b>
-    "additional-condition":"color=blue"}'); <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+    "additional-conditions":[{"data-collection": "schema1.table1" ,"filter":"color='blue'"}]}'); <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -968,19 +1042,21 @@ If you do not specify a value, the connector runs an incremental snapshot.</p></
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-condition</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional string, which specifies a condition based on the column(s) of the table(s), to capture a
-subset of the contents of the tables.
-For more information about the <code>additional-condition</code> parameter, see <a href="#postgresql-incremental-snapshots-additional-condition">Ad hoc incremental snapshots with <code>additional-condition</code></a>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.<br>
+Each additional condition is an object with <code>data-collection</code> and <code>filter</code> properties.
+You can specify different filters for each data collection.<br>
+* The <code>data-collection</code> property is the fully-qualified name of the data collection for which the filter will be applied.
+For more information about the <code>additional-conditions</code> parameter, see <a href="#postgresql-incremental-snapshots-additional-conditions">Ad hoc incremental snapshots with <code>additional-conditions</code></a>.</p></td>
 </tr>
 </tbody>
 </table>
 </li>
 </ol>
 </div>
-<div id="postgresql-incremental-snapshots-additional-condition" class="paragraph">
-<div class="title">Ad hoc incremental snapshots with <code>additional-condition</code></div>
-<p>If you want a snapshot to include only a subset of the content in a table, you can modify the signal request by appending an <code>additional-condition</code> parameter to the snapshot signal.</p>
+<div id="postgresql-incremental-snapshots-additional-conditions" class="paragraph">
+<div class="title">Ad hoc incremental snapshots with <code>additional-conditions</code></div>
+<p>If you want a snapshot to include only a subset of the content in a table, you can modify the signal request by appending an <code>additional-conditions</code> parameter to the snapshot signal.</p>
 </div>
 <div class="paragraph">
 <p>The SQL query for a typical snapshot takes the following form:</p>
@@ -991,11 +1067,11 @@ For more information about the <code>additional-condition</code> parameter, see 
 </div>
 </div>
 <div class="paragraph">
-<p>By adding an <code>additional-condition</code> parameter, you append a <code>WHERE</code> condition to the SQL query, as in the following example:</p>
+<p>By adding an <code>additional-conditions</code> parameter, you append a <code>WHERE</code> condition to the SQL query, as in the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT * FROM <em>&lt;tableName&gt;</em> WHERE <em>&lt;additional-condition&gt;</em> ....</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SELECT * FROM <em>&lt;data-collection&gt;</em> WHERE <em>&lt;filter&gt;</em> ....</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1003,7 +1079,7 @@ For more information about the <code>additional-condition</code> parameter, see 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-condition":"<em>&lt;additional-condition&gt;</em>"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO <em>&lt;signalTable&gt;</em> (id, type, data) VALUES (<em>'&lt;id&gt;'</em>, <em>'&lt;snapshotType&gt;'</em>, '{"data-collections": ["<em>&lt;tableName&gt;</em>","<em>&lt;tableName&gt;</em>"],"type":"<em>&lt;snapshotType&gt;</em>","additional-conditions":[{"data-collection": "<em>&lt;tableName&gt;</em>", "filter": "<em>&lt;additional-condition&gt;</em>"}]}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1027,16 +1103,16 @@ For more information about the <code>additional-condition</code> parameter, see 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-condition":"color=blue"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-conditions":[{"data-collection": "schema1.products", "filter": "color=blue"}]}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>additional-condition</code> parameter also enables you to pass conditions that are based on more than one column.
+<p>The <code>additional-conditions</code> parameter also enables you to pass conditions that are based on more than one column.
 For example, using the <code>products</code> table from the previous example, you can submit a query that triggers an incremental snapshot that includes the data of only those items for which <code>color=blue</code> and <code>quantity&gt;10</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-condition":"color=blue AND quantity&gt;10"}');</code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO myschema.debezium_signal (id, type, data) VALUES('ad-hoc-1', 'execute-snapshot', '{"data-collections": ["schema1.products"],"type":"incremental", "additional-conditions":[{"data-collection": "schema1.products", "filter": "color=blue AND quantity&gt;10"}]}');</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1091,6 +1167,138 @@ The value for snapshot events is <code>r</code>, signifying a <code>READ</code> 
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<div class="title">Procedure using kafka signaling channel</div>
+<p>You can send a message to the <a href="../configuration/signalling.html#debezium-signaling-enabling-kafka-signaling-channel" class="page">configured Kafka topic</a> to request the connector to run an ad hoc incremental snapshot.</p>
+</div>
+<div class="paragraph">
+<p>The key of the Kafka message must match the value of the <code>topic.prefix</code> connector configuration option.</p>
+</div>
+<div class="paragraph">
+<p>The value of the message is a JSON object with <code>type</code> and <code>data</code> fields.</p>
+</div>
+<div class="paragraph">
+<p>The signal type is <code>execute-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Execute snapshot data fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The type of the snapshot to be executed.
+Currently Debezium supports only the <code>incremental</code> type. <br>
+See the next section for more details.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An array of comma-separated regular expressions that match the fully-qualified names of tables to include in the snapshot.<br>
+Specify the names by using the same format as is required for the <a href="#postgresql-property-signal-data-collection">signal.data.collection</a> configuration option.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="line-through">additional-condition</span></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional string that specifies a condition that the connector evaluates to designate a subset of records to include in a snapshot.<br></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This property is deprecated and should be replaced by the <code>additional-conditions</code> property.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional array of additional conditions that specifies criteria that the connector evaluates to designate a subset of records to include in a snapshot.<br>
+Each additional condition is an object that specifies the criteria for filtering the data that an ad hoc snapshot captures.
+You can set the following parameters for each additional condition:
+<code>data-collection</code>:: The fully-qualified name of the table that the filter applies to.
+You can apply different filters to each table.
+<code>filter</code>:: Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
+<br>
+The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.
+In earlier Debezium releases, an explicit <code>filter</code> parameter was not defined for snapshot signals; instead, filter criteria were implied by the values that were specified for the now deprecated <code>additional-condition</code> parameter.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>An example of the execute-snapshot Kafka message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Key = `test_connector`
+
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.table1", "schema1.table2"], "type": "INCREMENTAL"}}`</pre>
+</div>
+</div>
+<div class="sect9">
+<h10 id="_ad_hoc_incremental_snapshots_with_additional_conditions"><a class="anchor" href="#_ad_hoc_incremental_snapshots_with_additional_conditions"></a>Ad hoc incremental snapshots with additional-conditions</h10>
+<div class="paragraph">
+<p>Debezium uses the <code>additional-conditions</code> field to select a subset of a table&#8217;s content.</p>
+</div>
+<div class="paragraph">
+<p>Typically, when Debezium runs a snapshot, it runs a SQL query such as:</p>
+</div>
+<div class="paragraph">
+<p><code>SELECT * FROM <em>&lt;tableName&gt;</em> &#8230;&#8203;.</code></p>
+</div>
+<div class="paragraph">
+<p>When the snapshot request includes an <code>additional-conditions</code> property, the <code>data-collection</code> and <code>filter</code> parameters of the  property are appended to the SQL query, for example:</p>
+</div>
+<div class="paragraph">
+<p><code>SELECT * FROM <em>&lt;data-collection&gt;</em> WHERE <em>&lt;filter&gt;</em> &#8230;&#8203;.</code></p>
+</div>
+<div class="paragraph">
+<p>For example, given a <code>products</code> table with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Key = `test_connector`
+
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "schema1.products" ,"filter":"color='blue'"}]}}`</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use the <code>additional-conditions</code> property to pass conditions based on multiple columns.
+For example, using the same <code>products</code> table as in the previous example, if you want a snapshot to include only the content from the <code>products</code> table for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Key = `test_connector`
+
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "schema1.products" ,"filter":"color='blue' AND brand='MyBrand'"}]}}`</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="postgresql-stopping-an-incremental-snapshot"><a class="anchor" href="#postgresql-stopping-an-incremental-snapshot"></a>Stopping an incremental snapshot</h4>
@@ -1108,7 +1316,7 @@ You submit a stop snapshot signal to the table by sending a SQL <code>INSERT</co
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-signaling" class="page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="page">Signaling is enabled</a>.<br></p>
 <div class="ulist">
 <ul>
 <li>
@@ -1123,7 +1331,7 @@ You submit a stop snapshot signal to the table by sending a SQL <code>INSERT</co
 </ul>
 </div>
 <div class="olist arabic">
-<div class="title">Procedure</div>
+<div class="title">Using a source signaling channel to stop an incremental snapshot</div>
 <ol class="arabic">
 <li>
 <p>Send a SQL query to stop the ad hoc incremental snapshot to the signaling table:</p>
@@ -1151,7 +1359,7 @@ values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
 <p>The following table describes the parameters in the example:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
+<caption class="title">Table 5. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 22.2222%;">
@@ -1200,6 +1408,59 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 </table>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<div class="title">Using the Kafka signaling channel to stop an incremental snapshot</div>
+<p>You can send a signal message to the <a href="../configuration/signalling.html#debezium-signaling-enabling-kafka-signaling-channel" class="page">configured Kafka signaling topic</a> to stop an ad hoc incremental snapshot.</p>
+</div>
+<div class="paragraph">
+<p>The key of the Kafka message must match the value of the <code>topic.prefix</code> connector configuration option.</p>
+</div>
+<div class="paragraph">
+<p>The value of the message is a JSON object with <code>type</code> and <code>data</code> fields.</p>
+</div>
+<div class="paragraph">
+<p>The signal type is <code>stop-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Execute snapshot data fields</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The type of the snapshot to be executed.
+Currently Debezium supports only the <code>incremental</code> type. <br>
+See the next section for more details.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array of comma-separated regular expressions that match the fully-qualified names of the tables to include in the snapshot.<br>
+Specify the names by using the same format as is required for the <a href="#postgresql-property-signal-data-collection">signal.data.collection</a> configuration option.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following example shows a typical <code>stop-snapshot</code> Kafka message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Key = `test_connector`
+
+Value = `{"type":"stop-snapshot","data": {"data-collections": ["schema1.table1", "schema1.table2"], "type": "INCREMENTAL"}}`</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1300,6 +1561,71 @@ public interface Snapshotter {
         // no operation
     }
 }</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="postgresql-blocking-snapshots"><a class="anchor" href="#postgresql-blocking-snapshots"></a>Blocking snapshots</h4>
+<div class="paragraph">
+<p>To provide more flexibility in managing snapshots, Debezium includes a supplementary ad hoc snapshot mechanism, known as a <em>blocking snapshot</em>.
+Blocking snapshots rely on the Debezium mechanism for <a href="../configuration/signalling.html#sending-signals-to-a-debezium-connector" class="page">sending signals to a Debezium connector</a>.</p>
+</div>
+<div class="paragraph">
+<p>A blocking snapshot behaves just like an <em>initial snapshot</em>, except that you can trigger it at run time.</p>
+</div>
+<div class="paragraph">
+<p>You might want to run a blocking snapshot rather than use the standard initial snapshot process in the following situations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You add a new table and you want to complete the snapshot while the connector is running.</p>
+</li>
+<li>
+<p>You add a large table, and you want the snapshot to complete in less time than is possible with an incremental snapshot.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<div class="title">Blocking snapshot process</div>
+<p>When you run a blocking snapshot, Debezium stops streaming, and then initiates a snapshot of the specified table, following the same process that it uses during an initial snapshot.
+After the snapshot completes, the streaming is resumed.</p>
+</div>
+<div class="paragraph">
+<div class="title">Configure snapshot</div>
+<p>You can set the following properties in the <code>data</code> component of a signal:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>data-collections: to specify which tables must be snapshot</p>
+</li>
+<li>
+<p>additional-conditions: You can specify different filters for different table.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>data-collection</code> property is the fully-qualified name of the table for which the filter will be applied.</p>
+</li>
+<li>
+<p>The <code>filter</code> property will have the same value used in the  <code>snapshot.select.statement.overrides</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  {"type": "blocking", "data-collections": ["schema1.table1", "schema1.table2"], "additional-conditions": [{"data-collection": "schema1.table1", "filter": "SELECT * FROM [schema1].[table1] WHERE column1 = 0 ORDER BY column2 DESC"}, {"data-collection": "schema1.table2", "filter": "SELECT * FROM [schema1].[table2] WHERE column2 &gt; 0"}]}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Possible duplicates</div>
+<p>A delay might exist between the time that you send the signal to trigger the snapshot, and the time when streaming stops and the snapshot starts.
+As a result of this delay, after the snapshot completes, the connector might emit some event records that duplicate records captured by the snapshot.</p>
 </div>
 </div>
 </div>
@@ -1604,7 +1930,7 @@ This field provides information about every event in the form of a composite of 
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Overview of change event basic content</caption>
+<caption class="title">Table 7. Overview of change event basic content</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -1725,7 +2051,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Description of change event key</caption>
+<caption class="title">Table 8. Description of change event key</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2015,7 +2341,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2035,7 +2361,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Descriptions of <em>create</em> event value fields</caption>
+<caption class="title">Table 9. Descriptions of <em>create</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2214,7 +2540,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2233,7 +2559,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Descriptions of <em>update</em> event value fields</caption>
+<caption class="title">Table 10. Descriptions of <em>update</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2359,7 +2685,7 @@ as a primary key change. For a primary key change, in place of sending an <code>
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2378,7 +2704,7 @@ as a primary key change. For a primary key change, in place of sending an <code>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Descriptions of <em>delete</em> event value fields</caption>
+<caption class="title">Table 11. Descriptions of <em>delete</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2494,7 +2820,7 @@ The message key is <code>null</code> in this case, the message value looks like 
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2513,7 +2839,7 @@ The message key is <code>null</code> in this case, the message value looks like 
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Descriptions of <em>truncate</em> event value fields</caption>
+<caption class="title">Table 12. Descriptions of <em>truncate</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2619,7 +2945,7 @@ The message value looks like this for transactional messages:</p>
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2651,7 +2977,7 @@ The message value looks like this for non-transactional messages:</p>
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2672,7 +2998,7 @@ The message value looks like this for non-transactional messages:</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Descriptions of <em>message</em> event value fields</caption>
+<caption class="title">Table 13. Descriptions of <em>message</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -2793,7 +3119,7 @@ For transactional <em>message</em> events, the <code>ts_ms</code> attribute of t
 <p>The following table describes how the connector maps basic types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Mappings for PostgreSQL basic data types</caption>
+<caption class="title">Table 14. Mappings for PostgreSQL basic data types</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3228,7 +3554,7 @@ Contains the string representation of the PostgreSQL <code>ENUM</code> value. Th
 <p>When the <code>time.precision.mode</code> property is set to <code>adaptive</code>, the default, the connector determines the literal type and semantic type based on the column&#8217;s data type definition. This ensures that events <em>exactly</em> represent the values in the database.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Mappings when <code>time.precision.mode</code> is <code>adaptive</code></caption>
+<caption class="title">Table 15. Mappings when <code>time.precision.mode</code> is <code>adaptive</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3314,7 +3640,7 @@ Represents the number of microseconds since the epoch, and does not include time
 <p>When the <code>time.precision.mode</code> configuration property is set to <code>adaptive_time_microseconds</code>, the connector determines the literal type and semantic type for temporal types based on the column&#8217;s data type definition. This ensures that events <em>exactly</em> represent the values in the database, except all <code>TIME</code> fields are captured as microseconds.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Mappings when <code>time.precision.mode</code> is <code>adaptive_time_microseconds</code></caption>
+<caption class="title">Table 16. Mappings when <code>time.precision.mode</code> is <code>adaptive_time_microseconds</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3387,7 +3713,7 @@ Represents the number of microseconds past the epoch, and does not include timez
 <p>When the <code>time.precision.mode</code> configuration property is set to <code>connect</code>, the connector uses Kafka Connect logical types. This may be useful when consumers can handle only the built-in Kafka Connect logical types and are unable to handle variable-precision time values. However, since PostgreSQL supports microsecond precision, the events generated by a connector with the <code>connect</code> time precision mode <strong>results in a loss of precision</strong> when the database column has a <em>fractional second precision</em> value that is greater than 3.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Mappings when <code>time.precision.mode</code> is <code>connect</code></caption>
+<caption class="title">Table 17. Mappings when <code>time.precision.mode</code> is <code>connect</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3468,7 +3794,7 @@ For reference, see the <a href="https://jdbc.postgresql.org/documentation/public
 <p>When the <code>decimal.handling.mode</code> property is set to <code>precise</code>, the connector uses the Kafka Connect <code>org.apache.kafka.connect.data.Decimal</code> logical type for all <code>DECIMAL</code>, <code>NUMERIC</code> and <code>MONEY</code> columns. This is the default mode.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Mappings when <code>decimal.handling.mode</code> is <code>precise</code></caption>
+<caption class="title">Table 18. Mappings when <code>decimal.handling.mode</code> is <code>precise</code></caption>
 <colgroup>
 <col style="width: 28%;">
 <col style="width: 17%;">
@@ -3529,7 +3855,7 @@ The <code>scale</code> schema parameter is determined by the <a href="#postgresq
 When the <code>NUMERIC</code> or <code>DECIMAL</code> types are used without scale constraints, the values coming from the database have a different (variable) scale for each value. In this case, the connector uses <code>io.debezium.data.VariableScaleDecimal</code>, which contains both the value and the scale of the transferred value.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Mappings of <code>DECIMAL</code> and <code>NUMERIC</code> types when there are no scale constraints</caption>
+<caption class="title">Table 19. Mappings of <code>DECIMAL</code> and <code>NUMERIC</code> types when there are no scale constraints</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3575,7 +3901,7 @@ Contains a structure with two fields: <code>scale</code> of type <code>INT32</co
 <p>When the <code>decimal.handling.mode</code> property is set to <code>double</code>, the connector represents all <code>DECIMAL</code>, <code>NUMERIC</code> and <code>MONEY</code> values as Java double values and encodes them as shown in the following table.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Mappings when <code>decimal.handling.mode</code> is <code>double</code></caption>
+<caption class="title">Table 20. Mappings when <code>decimal.handling.mode</code> is <code>double</code></caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 30%;">
@@ -3622,7 +3948,7 @@ Contains a structure with two fields: <code>scale</code> of type <code>INT32</co
 <p>The last possible setting for the <code>decimal.handling.mode</code> configuration property is <code>string</code>. In this case, the connector represents <code>DECIMAL</code>, <code>NUMERIC</code> and <code>MONEY</code> values as their formatted string representation, and encodes them as shown in the following table.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Mappings when <code>decimal.handling.mode</code> is <code>string</code></caption>
+<caption class="title">Table 21. Mappings when <code>decimal.handling.mode</code> is <code>string</code></caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 30%;">
@@ -3678,7 +4004,7 @@ Contains a structure with two fields: <code>scale</code> of type <code>INT32</co
 <p>When the <code>dhstore.handling.mode</code> property is set to <code>json</code> (the default), the connector represents <code>HSTORE</code> values as string representations of JSON values and encodes them as shown in the following table. When the <code>hstore.handling.mode</code> property is set to <code>map</code>, the connector uses the <code>MAP</code> schema type for <code>HSTORE</code> values.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Mappings for <code>HSTORE</code> data type</caption>
+<caption class="title">Table 22. Mappings for <code>HSTORE</code> data type</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3750,7 +4076,7 @@ Example: output representation  using the JSON converter is <code>{"key" : "val"
 <p>PostgreSQL has data types that can store IPv4, IPv6, and MAC addresses. It is better to use these types instead of plain text types to store network addresses. Network address types offer input error checking and specialized operators and functions.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. Mappings for network address types</caption>
+<caption class="title">Table 23. Mappings for network address types</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -3825,7 +4151,7 @@ MAC addresses in EUI-64 format</p>
 <p>The PostgreSQL connector supports all <a href="http://postgis.net">PostGIS data types</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 22. Mappings of PostGIS data types</caption>
+<caption class="title">Table 24. Mappings of PostGIS data types</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4171,7 +4497,7 @@ shared_preload_libraries = 'decoderbufs' <i class="conum" data-value="1"></i><b>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Instructs the server to load the <code>decoderbufs</code> logical decoding plug-ins at startup (the name of the plug-in is set in the <a href="https://github.com/debezium/postgres-decoderbufs/blob/v2.3.0.Alpha1/Makefile"><code>Protobuf</code></a> make file).</td>
+<td>Instructs the server to load the <code>decoderbufs</code> logical decoding plug-ins at startup (the name of the plug-in is set in the <a href="https://github.com/debezium/postgres-decoderbufs/blob/v2.4.0.Alpha2/Makefile"><code>Protobuf</code></a> make file).</td>
 </tr>
 </table>
 </div>
@@ -4637,7 +4963,7 @@ If necessary, you can confirm whether the connector read all changes from the re
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.3.0.Alpha1/debezium-connector-postgres-2.3.0.Alpha1-plugin.tar.gz">PostgreSQL connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/2.4.0.Alpha2/debezium-connector-postgres-2.4.0.Alpha2-plugin.tar.gz">PostgreSQL connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -4799,7 +5125,7 @@ The service records the configuration and starts one connector task that perform
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 23. Required connector configuration properties</caption>
+<caption class="title">Table 25. Required connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -5673,7 +5999,7 @@ That is, the specified expression is matched against the entire message prefix s
 <p>The following <em>advanced</em> configuration properties have defaults that work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 24. Advanced connector configuration properties</caption>
+<caption class="title">Table 26. Advanced connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 28%;">
@@ -6139,6 +6465,65 @@ Use the following format to specify the collection name:<br>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-signal-enabled-channels"></a><a href="#postgresql-property-signal-enabled-channels"><code>signal.enabled.channels</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>source</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>List of the signaling channel names that are enabled for the connector.
+By default, the following channels are available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>source</code></p>
+</li>
+<li>
+<p><code>kafka</code></p>
+</li>
+<li>
+<p><code>file</code></p>
+</li>
+<li>
+<p><code>jmx</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Optionally, you can also implement a <a href="../configuration/signalling.html#debezium-signaling-enabling-custom-signaling-channel" class="page">custom signaling channel</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-notification-enabled-channels"></a><a href="#postgresql-property-notification-enabled-channels"><code>notification.enabled.channels</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>List of notification channel names that are enabled for the connector.
+By default, the following channels are available:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>sink</code></p>
+</li>
+<li>
+<p><code>log</code></p>
+</li>
+<li>
+<p><code>jmx</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Optionally, you can also implement a <a href="../configuration/notification.html#debezium-notification-custom-channel" class="page">custom notification channel</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="postgresql-property-incremental-snapshot-chunk-size"></a><a href="#postgresql-property-incremental-snapshot-chunk-size"><code>incremental.snapshot.chunk.size</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -6241,6 +6626,28 @@ In a parallel initial snapshot, the connector processes multiple tables concurre
 This feature is incubating.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-custom-metric-tags"></a><a href="#postgresql-property-custom-metric-tags"><code>custom.metric.tags</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>No default</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The custom metric tags will accept key-value pairs to customize the MBean object name which should be appended the end of regular name, each key would represent a tag for the MBean object name, and the corresponding value would be the value of that tag the key is. For example: <code>k1=v1,k2=v2</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-errors-max-retires"></a><a href="#postgresql-property-errors-max-retires"><code>errors.max.retries</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>-1</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of retries on retriable errors (e.g. connection errors) before failing (-1 = no limit, 0 = disabled, &gt; 0 = num of retries).</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 <div id="postgresql-pass-through-properties" class="paragraph">
@@ -6249,6 +6656,139 @@ This feature is incubating.</p>
 </div>
 <div class="paragraph">
 <p>Be sure to consult the <a href="https://kafka.apache.org/documentation.html">Kafka documentation</a> for all of the configuration properties for Kafka producers and consumers. The PostgreSQL connector does use the <a href="https://kafka.apache.org/documentation.html#consumerconfigs">new consumer configuration properties</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="debezium-postgresql-connector-kafka-signals-configuration-properties"><a class="anchor" href="#debezium-postgresql-connector-kafka-signals-configuration-properties"></a>Debezium connector Kafka signals configuration properties</h4>
+<div class="paragraph">
+<p>Debezium provides a set of <code>signal.*</code> properties that control how the connector interacts with the Kafka signals topic.</p>
+</div>
+<div class="paragraph">
+<p>The following table describes the Kafka <code>signal</code> properties.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 27. Kafka signals configuration properties</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 17%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-signal-kafka-topic"></a><a href="#postgresql-property-signal-kafka-topic"><code>signal.kafka.topic</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>&lt;topic.prefix&gt;-signal</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The name of the Kafka topic that the connector monitors for ad hoc signals.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If <a href="#{ink-topic-auto-creation}.adoc#topic-auto-create-config" class="page unresolved">automatic topic creation</a> is disabled, you must manually create the required signaling topic.
+A signaling topic is required to preserve signal ordering.
+The signaling topic must have a single partition.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-signal-kafka-groupId"></a><a href="#postgresql-property-signal-kafka-groupId"><code>signal.kafka.groupId</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>kafka-signal</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The name of the group ID  that is used by Kafka consumers.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-signal-kafka-bootstrap-servers"></a><a href="#postgresql-property-signal-kafka-bootstrap-servers"><code>signal.kafka.bootstrap.servers</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A list of host/port pairs that the connector uses for establishing an initial connection to the Kafka cluster.
+Each pair references the Kafka cluster that is used by the Debezium Kafka Connect process.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-signal-kafka-poll-timeout-ms"></a><a href="#postgresql-property-signal-kafka-poll-timeout-ms"><code>signal.kafka.poll.timeout.ms</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>100</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An integer value that specifies the maximum number of milliseconds that the connector waits when polling signals.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="debezium-postgresql-connector-pass-through-signals-kafka-consumer-configuration-properties"><a class="anchor" href="#debezium-postgresql-connector-pass-through-signals-kafka-consumer-configuration-properties"></a>Debezium connector pass-through signals Kafka consumer client configuration properties</h4>
+<div class="paragraph">
+<p>The Debezium connector provides for pass-through configuration of the signals Kafka consumer.
+Pass-through signals properties begin with the prefix <code>signals.consumer.*</code>.
+For example, the connector passes properties such as <code>signal.consumer.security.protocol=SSL</code> to the Kafka consumer.</p>
+</div>
+<div class="paragraph">
+<p>As is the case with the <a href="#postgresql-pass-through-database-history-properties-for-configuring-producer-and-consumer-clients">pass-through properties for database schema history clients</a>, Debezium strips the prefixes from the properties before it passes them to the Kafka signals consumer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="debezium-postgresql-connector-kafka-notifications-configuration-properties"><a class="anchor" href="#debezium-postgresql-connector-kafka-notifications-configuration-properties"></a>Debezium connector sink notifications configuration properties</h4>
+<div class="paragraph">
+<p>The following table describes the <code>notification</code> properties.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 28. Sink notification configuration properties</caption>
+<colgroup>
+<col style="width: 33%;">
+<col style="width: 17%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-notification-sink-topic-name"></a><a href="#postgresql-property-notification-sink-topic-name"><code>notification.sink.topic.name</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The name of the topic that receives notifications from Debezium.
+This property is required when you configure the <a href="#postgresql-property-notification-enabled-channels"><code>notification.enabled.channels</code></a> property to include <code>sink</code> as one of the enabled notification channels.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -6275,7 +6815,7 @@ This feature is incubating.</p>
 <div class="sect2">
 <h3 id="postgresql-snapshot-metrics"><a class="anchor" href="#postgresql-snapshot-metrics"></a>Snapshot metrics</h3>
 <div class="paragraph">
-<p>The <strong>MBean</strong> is <code>debezium.postgres:type=connector-metrics,context=snapshot,server=<em>&lt;postgresql.server.name&gt;</em></code>.</p>
+<p>The <strong>MBean</strong> is <code>debezium.postgres:type=connector-metrics,context=snapshot,server=<em>&lt;topic.prefix&gt;</em></code>.</p>
 </div>
 <div class="paragraph">
 <p>Snapshot metrics are not exposed unless a snapshot operation is active, or if a snapshot has occurred since the last connector start.</p>
@@ -6577,7 +7117,7 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 <div class="sect2">
 <h3 id="postgresql-streaming-metrics"><a class="anchor" href="#postgresql-streaming-metrics"></a>Streaming metrics</h3>
 <div class="paragraph">
-<p>The <strong>MBean</strong> is <code>debezium.postgres:type=connector-metrics,context=streaming,server=<em>&lt;postgresql.server.name&gt;</em></code>.</p>
+<p>The <strong>MBean</strong> is <code>debezium.postgres:type=connector-metrics,context=streaming,server=<em>&lt;topic.prefix&gt;</em></code>.</p>
 </div>
 <div class="paragraph">
 <p>The following table lists the streaming metrics that are available.</p>
@@ -6934,7 +7474,7 @@ If the primary server goes down, a new primary must be promoted.</p>
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e91f483062b16dbf8ed75fbc8679a5295c9fd319">e91f4830</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/6f5732b70771e07c90d7d29875e4c576645b456b">6f5732b7</a></span>)
             
         </div>
     </footer>

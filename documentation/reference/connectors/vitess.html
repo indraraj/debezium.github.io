@@ -87,6 +87,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/signalling.html">Sending Signals to Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -155,6 +158,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/filtering.html">Message Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/schema-change-event-filter.html">Schema Change Event Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/content-based-routing.html">Content-Based Routing</a>
@@ -251,6 +257,9 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/2.4/index.html">2.4</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/2.3/index.html">2.3</a>
         </li>
         <li class="version">
@@ -322,6 +331,7 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                 <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
+                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
                 <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
                 <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
                 <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
@@ -448,8 +458,8 @@ In this way, the connector starts with a consistent view of all of the data, and
 </div>
 <div class="paragraph">
 <p>The connector is tolerant of failures.
-As the connector reads changes and produces events, it records the VGTID position for each event.
-If the connector stops for any reason (including communication failures, network problems, or crashes), after the connectors restarts, it continues reading the WAL from the point at which it stopped.
+As the connector reads changes and produces events, it records the Vitess global transaction ID (VGTID) position for each event.
+If the connector stops for any reason (including communication failures, network problems, or crashes), after the connector restarts, it continues reading from VStream from the last change event entry that it stored.
 This behavior does not apply to snapshots. If the connector stops during a snapshot, after a restart, the connector does not continue performing snapshots where it last left off.
 We&#8217;ll talk later about how the connector behaves <a href="#vitess-when-things-go-wrong">when things go wrong</a>.</p>
 </div>
@@ -1036,9 +1046,14 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
                         "field": "ts_ms"
                     },
                     {
-                        "type": "boolean",
+                        "type": "string",
                         "optional": true,
-                        "default": false,
+                        "name": "io.debezium.data.Enum",
+                        "version": 1,
+                        "parameters": {
+                            "allowed": "true,last,false,incremental"
+                        },
+                        "default": "false",
                         "field": "snapshot"
                     },
                     {
@@ -1048,13 +1063,23 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
                     },
                     {
                         "type": "string",
+                        "optional": true,
+                        "field": "sequence"
+                    },
+                    {
+                        "type": "string",
                         "optional": false,
-                        "field": "schema"
+                        "field": "keyspace"
                     },
                     {
                         "type": "string",
                         "optional": false,
                         "field": "table"
+                    },
+                    {
+                        "type": "string",
+                        "optional": false,
+                        "field": "shard"
                     },
                     {
                         "type": "int64",
@@ -1089,14 +1114,16 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": false,
+            "snapshot": "false",
             "db": "",
+            "sequence": null,
             "keyspace": "commerce",
             "table": "customers",
+            "shard": "-80",
             "vgtid": "[{\"keyspace\":\"commerce\",\"shard\":\"80-\",\"gtid\":\"MariaDB/0-54610504-47\"},{\"keyspace\":\"commerce\",\"shard\":\"-80\",\"gtid\":\"MariaDB/0-1592148-45\"}]"
         },
         "op": "c", <i class="conum" data-value="9"></i><b>(9)</b>
@@ -1185,13 +1212,13 @@ However, by using the <a href="../configuration/avro.html" class="page">Avro con
 <p>Connector type and name</p>
 </li>
 <li>
-<p>Database (a.k.a keyspace) and table that contains the new row</p>
+<p>Database (also known as keyspace), table, and shard that contains the new row</p>
 </li>
 <li>
 <p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
-<p>Offset of the operation in the database binlog</p>
+<p>VGTID of the operation</p>
 </li>
 <li>
 <p>Timestamp for when the change was made in the database</p>
@@ -1254,14 +1281,16 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": false,
+            "snapshot": "false",
             "db": "",
+            "sequence": null,
             "keyspace": "commerce",
             "table": "customers",
+            "shard": "-80",
             "vgtid": "[{\"keyspace\":\"commerce\",\"shard\":\"80-\",\"gtid\":\"MariaDB/0-54610504-47\"},{\"keyspace\":\"commerce\",\"shard\":\"-80\",\"gtid\":\"MariaDB/0-1592148-46\"}]"
         },
         "op": "u", <i class="conum" data-value="4"></i><b>(4)</b>
@@ -1310,13 +1339,13 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <p>Connector type and name</p>
 </li>
 <li>
-<p>Database (a.k.a keyspace) and table that contains the new row</p>
+<p>Database (also known as keyspace), table, and shard that contains the new row</p>
 </li>
 <li>
 <p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
-<p>Offset of the operation in the database log</p>
+<p>VGTID of the operation</p>
 </li>
 <li>
 <p>Timestamp for when the change was made in the database</p>
@@ -1375,14 +1404,16 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.3.0.Alpha1",
+            "version": "2.4.0.Alpha2",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904863,
-            "snapshot": false,
+            "snapshot": "false",
             "db": "",
+            "sequence": null,
             "keyspace": "commerce",
             "table": "customers",
+            "shard": "-80",
             "vgtid": "[{\"keyspace\":\"commerce\",\"shard\":\"80-\",\"gtid\":\"MariaDB/0-54610504-47\"},{\"keyspace\":\"commerce\",\"shard\":\"-80\",\"gtid\":\"MariaDB/0-1592148-47\"}]"
         },
         "op": "d", <i class="conum" data-value="4"></i><b>(4)</b>
@@ -1431,13 +1462,13 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <p>Connector type and name</p>
 </li>
 <li>
-<p>Database (a.k.a keyspace) and table that contains the new row</p>
+<p>Database (also known as keyspace), table, and shard that contains the new row</p>
 </li>
 <li>
 <p>If the event was part of a snapshot (always <code>false</code>)</p>
 </li>
 <li>
-<p>Offset of the operation in the database log</p>
+<p>VGTID of the operation</p>
 </li>
 <li>
 <p>Timestamp for when the change was made in the database</p>
@@ -1912,7 +1943,7 @@ GEOMETRYCOLLECTION</code></p>
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.3.0.Alpha1/debezium-connector-vitess-2.3.0.Alpha1-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
+<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.4.0.Alpha2/debezium-connector-vitess-2.4.0.Alpha2-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
 <p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Zookeeper, Kafka and Kafka Connect with the Vitess connector already installed and ready to run. You can also <a href="../operations/openshift.html" class="page">run Debezium on Kubernetes and OpenShift</a>.</p>
@@ -2032,13 +2063,13 @@ GEOMETRYCOLLECTION</code></p>
     "database.port": "15991",
     "database.user": "vitess",
     "database.password": "vitess_password",
+    "topic.prefix": "fullfillment",
     "vitess.keyspace": "commerce",
     "vitess.tablet.type": "MASTER",
     "vitess.vtctld.host": "192.168.99.101",
     "vitess.vtctld.port": "15999",
     "vitess.vtctld.user": "vitess",
     "vitess.vtctld.password": "vitess_password",
-    "database.server.name": "fullfillment",
     "vitess.offset.storage.per.task": true, <i class="conum" data-value="1"></i><b>(1)</b>
     "vitess.offset.storage.task.key.gen": 1, <i class="conum" data-value="2"></i><b>(2)</b>
     "vitess.prev.num.tasks": 1, <i class="conum" data-value="3"></i><b>(3)</b>
@@ -2142,7 +2173,7 @@ GEOMETRYCOLLECTION</code></p>
 <div class="sect3">
 <h4 id="vitess-streaming-metrics"><a class="anchor" href="#vitess-streaming-metrics"></a>Streaming metrics</h4>
 <div class="paragraph">
-<p>The <strong>MBean</strong> is <code>debezium.vitess:type=connector-metrics,context=streaming,server=<em>&lt;vitess.server.name&gt;</em></code>.</p>
+<p>The <strong>MBean</strong> is <code>debezium.vitess:type=connector-metrics,context=streaming,server=<em>&lt;topic.prefix&gt;</em></code>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -2988,6 +3019,28 @@ Default is 4MiB</p>
 For example, if the topic prefix is <code>fulfillment</code>, the default topic name is <code>fulfillment.transaction</code>.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-custom-metric-tags"></a><a href="#vitess-property-custom-metric-tags"><code>custom.metric.tags</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>No default</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The custom metric tags will accept key-value pairs to customize the MBean object name which should be appended the end of regular name, each key would represent a tag for the MBean object name, and the corresponding value would be the value of that tag the key is. For example: <code>k1=v1,k2=v2</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-errors-max-retires"></a><a href="#vitess-property-errors-max-retires"><code>errors.max.retries</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>-1</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of retries on retriable errors (e.g. connection errors) before failing (-1 = no limit, 0 = disabled, &gt; 0 = num of retries).</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 <div id="vitess-pass-through-properties" class="paragraph">
@@ -3119,7 +3172,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e91f483062b16dbf8ed75fbc8679a5295c9fd319">e91f4830</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/6f5732b70771e07c90d7d29875e4c576645b456b">6f5732b7</a></span>)
             
         </div>
     </footer>
