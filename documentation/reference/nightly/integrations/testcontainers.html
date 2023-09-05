@@ -432,7 +432,7 @@ allowing you to focus on the essential logic of your tests.</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.debezium&lt;/groupId&gt;
   &lt;artifactId&gt;debezium-testing-testcontainers&lt;/artifactId&gt;
-  &lt;version&gt;2.4.0.Alpha2&lt;/version&gt;
+  &lt;version&gt;2.4.0.Beta1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
@@ -482,7 +482,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
                 .withNetworkAliases("postgres"); <i class="conum" data-value="3"></i><b>(3)</b>
 
     public static DebeziumContainer debeziumContainer =
-            new DebeziumContainer("quay.io/debezium/connect:2.4.0.Alpha2")
+            new DebeziumContainer("quay.io/debezium/connect:2.4.0.Beta1")
                 .withNetwork(network)
                 .withKafka(kafkaContainer)
                 .dependsOn(kafkaContainer); <i class="conum" data-value="4"></i><b>(4)</b>
@@ -512,7 +512,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set up a container for Kafka Connect with Debezium 2.4.0.Alpha2</td>
+<td>Set up a container for Kafka Connect with Debezium 2.4.0.Beta1</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -648,7 +648,7 @@ private List&lt;ConsumerRecord&lt;String, String&gt;&gt; drain(
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/6f5732b70771e07c90d7d29875e4c576645b456b">6f5732b7</a></span>)
+            <div class="copyright">Copyright &copy; 2023 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/6644eeefb99532ca01402a773d7e52a840c84c2f">6644eeef</a></span>)
             
         </div>
     </footer>
