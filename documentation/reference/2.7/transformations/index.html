@@ -94,13 +94,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mongodb.html">MongoDB</a>
@@ -127,10 +130,19 @@
     <a class="nav-link" href="../connectors/spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
+    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -275,10 +287,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -324,28 +345,48 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.7</button>
         <div class="version-menu">
-                <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version is-current" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version" href="/documentation//reference/transformations/index.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/transformations/index.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/transformations/index.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/transformations/index.html" data-hash="true">3.0</a>
+                        <a class="version is-current" href="/reference/2.7/transformations/index.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/transformations/index.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/transformations/index.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/transformations/index.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/transformations/index.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/transformations/index.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/transformations/index.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/transformations/index.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/transformations/index.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/2.7/documentation/modules/ROOT/pages/transformations/index.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
@@ -464,6 +505,34 @@
 <p>Converts values of records deserialized by Debezium CloudEvents converter to a structure suitable for Debezium JDBC sink connector.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="vitess-use-local-vgtid.html" class="xref page">Vitess Use Local VGTID</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A transformation that reduces the size of VGTIDs that the Vitess connector emits.
+To reduce the amount of data in the event message, the SMT writes only the VGTID for the shard in which a change occurs.
+The VGTIDs for other shards are removed.
+This transformation is designed for use only with the Debezium connector for Vitess.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="vitess-remove-field.html" class="xref page">Vitess Remove Field</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The Vitess-specific transformation to remove fields to reduce the size of the messages written (e.g., redundant VGTID fields).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a href="vitess-filter-transaction-topic-records.html" class="xref page">Vitess Filter Transaction Topic Records</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A transformation that filters out all messages that the connector emits to the transaction topic (when transaction metadata is enabled).
+This transformation is designed for use only with the Debezium connector for Vitess.</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 <div class="paragraph">
@@ -491,7 +560,7 @@
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2a6bb4a90176487cc38ff8cde10232cb213dc6cf">2a6bb4a9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2da43af5db7d86c1ead7a101531db65f6163c676">2da43af5</a></span>)
             
         </div>
     </footer>

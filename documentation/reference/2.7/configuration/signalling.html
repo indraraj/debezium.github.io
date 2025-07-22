@@ -94,13 +94,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mongodb.html">MongoDB</a>
@@ -127,10 +130,19 @@
     <a class="nav-link" href="../connectors/spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
+    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -275,10 +287,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -324,28 +345,48 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.7</button>
         <div class="version-menu">
-                <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version is-current" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version" href="/documentation//reference/configuration/signalling.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/configuration/signalling.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/configuration/signalling.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/configuration/signalling.html" data-hash="true">3.0</a>
+                        <a class="version is-current" href="/reference/2.7/configuration/signalling.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/configuration/signalling.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/configuration/signalling.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/configuration/signalling.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/configuration/signalling.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/configuration/signalling.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/configuration/signalling.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/configuration/signalling.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/configuration/signalling.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/2.7/documentation/modules/ROOT/pages/configuration/signalling.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
@@ -438,6 +479,9 @@ When Debezium detects that a new <a href="#debezium-signaling-example-of-a-loggi
 <p>Db2</p>
 </li>
 <li>
+<p>MariaDB (Technology Preview)</p>
+</li>
+<li>
 <p>MongoDB</p>
 </li>
 <li>
@@ -487,11 +531,19 @@ For example, <code>signal.data.collection = inventory.debezium_signals</code>.<b
 <br>
 The format for the fully-qualified name of the signaling collection depends on the connector.<br>
 The following example shows the naming formats to use for each connector:</p>
-<div class="dlist">
+</li>
+</ol>
+</div>
+<div id="format-for-specifying-fully-qualified-names-for-data-collections" class="dlist">
+<div class="title">Fully qualified table names</div>
 <dl>
 <dt class="hdlist1">Db2</dt>
 <dd>
 <p><code><em>&lt;schemaName&gt;</em>.<em>&lt;tableName&gt;</em></code></p>
+</dd>
+<dt class="hdlist1">MariaDB (Technology Preview)</dt>
+<dd>
+<p><code><em>&lt;databaseName&gt;</em>.<em>&lt;tableName&gt;</em></code></p>
 </dd>
 <dt class="hdlist1">MongoDB</dt>
 <dd>
@@ -516,9 +568,6 @@ The following example shows the naming formats to use for each connector:</p>
 For more information about setting the <code>signal.data.collection</code> property, see the table of configuration properties for your connector.</p>
 </dd>
 </dl>
-</div>
-</li>
-</ol>
 </div>
 <div class="sect2">
 <h3 id="debezium-signaling-data-collection-structure"><a class="anchor" href="#debezium-signaling-data-collection-structure"></a>Structure of a signaling data collection</h3>
@@ -656,6 +705,9 @@ After you enable the signaling channel, a Kafka consumer is created to consume s
 <p><a href="../connectors/db2.html#debezium-db2-connector-kafka-signals-configuration-properties" class="xref page">Db2 connector Kafka signal configuration properties</a></p>
 </li>
 <li>
+<p><a href="../connectors/mariadb.html#debezium-mariadb-connector-kafka-signals-configuration-properties" class="xref page">MariaDB connector Kafka signal configuration properties</a></p>
+</li>
+<li>
 <p><a href="../connectors/mongodb.html#debezium-mongodb-connector-kafka-signals-configuration-properties" class="xref page">MongoDB connector Kafka signal configuration properties</a></p>
 </li>
 <li>
@@ -727,30 +779,8 @@ Currently Debezium supports the <code>incremental</code> and <code>blocking</cod
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array of comma-separated regular expressions that match the fully-qualified names of the data collections to include in the snapshot.<br>
-Specify the names by using the same format as is required for the <code>signal.data.collection</code> configuration option.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="line-through">additional-condition</span></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An optional string that specifies a condition that the connector evaluates to designate a subset of records to include in a snapshot.<br>
-<br></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This property is deprecated and should be replaced by the <code>additional-conditions</code> property.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>An array of comma-separated regular expressions that match the fully qualified names of the data collections to include in the snapshot.<br>
+The <a href="#format-for-specifying-fully-qualified-names-for-data-collections">naming format</a> depends on the database.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -765,13 +795,13 @@ You can set the following properties for each additional condition:</p>
 <dl>
 <dt class="hdlist1"><code>data-collection</code></dt>
 <dd>
-<p>The fully-qualified name of the {data-collection} that the filter applies to.
-You can apply different filters to each {data-collection}.</p>
+<p>The fully-qualified name of the data collection that the filter applies to.
+You can apply different filters to each data collection.</p>
 </dd>
 <dt class="hdlist1"><code>filter</code></dt>
 <dd>
 <p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
-The snapshot process evaluates records in the {data-collection} against the <code>filter</code> value and captures only records that contain matching values.<br>
+The snapshot process evaluates records in the data collection against the <code>filter</code> value and captures only records that contain matching values.<br>
 <br>
 The specific values that you assign to the <code>filter</code> property depend on the type of ad hoc snapshot:</p>
 <div class="ulist">
@@ -867,29 +897,7 @@ Currently Debezium supports the <code>incremental</code> and <code>blocking</cod
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array of comma-separated regular expressions that match the fully-qualified names of the tables to include in the snapshot.<br>
-Specify the names by using the same format as is required for the <a href="#debezium-property-signal-data-collection">signal.data.collection</a> configuration option.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="line-through">additional-condition</span></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An optional string that specifies a condition that the connector evaluates to designate a subset of records to include in a snapshot.<br></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This property is deprecated and should be replaced by the <code>additional-conditions</code> property.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>An array of comma-separated regular expressions that match the <a href="#format-for-specifying-fully-qualified-names-for-data-collections">fully-qualified names of the tables</a> to include in the snapshot.<br></p>
 </div></div></td>
 </tr>
 <tr>
@@ -904,13 +912,13 @@ You can set the following properties for each additional condition:</p>
 <dl>
 <dt class="hdlist1"><code>data-collection</code></dt>
 <dd>
-<p>The fully-qualified name of the {data-collection} that the filter applies to.
-You can apply different filters to each {data-collection}.</p>
+<p>The fully-qualified name of the data collection that the filter applies to.
+You can apply different filters to each data collection.</p>
 </dd>
 <dt class="hdlist1"><code>filter</code></dt>
 <dd>
 <p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
-The snapshot process evaluates records in the {data-collection} against the <code>filter</code> value and captures only records that contain matching values.<br>
+The snapshot process evaluates records in the data collection against the <code>filter</code> value and captures only records that contain matching values.<br>
 <br>
 The specific values that you assign to the <code>filter</code> property depend on the type of ad hoc snapshot:</p>
 <div class="ulist">
@@ -1176,6 +1184,9 @@ You can initiate ad hoc snapshots at any time.</p>
 <p>Db2</p>
 </li>
 <li>
+<p>MariaDB (Technology Preview)</p>
+</li>
+<li>
 <p>MongoDB</p>
 </li>
 <li>
@@ -1240,7 +1251,7 @@ You can initiate ad hoc snapshots at any time.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">test_connector</p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"type":"execute-snapshot","data": {"data-collections": ["public.MyFirstTable"], "type": "INCREMENTAL", "additional-conditions":[{"data-collection": "public.MyFirstTable", "filter":"color='blue' AND brand='MyBrand'"]}}</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"type":"execute-snapshot","data": {"data-collections": ["public.MyFirstTable"], "type": "INCREMENTAL", "additional-conditions":[{"data-collection": "public.MyFirstTable", "filter":"color='blue' AND brand='MyBrand'"}]}}</code></pre>
 </div>
 </div></div></td>
 </tr>
@@ -1286,6 +1297,9 @@ After processing the signal, the connector will stop the current in-progress sna
 <ul>
 <li>
 <p>Db2</p>
+</li>
+<li>
+<p>MariaDB (Technology Preview)</p>
 </li>
 <li>
 <p>MongoDB</p>
@@ -1383,6 +1397,9 @@ Therefor it&#8217;s not possible to specify the data collection as the snapshot 
 <p>Db2</p>
 </li>
 <li>
+<p>MariaDB (Technology Preview)</p>
+</li>
+<li>
 <p>MongoDB</p>
 </li>
 <li>
@@ -1440,6 +1457,9 @@ After processing the signal, the connector will resume previously paused snapsho
 <ul>
 <li>
 <p>Db2</p>
+</li>
+<li>
+<p>MariaDB (Technology Preview)</p>
 </li>
 <li>
 <p>MongoDB</p>
@@ -1530,6 +1550,9 @@ You can initiate ad hoc blocking snapshots at any time.</p>
 <ul>
 <li>
 <p>Db2</p>
+</li>
+<li>
+<p>MariaDB (Technology Preview)</p>
 </li>
 <li>
 <p>MongoDB</p>
@@ -1749,7 +1772,7 @@ To use a custom action with multiple connectors, you must place a copy of the cu
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2a6bb4a90176487cc38ff8cde10232cb213dc6cf">2a6bb4a9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2da43af5db7d86c1ead7a101531db65f6163c676">2da43af5</a></span>)
             
         </div>
     </footer>

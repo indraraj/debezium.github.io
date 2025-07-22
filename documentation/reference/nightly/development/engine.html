@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mongodb.html">MongoDB</a>
@@ -127,10 +136,19 @@
     <a class="nav-link" href="../connectors/spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
+    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="../integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/development/engine.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/development/engine.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/development/engine.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/development/engine.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/development/engine.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/development/engine.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/development/engine.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/development/engine.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/development/engine.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/development/engine.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/development/engine.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/development/engine.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/development/engine.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/development/engine.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -355,7 +426,11 @@
 <div id="toc" class="toc">
 <div id="toctitle" class="title">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_dependencies">Dependencies</a></li>
+<li><a href="#_dependencies">Dependencies</a>
+<ul class="sectlevel2">
+<li><a href="#_packaging_your_project">Packaging your project</a></li>
+</ul>
+</li>
 <li><a href="#_in_the_code">In the Code</a></li>
 <li><a href="#engine-output-message-formats">Output Message Formats</a></li>
 <li><a href="#engine-message-transformations">Message transformations</a></li>
@@ -387,8 +462,11 @@ They still want the same data change events, but prefer to have the connectors s
 <div class="paragraph">
 <p>Beginning with the 2.6.0 release, Debezium provides two implementations of the <code>DebeziumEngine</code> interface.
 The older <code>EmbeddedEngine</code> implementation runs a single connector that uses only one task.
-The connector emits all records sequentially.
-This the default implementation.</p>
+The connector emits all records sequentially.</p>
+</div>
+<div class="paragraph">
+<p><code>EmbeddedEngine</code> is the default implementation in Debezium release 3.1.0.Final and older.
+Starting Debezium release 3.2.0.Alpha1, the default implementation is <code>AsyncEmbeddedEngine</code> and <code>EmbeddedEngine</code> implementation is not available anymore.</p>
 </div>
 <div class="paragraph">
 <p>Beginning with the 2.6.0 release, a new <code>AsyncEmbeddedEngine</code> implementation is available.
@@ -456,6 +534,38 @@ For example, the following can be added to your application&#8217;s Maven POM fi
 <div class="paragraph">
 <p>The remainder of this document describes embedding the MySQL connector in your application.
 Other connectors are used in a similar manner, except with connector-specific configuration, topics, and events.</p>
+</div>
+<div class="sect2">
+<h3 id="_packaging_your_project"><a class="anchor" href="#_packaging_your_project"></a>Packaging your project</h3>
+<div class="paragraph">
+<p>Debezium uses the SPI via the ServiceLoader to load the implementation.
+The implementation can be based on the connector type, or it can be a custom implementation.</p>
+</div>
+<div class="paragraph">
+<p>Some interfaces have multiple implementations.
+For example, <code>io.debezium.snapshot.spi.SnapshotLock</code> has a default implementation in the core, and specific implementations for each connector.
+To ensure that Debezium can locate the required implementation, you must explicitly configure your build tools to merge the <code>META-INF/services files</code>.</p>
+</div>
+<div class="paragraph">
+<p>For example, if you are using the <a href="https://maven.apache.org/plugins/maven-shade-plugin">Maven shade plugin</a>,
+add the <a href="https://maven.apache.org/plugins/maven-shade-plugin/examples/resource-transformers.html#ServicesResourceTransformer"><code>ServicesResourceTransformer</code></a> transformer, as shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">...
+&lt;configuration&gt;
+ &lt;transformers&gt;
+    ...
+    &lt;transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" /&gt;
+    ...
+ &lt;/transformers&gt;
+...
+&lt;/configuration&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, if you use the <a href="https://maven.apache.org/plugins/maven-assembly-plugin/index.html">Maven Assembly plug-in</a>, you can use the <a href="https://maven.apache.org/plugins/maven-assembly-plugin/examples/single/using-container-descriptor-handlers.html">metaInf-services container descriptor handlers</a>.</p>
+</div>
 </div>
 </div>
 </div>
@@ -552,14 +662,14 @@ These fields can be tailored as needed for your application.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">    /* begin connector properties */
-    props.setProperty("database.hostname", "localhost")
-    props.setProperty("database.port", "3306")
-    props.setProperty("database.user", "mysqluser")
-    props.setProperty("database.password", "mysqlpw")
-    props.setProperty("database.server.id", "85744")
-    props.setProperty("topic.prefix", "my-app-connector")
-    props.setProperty("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory")
-    props.setProperty("schema.history.internal.file.filename", "/path/to/storage/schemahistory.dat")</code></pre>
+    props.setProperty("database.hostname", "localhost");
+    props.setProperty("database.port", "3306");
+    props.setProperty("database.user", "mysqluser");
+    props.setProperty("database.password", "mysqlpw");
+    props.setProperty("database.server.id", "85744");
+    props.setProperty("topic.prefix", "my-app-connector");
+    props.setProperty("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory");
+    props.setProperty("schema.history.internal.file.filename", "/path/to/storage/schemahistory.dat");</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -687,29 +797,8 @@ Although the <code>DebeziumEngine</code> will indeed terminate when its thread i
 <p>As mentioned earlier, there are two implementations of the <code>DebeziumEngine</code> interface.
 The two implementations use the same API, and the preceding code sample is valid for both versions.
 The only exception is the creation of the <code>DebeziumEngine</code> instance.
-As was also mentioned in the introduction, by default, the <code>EmbeddedEngine</code> implementation is used.
-Therefore, the method <code>DebeziumEngine.create(Json.class)</code> results internally in the use of the <code>EmbeddedEngine</code> instance.
-If you want to use the new <code>AsyncEmbeddedEngine</code> instance instead, use the following method:
-<code>DebeziumEngine#create(KeyValueHeaderChangeEventFormat&lt;K, V, H&gt; format, String builderFactory)</code>
-For example, to create an embedded engine that uses the <code>AsyncEmbeddedEngine</code>, and uses JSON as its key, value, and header format, you would use following code:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">try (DebeziumEngine&lt;ChangeEvent&lt;String, String&gt;&gt; engine = DebeziumEngine
-        .create(KeyValueHeaderChangeEventFormat.of(Json.class, Json.class, Json.class),
-                "io.debezium.embedded.async.ConvertingAsyncEngineBuilderFactory")
-        .using(props)
-        .notifying(record -&gt; {
-            System.out.println(record);
-        }).build()
-    ) {
-    // Also run the engine asynchronously ...
-    ExecutorService executor = Executors.newSingleThreadExecutor();
-    executor.execute(engine);
-
-    // Do something else or wait for a signal or an event
-}</code></pre>
-</div>
+As was also mentioned in the introduction, by default, the <code>AsyncEmbeddedEngine</code> implementation is used.
+Therefore, the method <code>DebeziumEngine.create(Json.class)</code> results internally in the use of the <code>AsyncEmbeddedEngine</code> instance.</p>
 </div>
 </div>
 </div>
@@ -935,7 +1024,7 @@ DebeziumEngine&lt;RecordChangeEvent&lt;SourceRecord&gt;&gt; engine = DebeziumEng
 // Create the engine with this configuration ...
 DebeziumEngine&lt;ChangeEvent&lt;String, String&gt;&gt; engine = DebeziumEngine.create(Json.class)
         .using(props)
-        .notifying(new MyChangeConsumer())
+        .notifying(new JsonChangeConsumer())
         .build();</code></pre>
 </div>
 </div>
@@ -1138,12 +1227,14 @@ The default is a periodic commity policy based upon time intervals.</p>
 <p><code>record.processing.threads</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The number of available cores.</p>
+<p>Threads allocated on demand, based on the workload and the number of available CPU cores.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The number of threads to use for processing CDC records.
-If you want to use all available cores on given machine, you can use the <code>AVAILABLE_CORES</code> placeholder.
-If the value is not specified, threads are created as needed, using Java <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executors.html#newCachedThreadPool()">cached thread pool</a>.</p>
+<p>The number of threads that are available to process change event records.
+If no value is specified (the default), the engine uses the Java <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html">ThreadPoolExecutor</a> to dynamically adjust the number of threads, based on the current workload.
+Maximum number of threads is number of CPU cores on given machine.
+If a value is specified, the engine uses the Java <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executors.html#newFixedThreadPool(int)">fixed thread pool</a> method to create a thread pool with the specified number of threads.
+To use all available cores on given machine, set the placeholder value, <code>AVAILABLE_CORES</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1338,7 +1429,7 @@ If applications need more rigorous exactly-once behavior, then they should use t
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

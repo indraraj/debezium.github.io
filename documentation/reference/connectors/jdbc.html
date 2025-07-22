@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -126,11 +135,20 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
-  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="../integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +366,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Sink Connectors</li>
     <li><a href="jdbc.html">JDBC</a></li>
   </ul>
 </nav>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version is-missing" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version is-missing" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version is-missing" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/connectors/jdbc.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/jdbc.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/jdbc.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/jdbc.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/connectors/jdbc.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/jdbc.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/jdbc.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/jdbc.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/jdbc.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/jdbc.html" data-hash="true">2.2</a>
+                    <a class="version is-missing" href="#">2.1</a>
+                    <a class="version is-missing" href="#">2.0</a>
+                    <a class="version is-missing" href="#">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/connectors/jdbc.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -371,12 +442,25 @@
 </ul>
 </li>
 <li><a href="#jdbc-field-types">Data type mappings</a></li>
+<li><a href="#jdbc-transformations">Transformations</a>
+<ul class="sectlevel2">
+<li><a href="#_naming_transformations">Naming transformations</a></li>
+</ul>
+</li>
 <li><a href="#jdbc-deployment">Deployment</a>
 <ul class="sectlevel2">
 <li><a href="#jdbc-connector-configuration">Debezium JDBC connector configuration</a></li>
 </ul>
 </li>
-<li><a href="#jdbc-connector-properties">Connector properties</a></li>
+<li><a href="#jdbc-connector-properties">Connector properties</a>
+<ul class="sectlevel2">
+<li><a href="#jdbc-connector-properties-kafka-consumer">JDBC connector Kafka consumer properties</a></li>
+<li><a href="#jdbc-connector-properties-connection">JDBC connector connection properties</a></li>
+<li><a href="#jdbc-connector-properties-runtime">JDBC connector runtime properties</a></li>
+<li><a href="#jdbc-connector-properties-extendable">JDBC connector extendable properties</a></li>
+<li><a href="#jdbc-connector-hibernate-passthrough-properties">JDBC connector <code>hibernate.*</code> passthrough properties</a></li>
+</ul>
+</li>
 <li><a href="#jdbc-faq">Frequently asked questions</a></li>
 </ul>
 </div>
@@ -408,7 +492,7 @@ The connector supports idempotent write operations by using upsert semantics and
 <p><a href="#jdbc-consume-complex-debezium-events">Consuming complex Debezium change events</a></p>
 </li>
 <li>
-<p><a href="#jdbc-at-least-once-delivery">At-least-once delivery</a></p>
+<p><a href="#jdbc-at-least-once-delivery">JDBC at-least-once delivery</a></p>
 </li>
 <li>
 <p><a href="#jdbc-multiple-tasks">Multiple tasks</a></p>
@@ -429,10 +513,10 @@ The connector supports idempotent write operations by using upsert semantics and
 <p><a href="#jdbc-schema-evolution">Schema evolution</a></p>
 </li>
 <li>
-<p><a href="#jdbc-quoting-case-sensitivity">Quoting and case sensitivity</a></p>
+<p><a href="#jdbc-quoting-case-sensitivity">JDBC quoting and case-sensitivity</a></p>
 </li>
 <li>
-<p><a href="#jdbc-connection-idle-timeouts">Connection Idle Timeouts</a></p>
+<p><a href="#jdbc-connection-idle-timeouts">Connection idle timeouts</a></p>
 </li>
 </ul>
 </div>
@@ -591,6 +675,21 @@ To avoid this problem, apply the following settings in your environment:</p>
 </tr>
 </table>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If a column maps to a data type that isn&#8217;t permitted as a primary key for your target database, an explicit list of columns will be necessary in <code>primary.key.fields</code> excluding such columns.
+Consult your specific database vendor&#8217;s documentation for what data types are and are not permissible.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="jdbc-delete-mode"><a class="anchor" href="#jdbc-delete-mode"></a>Delete mode</h3>
@@ -704,7 +803,7 @@ To adjust nullability settings or default values, you can introduce a custom sin
 </div>
 <div class="paragraph">
 <p>A field&#8217;s data type is resolved based on a predefined set of mappings.
-For more information, see <a href="#jdbc-field-types">Data type mappings</a>.</p>
+For more information, see <a href="#jdbc-field-types">JDBC field types</a>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -815,12 +914,12 @@ Logical data types are more often complex types, including values such as <code>
 <div class="listingblock">
 <div class="title">Logical field schema</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">[
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
   "schema": {
     "type": "INT64",
     "name": "org.apache.kafka.connect.data.Date"
   }
-]</code></pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -846,6 +945,9 @@ The actual final column type varies with for each database type.</p>
 </li>
 <li>
 <p><a href="#jdbc-debezium-logical-mappings-dialect-specific">Mappings between Debezium dialect-specific Logical Types and Column Data Types</a></p>
+</li>
+<li>
+<p><a href="#jdbc-debezium-vector-logical-mappings">Mapings between Debezium Vector Types and Column Data Types</a></p>
 </li>
 </ol>
 </div>
@@ -1073,6 +1175,67 @@ The actual final column type varies with for each database type.</p>
 </tr>
 </tbody>
 </table>
+<table id="jdbc-debezium-vector-logical-mappings" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Mapings between Debezium Vector Types and Column Data Types</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 16.667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Logical Type</th>
+<th class="tableblock halign-left valign-top">Db2</th>
+<th class="tableblock halign-left valign-top">MySQL</th>
+<th class="tableblock halign-left valign-top">PostgreSQL</th>
+<th class="tableblock halign-left valign-top">Oracle</th>
+<th class="tableblock halign-left valign-top">SQL Server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.debezium.data.DoubleVector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">'vector'</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vector</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.debezium.data.FloatVector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">'vector'</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>halfvec</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.debezium.data.SparseVector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sparsevec</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unsupported</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If there is not a direct mapping between one of the vector logical types and your target relational database&#8217;s column types, you can use the <code>VectorToJsonConverter</code> to convert the vector logical type to JSON so that it can be written to any target relational database.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>In addition to the primitive and logical mappings above, if the source of the change events is a Debezium source connector, the resolution of the column type, along with its length, precision, and scale, can be further influenced by enabling column or data type propagation.
 To enforce propagation, one of the following properties must be set in the source connector  configuration:</p>
@@ -1132,6 +1295,196 @@ If you find a mapping could be improved, please let us know.</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="jdbc-transformations"><a class="anchor" href="#jdbc-transformations"></a>Transformations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Debezium JDBC connector provides several transformations that can be added to the connector configuration to modify the consumed events in-flight before they&#8217;re processed by the connector.</p>
+</div>
+<div class="sect2">
+<h3 id="_naming_transformations"><a class="anchor" href="#_naming_transformations"></a>Naming transformations</h3>
+<div class="paragraph">
+<p>The Debezium provides two naming transformations that are specifically designed to change either the topic or field names within the event to the configured naming style.
+The naming transformations can be configured with one of the following naming styles:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>camel_case</code></dt>
+<dd>
+<p>Removes all <code>.</code> and <code>_</code> characters, and makes the immediate next character uppercase.
+For example, the value <code>inventory.customers</code> would be changed to <code>inventoryCustomers</code>.</p>
+</dd>
+<dt class="hdlist1"><code>snake_case</code></dt>
+<dd>
+<p>Removes all <code>.</code> and replaces them with an <code><em></code> character. Additionally, any numeric sequences will be prefixed with an <code></em></code> while any capitalized character will be converted to lower case and prepended with an <code>_</code> character, too.
+For example, the value <code>public.inventory</code> would become <code>public_inventory</code>, while <code>TopicWith123Numbers</code> would become <code>topic_with_123_numbers</code>.</p>
+</dd>
+<dt class="hdlist1"><code>upper_case</code></dt>
+<dd>
+<p>Converts to upper case.
+For example, the value <code>public.inventory</code> would become <code>PUBLIC.INVENTORY</code>.</p>
+</dd>
+<dt class="hdlist1"><code>lower_case</code></dt>
+<dd>
+<p>Converts to lower case.
+For example, the value <code>PUBLIC.INVENTORY</code> would become <code>public.inventory</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>In addition, these transformations optionally provide a way to apply a prefix or a suffix to the transformed name, too.</p>
+</div>
+<div class="sect3">
+<h4 id="_collectionnametransformation"><a class="anchor" href="#_collectionnametransformation"></a>CollectionNameTransformation</h4>
+<div class="paragraph">
+<p>The <code>CollectionNameTransformation</code> aims to provide a way to change the case of the topic names before the event is consumed.</p>
+</div>
+<div class="paragraph">
+<p>This transformation has the following configuration properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 25%;">
+<col style="width: 45%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-collection-naming-style"></a><a href="#jdbc-property-collection-naming-style"><code>collection.naming.style</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>none</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the naming style to apply to the event&#8217;s topic.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-collection-naming-prefix"></a><a href="#jdbc-property-collection-naming-prefix"><code>collection.naming.prefix</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>empty</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the prefix that is applied to the topic name after transformation.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-collection-naming-suffix"></a><a href="#jdbc-property-collection-naming-suffix"><code>collection.naming.suffix</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>empty</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the suffix that is applied to the topic name after transformation.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following configuration example illustrates using the <code>CollectionNameTransformation</code> SMT to set the topic name to uppercase and prefixes the topic name with <code>ADT_</code>.
+For example, given a topic called <code>public.inventory</code>, the topic name would become <code>ADT_PUBLIC.INVENTORY</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example CollectionNameTransformation configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "transforms": "topic-uppercase",
+  "transforms.topic-uppercase.type": "io.debezium.connector.jdbc.transforms.CollectionNameTransformation",
+  "transforms.topic-uppercase.collection.naming.style": "upper_case",
+  "transforms.topic-uppercase.collection.naming.prefix": "ADT_"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_fieldnametransformation"><a class="anchor" href="#_fieldnametransformation"></a>FieldNameTransformation</h4>
+<div class="paragraph">
+<p>The <code>FieldNameTransformation</code> aims to provide a way to change the case of the field names before the event is consumed.
+If the event is a Debezium source connector event, only the fields within the <code>before</code> and <code>after</code> sections are changed.
+When the event is not a Debezium source connector event, all top-level field names will be changed.</p>
+</div>
+<div class="paragraph">
+<p>This transformation has the following configuration properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 30%;">
+<col style="width: 25%;">
+<col style="width: 45%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-column-naming-style"></a><a href="#jdbc-property-column-naming-style"><code>column.naming.style</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>none</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the naming style to apply to the field name.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-column-naming-prefix"></a><a href="#jdbc-property-column-naming-prefix"><code>column.naming.prefix</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>empty</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the prefix that is applied to the field name after transformation.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-column-naming-suffix"></a><a href="#jdbc-property-column-naming-suffix"><code>column.naming.suffix</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>empty</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the suffix that is applied to the field name after transformation.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The following configuration example illustrates using the <code>FieldNameTransformation</code> SMT to set the field names name to lowercase and prefixes them with <code>adt_</code>.
+For example, should the event contain the field <code>ID</code>, the field will become <code>adt_id</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example FieldNameTransformation configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "transforms": "topic-lowercase",
+  "transforms.topic-lowercase.type": "io.debezium.connector.jdbc.transforms.FieldNameTransformation",
+  "transforms.topic-lowercase.collection.naming.style": "lower_case",
+  "transforms.topic-lowercase.collection.naming.prefix": "adt_"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="jdbc-deployment"><a class="anchor" href="#jdbc-deployment"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -1144,7 +1497,10 @@ If you find a mapping could be improved, please let us know.</p>
 <p><a href="https://zookeeper.apache.org/">Apache ZooKeeper</a>, <a href="http://kafka.apache.org/">Apache Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
 </li>
 <li>
-<p>A destination database is installed and configured to accept JDBC connections.</p>
+<p>You have a Kafka topic from which the connector can read change event records.</p>
+</li>
+<li>
+<p>A destination database is installed and is configured to accept JDBC connections.</p>
 </li>
 </ul>
 </div>
@@ -1152,18 +1508,18 @@ If you find a mapping could be improved, please let us know.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/2.7.0.Beta2/debezium-connector-jdbc-2.7.0.Beta2-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.2.0.Final/debezium-connector-jdbc-3.2.0.Final-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
 </li>
 <li>
 <p>Optionally download the JDBC driver from Maven Central and extract the downloaded driver file to the directory that contains the JDBC sink connector JAR file.</p>
-<div class="admonitionblock note">
+<div class="admonitionblock important">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
 <div class="paragraph">
@@ -1176,10 +1532,7 @@ You must download the drivers and install them manually.</p>
 </div>
 </li>
 <li>
-<p>Add the driver JAR files to the path where the JDBC sink connector has been installed.</p>
-</li>
-<li>
-<p>Make sure that the path where you install the JDBC sink connector is part of the <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect <code>plugin.path</code></a>.</p>
+<p>Add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. Make sure that the path where you install the JDBC sink connector is part of the <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect <code>plugin.path</code></a>.</p>
 </li>
 <li>
 <p>Restart the Kafka Connect process to pick up the new JAR files.</p>
@@ -1207,7 +1560,7 @@ The following example shows a JSON request for registering an instance of the De
         "delete.enabled": "true",  <i class="conum" data-value="8"></i><b>(8)</b>
         "primary.key.mode": "record_key",  <i class="conum" data-value="9"></i><b>(9)</b>
         "schema.evolution": "basic",  <i class="conum" data-value="10"></i><b>(10)</b>
-        "database.time_zone": "UTC",  <i class="conum" data-value="11"></i><b>(11)</b>
+        "use.time.zone": "UTC",  <i class="conum" data-value="11"></i><b>(11)</b>
         "topics": "orders" <i class="conum" data-value="12"></i><b>(12)</b>
     }
 }</code></pre>
@@ -1315,7 +1668,7 @@ Information about the properties is organized as follows:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#jdbc-connector-properties-generic">JCBC connector generic properties</a></p>
+<p><a href="#jdbc-connector-properties-kafka-consumer">JCBC connector Kafka consumer properties</a></p>
 </li>
 <li>
 <p><a href="#jdbc-connector-properties-connection">JDBC connector connection properties</a></p>
@@ -1326,10 +1679,14 @@ Information about the properties is organized as follows:</p>
 <li>
 <p><a href="#jdbc-connector-properties-extendable">JDBC connector extendable properties</a></p>
 </li>
+<li>
+<p><a href="#jdbc-connector-hibernate-passthrough-properties">JDBC connector <code>hibernate.*</code> passthrough properties</a></p>
+</li>
 </ul>
 </div>
-<table id="jdbc-connector-properties-generic" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Generic properties</caption>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-kafka-consumer"><a class="anchor" href="#jdbc-connector-properties-kafka-consumer"></a>JDBC connector Kafka consumer properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1406,8 +1763,10 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 </tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-connection" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. JDBC connector connection properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-connection"><a class="anchor" href="#jdbc-connector-properties-connection"></a>JDBC connector connection properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1509,10 +1868,44 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 <p>Specifies the number of seconds that an unused connection is kept before it is discarded.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-connection-restart-on-errors"></a><a href="#jdbc-property-connection-restart-on-errors"><code>connection.restart.on.errors</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether the connector retries after a transient JDBC connection error.</p>
+</div>
+<div class="paragraph">
+<p>When enabled (<code>true</code>), the connector treats connection issues (such as socket closures or timeouts) as retriable, allowing it to retry processing instead of failing the task. This reduces downtime and improves resilience against temporary disruptions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Setting this option to <code>true</code> can reduce downtime.
+However, in master-replica environments with asynchronous replication, it may lead to data loss if retries occur before all changes are fully replicated.</p>
+</div>
+<div class="paragraph">
+<p>Use with caution where strong data consistency is required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-runtime" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. JDBC connector runtime properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-runtime"><a class="anchor" href="#jdbc-connector-properties-runtime"></a>JDBC connector runtime properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1528,7 +1921,7 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="jdbc-property-database-time-zone"></a><a href="#jdbc-property-database-time-zone"><code>database.time_zone</code></a></p>
+<p><a id="jdbc-property-use-time-zone"></a><a href="#jdbc-property-use-time-zone"><code>use.time.zone</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>UTC</code></p>
@@ -1678,7 +2071,7 @@ You can set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fi
 When <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> and the event&#8217;s key is a primitive type, it is expected that this property specifies the column name to be used for the key.<br>
 <br>
 When the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, it is expected that this property specifies a comma-separated list of field names from either the key or value.
-If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, and this property is not specifies, the connector derives the primary key from all fields of either the record key or record value, depending on the specified mode.</p>
+If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, and this property is not specified, the connector derives the primary key from all fields of either the record key or record value, depending on the specified mode.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1690,7 +2083,7 @@ If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies whether generated SQL statements use quotation marks to delimit table and column names.
-See the <a href="#jdbc-quoting-case-sensitivity">Quoting and case sensitivity</a> section for more details.</p>
+See the <a href="#jdbc-quoting-case-sensitivity">JDBC quoting case-sensitivity</a> section for more details.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1721,7 +2114,7 @@ The connector adds missing columns to the table by comparing the incoming event&
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="jdbc-property-table-name-format"></a><a href="#jdbc-property-table-name-format"><code>table.name.format</code></a></p>
+<p><a id="jdbc-property-collection-name-format"></a><a href="#jdbc-property-collection-name-format"><code>collection.name.format</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>${topic}</code></p>
@@ -1848,10 +2241,50 @@ Fully-qualified names for fields are of the form <code><em>fieldName</em></code>
 If you include this property in the configuration, do not set the <code>field.include.list</code> property.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-flush-max-retries"></a><a href="#jdbc-property-flush-max-retries"><code>flush.max.retries</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>5</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of retries that the connector performs after an attempt to flush changes to the target database results in certain database errors.
+If the number of retries exceeds the retry value, the sink connector enters a <em>FAILED</em> state.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-flush-retry-delay-ms"></a><a href="#jdbc-property-flush-retry-delay-ms"><code>flush.retry.delay.ms</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>1000</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the number of milliseconds that the connector waits to retry a flush operation that failed.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When you set both the <code>flush.retry.delay.ms</code> and <a href="#jdbc-property-flush-max-retries"><code>flush.max.retries</code></a> properties, it can affect the behavior of the Kafka <a href="https://kafka.apache.org/documentation/#consumerconfigs_max.poll.interval.ms">max.poll.interval.ms</a> property.
+To prevent the connector from rebalancing, set the total retry time (flush.retry.delay.ms * flush.max.retries) to a value that is less than the value of <code>max.poll.interval.ms</code> (default is 5 minutes).</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+</tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-extendable" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. JDBC connector extendable properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-extendable"><a class="anchor" href="#jdbc-connector-properties-extendable"></a>JDBC connector extendable properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1870,39 +2303,52 @@ If you include this property in the configuration, do not set the <code>field.in
 <p><a id="jdbc-property-column-naming-strategy"></a><a href="#jdbc-property-column-naming-strategy"><code>column.naming.strategy</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>i.d.c.j.n.DefaultColumnNamingStrategy</code></p>
+<p><code>io.debezium.connector.jdbc.naming.DefaultColumnNamingStrategy</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the fully-qualified class name of a <code>ColumnNamingStrategy</code> implementation that the connector uses to resolve column names from event field names.<br>
+<p>Specifies the fully-qualified class name of a <code>ColumnNamingStrategy</code> implementation that the connector uses to resolve column names from incoming event field names.<br>
 <br>
-By default, the connector uses the field name as the column name.</p>
+The default behavior is to use the field name as the column name without any transformation.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="jdbc-property-table-naming-strategy"></a><a href="#jdbc-property-table-naming-strategy"><code>table.naming.strategy</code></a></p>
+<p><a id="jdbc-property-collection-naming-strategy"></a><a href="#jdbc-property-collection-naming-strategy"><code>collection.naming.strategy</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>i.d.c.j.n.DefaultTableNamingStrategy</code></p>
+<p><code>io.debezium.connector.jdbc.nnaming.DefaultCollectionNamingStrategy</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the fully-qualified class name of a <code>TableNamingStrategy</code> implementation that the connector uses to resolve table names from incoming event topic names.<br>
+<p>Specifies the fully-qualified class name of a <code>CollectionNamingStrategy</code> implementation that the connector uses to resolve table names from incoming event topic names.<br>
 <br>
 The default behavior is to:<br></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Replace the <code>${topic}</code> placeholder in the <a href="#jdbc-property-table-name-format"><code>table.name.format</code></a> configuration property with the event&#8217;s topic.</p>
+<p>Sanitize the topic name by replacing dots (<code>.</code>) with underscores (<code>_</code>).</p>
 </li>
 <li>
-<p>Sanitize the table name by replacing dots (<code>.</code>) with underscores (<code>_</code>).</p>
+<p>Replace the <code>${topic}</code> placeholder in the <a href="#jdbc-property-collection-name-format"><code>collection.name.format</code></a> configuration property with the event&#8217;s topic.</p>
 </li>
 </ul>
 </div></div></td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-hibernate-passthrough-properties"><a class="anchor" href="#jdbc-connector-hibernate-passthrough-properties"></a>JDBC connector <code>hibernate.*</code> passthrough properties</h3>
+<div class="paragraph">
+<p>Kafka Connect supports passthrough configuration, enabling you to modify the behavior of an underlying system by passing certain properties directly from the connector configuration.
+By default, some Hibernate properties are exposed via the JDBC connector <a href="#jdbc-connector-properties-connection">connection properties</a> (for example, <code>connection.url</code>, <code>connection.username</code>, and <code>connection.pool.*_size</code>),
+and through the connector&#8217;s <a href="#jdbc-connector-properties-runtime">runtime properties</a> (for example, <code>use.time.zone</code>, <code>quote.identifiers</code>).</p>
+</div>
+<div class="paragraph">
+<p>If you want to customize other Hibernate behavior, you can take advantage of the passthrough mechanism by adding properties that use the <code>hibernate.*</code> namespace to the connector configuration.
+For example, to assist Hibernate in resolving the type and version of the target database, you can add the <code>hibernate.dialect</code> property and set it to the fully qualified class name of the database, for example, <code>org.hibernate.dialect.MariaDBDialect</code>.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1932,8 +2378,8 @@ If you want to apply a different data type mapping, define the table manually to
 </dd>
 <dt class="hdlist1"><strong>How do you specify a prefix or a suffix to the table name without changing the Kafka topic name?</strong></dt>
 <dd>
-<p>In order to add a prefix or a suffix to the destination table name, adjust the <a href="#jdbc-property-table-name-format">table.name.format</a> connector configuration property to apply the prefix or suffix that you want.
-For example, to prefix all table names with <code>jdbc_</code>, specify the <code>table.name.format</code> configuration property with a value of <code>jdbc_${topic}</code>.
+<p>In order to add a prefix or a suffix to the destination table name, adjust the <a href="#jdbc-property-collection-name-format">collection.name.format</a> connector configuration property to apply the prefix or suffix that you want.
+For example, to prefix all table names with <code>jdbc_</code>, specify the <code>collection.name.format</code> configuration property with a value of <code>jdbc_${topic}</code>.
 If the connector is subscribed to a topic called <code>orders</code>, the resulting table is created as <code>jdbc_orders</code>.</p>
 </dd>
 <dt class="hdlist1"><strong>Why are some columns automatically quoted, even though identifier quoting is not enabled?</strong></dt>
@@ -1955,7 +2401,7 @@ Quoting behavior is dialect-specific, and varies among different types of databa
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

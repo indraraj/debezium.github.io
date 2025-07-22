@@ -3,7 +3,7 @@
 <head>
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Connectors :: Debezium Documentation</title>
+    <title>Source Connectors :: Debezium Documentation</title>
     <link rel="canonical" href="https://debezium.io/documentation/reference/stable/connectors/index.html">
     <meta name="generator" content="Antora 3.1.7">
 <link rel="stylesheet" href="../../../debezium-antora/css/site.css">
@@ -94,13 +94,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -127,10 +130,19 @@
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
+    <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="informix.html">Informix</a>
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -275,10 +287,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +336,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Source Connectors</li>
     <li><a href="index.html">Overview</a></li>
   </ul>
 </nav>
@@ -324,34 +345,55 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.7</button>
         <div class="version-menu">
-                <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version is-current" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version" href="/documentation//reference/connectors/index.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/index.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/index.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/index.html" data-hash="true">3.0</a>
+                        <a class="version is-current" href="/reference/2.7/connectors/index.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/index.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/index.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/index.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/index.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/index.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/connectors/index.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/connectors/index.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/connectors/index.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/2.7/documentation/modules/ROOT/pages/connectors/index.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
-</div>            <h1 class="page">Connectors</h1>
+</div>            <h1 class="page">Source Connectors</h1>
         <div class="paragraph">
-<p>Debezium&#8217;s goal is to build up a library of connectors that capture changes from a variety of database management systems and produce events with very similar structures, making it far easier for your applications to consume and respond to the events regardless of where the changes originated.</p>
+<p>Debezium provides a growing library of source connectors that capture changes from a variety of database management systems.
+Each connector produces change events with very similar structures, making it easy for your applications to consume and respond to events, regardless of their origin.</p>
 </div>
 <div class="paragraph">
 <p>We currently have the following connectors:</p>
@@ -386,9 +428,6 @@
 <p><a href="spanner.html" class="xref page">Spanner</a></p>
 </li>
 <li>
-<p><a href="jdbc.html" class="xref page">JDBC</a> (Incubating)</p>
-</li>
-<li>
 <p><a href="informix.html" class="xref page">Informix</a> (Incubating)</p>
 </li>
 </ul>
@@ -415,7 +454,7 @@
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2a6bb4a90176487cc38ff8cde10232cb213dc6cf">2a6bb4a9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2da43af5db7d86c1ead7a101531db65f6163c676">2da43af5</a></span>)
             
         </div>
     </footer>

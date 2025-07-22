@@ -94,13 +94,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -127,10 +130,19 @@
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
+    <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="informix.html">Informix</a>
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -275,10 +287,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +336,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Source Connectors</li>
     <li><a href="vitess.html">Vitess</a></li>
   </ul>
 </nav>
@@ -324,28 +345,48 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.7</button>
         <div class="version-menu">
-                <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version is-current" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version" href="/documentation//reference/connectors/vitess.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/vitess.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/vitess.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/vitess.html" data-hash="true">3.0</a>
+                        <a class="version is-current" href="/reference/2.7/connectors/vitess.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/vitess.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/vitess.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/vitess.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/vitess.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/vitess.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/connectors/vitess.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/connectors/vitess.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/connectors/vitess.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/2.7/documentation/modules/ROOT/pages/connectors/vitess.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
@@ -363,6 +404,7 @@
 <li><a href="#vitess-topic-names">Topics names</a></li>
 <li><a href="#vitess-transaction-metadata">Transaction metadata</a></li>
 <li><a href="#vitess-ordered-transaction-metadata">Ordered Transaction Metadata</a></li>
+<li><a href="#vitess-efficient-transaction-metadata">Efficient Transaction Metadata</a></li>
 </ul>
 </li>
 <li><a href="#vitess-events">Data change events</a>
@@ -758,6 +800,65 @@ Because the <code>total_order</code> field represents the order of events within
     "transaction_rank": 68,
     "transaction_epoch": 0
   }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vitess-efficient-transaction-metadata"><a class="anchor" href="#vitess-efficient-transaction-metadata"></a>Efficient Transaction Metadata</h3>
+<div class="paragraph">
+<p>If you enable the connector to provide transaction metadata, it generates significantly more data.
+Not only does the connector send additional messages to the transaction topics, but messages that it sends to the data change topics are larger, because they include a transaction metadata block.
+The added volume is due to the following factors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The VGTID is stored twice, once as <code>source.vgtid</code>, and then again as <code>transaction.id</code>.
+In keyspaces that include many shards, these VGTIDs can be quite large</p>
+</li>
+<li>
+<p>In a sharded environment, the VGTID typically contains the VGTID for every shard.
+In keyspaces with many shards, the amount of data in the VGTID field can be quite large.</p>
+</li>
+<li>
+<p>The connector sends transaction topic messages for every transaction boundary event.
+Typically, keyspaces that include many shards tend to generate a high number of transaction boundary events.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable the Vitess connector to encode transaction metadata without significantly increasing the volume of data produced, Debezium provides several single message transformations (SMTs).
+The following SMTs are designed to reduce the amount of data in events that the Vitess connector emits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../transformations/vitess-use-local-vgtid.html" class="xref page">Use Local VGTID</a></p>
+</li>
+<li>
+<p><a href="../transformations/vitess-remove-field.html" class="xref page">Remove Field</a></p>
+</li>
+<li>
+<p><a href="../transformations/vitess-filter-transaction-topic-records.html" class="xref page">Filter Transaction Topic Records</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example shows an excerpt from the configuration of a Vitess connector that uses the preceding transformations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">}
+ [...]
+ "provide.transaction.metadata": "true",
+ "transaction.metadata.factory": "io.debezium.connector.vitess.pipeline.txmetadata.VitessOrderedTransactionMetadataFactory",
+ "transforms": "filterTransactionTopicRecords,removeField,useLocalVgtid",
+ "transforms.filterTransactionTopicRecords.type": "io.debezium.connector.vitess.transforms.FilterTransactionTopicRecords",
+ "transforms.removeField.type": "io.debezium.connector.vitess.transforms.RemoveField",
+ "transforms.removeField.field_names": "transaction.id",
+ "transforms.useLocalVgtid.type": "io.debezium.connector.vitess.transforms.UseLocalVgtid",
+ [...]
 }</code></pre>
 </div>
 </div>
@@ -1217,7 +1318,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "2.7.0.Beta2",
+            "version": "2.7.4.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1389,7 +1490,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.7.0.Beta2",
+            "version": "2.7.4.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1534,7 +1635,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.7.0.Beta2",
+            "version": "2.7.4.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -2241,7 +2342,7 @@ Represents the number of milliseconds elapsed since the UNIX epoch, and does not
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.7.0.Beta2/debezium-connector-vitess-2.7.0.Beta2-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
+<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.7.4.Final/debezium-connector-vitess-2.7.4.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
 <p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Zookeeper, Kafka and Kafka Connect with the Vitess connector already installed and ready to run. You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
@@ -2507,7 +2608,7 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <div class="title">Example 1. How custom tags modify the connector MBean name</div>
 <div class="content">
 <div class="paragraph">
-<p>By default, the {connector-name} connector uses the following MBean name for streaming metrics:
+<p>By default, the Vitess connector uses the following MBean name for streaming metrics:
 <br></p>
 </div>
 <div class="listingblock">
@@ -3605,7 +3706,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2a6bb4a90176487cc38ff8cde10232cb213dc6cf">2a6bb4a9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2da43af5db7d86c1ead7a101531db65f6163c676">2da43af5</a></span>)
             
         </div>
     </footer>

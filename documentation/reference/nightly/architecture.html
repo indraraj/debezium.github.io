@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="connectors/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="connectors/mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="connectors/mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="connectors/mongodb.html">MongoDB</a>
@@ -127,10 +136,19 @@
     <a class="nav-link" href="connectors/spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="connectors/jdbc.html">JDBC</a>
+    <a class="nav-link" href="connectors/informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="connectors/index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="connectors/informix.html">Informix</a>
+    <a class="nav-link" href="connectors/jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/architecture.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/architecture.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/architecture.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/architecture.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/architecture.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/architecture.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/architecture.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/architecture.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/architecture.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/architecture.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/architecture.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/architecture.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/architecture.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/architecture.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -405,8 +476,10 @@ If needed, you can adjust the destination topic name by configuring Debezium&#82
 </ul>
 </div>
 <div class="paragraph">
-<p>After change event records are in Apache Kafka, different connectors in the Kafka Connect eco-system can stream the records to other systems and databases such as Elasticsearch, data warehouses and analytics systems, or caches such as Infinispan.
-Depending on the chosen sink connector, you might need to configure Debezium&#8217;s <a href="transformations/event-flattening.html#new-record-state-extraction" class="xref page">new record state extraction</a> transformation. This Kafka Connect SMT propagates the <code>after</code> structure from Debezium&#8217;s change event to the sink connector. This is in place of the verbose change event record that is propagated by default.</p>
+<p>After change event records are in Apache Kafka, different connectors in the Kafka Connect ecosystem can stream the records to other systems and databases such as Elasticsearch, data warehouses and analytics systems, or caches such as Infinispan.
+Depending on the chosen sink connector, you might need to configure the Debezium <a href="transformations/event-flattening.html#new-record-state-extraction" class="xref page">new record state extraction</a> transformation.
+This Kafka Connect SMT propagates the <code>after</code> structure from a Debezium change event to the sink connector.
+The modified change event record replaces the original, more verbose record that is propagated by default.</p>
 </div>
 </div>
 </div>
@@ -414,11 +487,9 @@ Depending on the chosen sink connector, you might need to configure Debezium&#82
 <h2 id="_debezium_server"><a class="anchor" href="#_debezium_server"></a>Debezium Server</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Another way to deploy Debezium is using the <a href="operations/debezium-server.html" class="xref page">Debezium server</a>.
-The Debezium server is a configurable, ready-to-use application that streams change events from a source database to a variety of messaging infrastructures.</p>
-</div>
-<div class="paragraph">
-<p>The following image shows the architecture of a change data capture pipeline that uses the Debezium server:</p>
+<p>Another way to deploy Debezium is by using the <a href="operations/debezium-server.html" class="xref page">Debezium server</a>.
+The Debezium server is a configurable, ready-to-use application that streams change events from a source database to a variety of messaging infrastructures.
+The following image shows the architecture of a change data capture pipeline that uses the Debezium Server:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -426,8 +497,9 @@ The Debezium server is a configurable, ready-to-use application that streams cha
 </div>
 </div>
 <div class="paragraph">
-<p>The Debezium server is configured to use one of the Debezium source connectors to capture changes from the source database.
-Change events can be serialized to different formats like JSON or Apache Avro and then will be sent to one of a variety of messaging infrastructures such as Amazon Kinesis, Google Cloud Pub/Sub, or Apache Pulsar.</p>
+<p>You can configure Debezium server to use one of the Debezium source connectors to capture changes from a source database.
+Change events can be serialized to different formats like JSON or Apache Avro and then will be sent to one of a variety of messaging infrastructures such as
+Amazon Kinesis, Google Cloud Pub/Sub, or Apache Pulsar.</p>
 </div>
 </div>
 </div>
@@ -452,7 +524,7 @@ You can find <a href="https://github.com/debezium/debezium-examples/tree/main/ki
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -127,10 +136,19 @@
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
+    <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="informix.html">Informix</a>
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="../integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +366,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Source Connectors</li>
     <li><a href="vitess.html">Vitess</a></li>
   </ul>
 </nav>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/connectors/vitess.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/vitess.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/vitess.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/vitess.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/connectors/vitess.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/vitess.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/vitess.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/vitess.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/vitess.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/vitess.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/connectors/vitess.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/connectors/vitess.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/connectors/vitess.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/connectors/vitess.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -363,6 +434,7 @@
 <li><a href="#vitess-topic-names">Topics names</a></li>
 <li><a href="#vitess-transaction-metadata">Transaction metadata</a></li>
 <li><a href="#vitess-ordered-transaction-metadata">Ordered Transaction Metadata</a></li>
+<li><a href="#vitess-efficient-transaction-metadata">Efficient Transaction Metadata</a></li>
 </ul>
 </li>
 <li><a href="#vitess-events">Data change events</a>
@@ -758,6 +830,68 @@ Because the <code>total_order</code> field represents the order of events within
     "transaction_rank": 68,
     "transaction_epoch": 0
   }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="vitess-efficient-transaction-metadata"><a class="anchor" href="#vitess-efficient-transaction-metadata"></a>Efficient Transaction Metadata</h3>
+<div class="paragraph">
+<p>If you enable the connector to provide transaction metadata, it generates significantly more data.
+Not only does the connector send additional messages to the transaction topics, but messages that it sends to the data change topics are larger, because they include a transaction metadata block.
+The added volume is due to the following factors:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The VGTID is stored twice, once as <code>source.vgtid</code>, and then again as <code>transaction.id</code>.
+In keyspaces that include many shards, these VGTIDs can be quite large</p>
+</li>
+<li>
+<p>In a sharded environment, the VGTID typically contains the VGTID for every shard.
+In keyspaces with many shards, the amount of data in the VGTID field can be quite large.</p>
+</li>
+<li>
+<p>The connector sends transaction topic messages for every transaction boundary event.
+Typically, keyspaces that include many shards tend to generate a high number of transaction boundary events.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable the Vitess connector to encode transaction metadata without significantly increasing the volume of data produced, Debezium provides several single message transformations (SMTs).
+The following SMTs are designed to reduce the amount of data in events that the Vitess connector emits:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="../transformations/vitess-use-local-vgtid.html" class="xref page">Use Local VGTID</a></p>
+</li>
+<li>
+<p><a href="../transformations/vitess-remove-field.html" class="xref page">Remove Field</a></p>
+</li>
+<li>
+<p><a href="../transformations/vitess-replace-field-value.html" class="xref page">Replace Field Value</a></p>
+</li>
+<li>
+<p><a href="../transformations/vitess-filter-transaction-topic-records.html" class="xref page">Filter Transaction Topic Records</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following example shows an excerpt from the configuration of a Vitess connector that uses the preceding transformations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">}
+ [...]
+ "provide.transaction.metadata": "true",
+ "transaction.metadata.factory": "io.debezium.connector.vitess.pipeline.txmetadata.VitessOrderedTransactionMetadataFactory",
+ "transforms": "filterTransactionTopicRecords,removeField,useLocalVgtid",
+ "transforms.filterTransactionTopicRecords.type": "io.debezium.connector.vitess.transforms.FilterTransactionTopicRecords",
+ "transforms.removeField.type": "io.debezium.connector.vitess.transforms.RemoveField",
+ "transforms.removeField.field_names": "transaction.id",
+ "transforms.useLocalVgtid.type": "io.debezium.connector.vitess.transforms.UseLocalVgtid",
+ [...]
 }</code></pre>
 </div>
 </div>
@@ -1217,7 +1351,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "2.7.0.Beta2",
+            "version": "3.2.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1389,7 +1523,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.7.0.Beta2",
+            "version": "3.2.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1534,7 +1668,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "2.7.0.Beta2",
+            "version": "3.2.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -2207,6 +2341,60 @@ Represents the number of milliseconds elapsed since the UNIX epoch, and does not
 </tbody>
 </table>
 </dd>
+<dt class="hdlist1">time.precision.mode=isostring</dt>
+<dd>
+<p>The Vitess connector uses string representations for all temporal types.</p>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Mappings when <code>time.precision.mode=connect</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vitess data type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>n/a</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>n/a</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>n/a</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 </div>
@@ -2241,10 +2429,26 @@ Represents the number of milliseconds elapsed since the UNIX epoch, and does not
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/2.7.0.Beta2/debezium-connector-vitess-2.7.0.Beta2-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
+<p>With <a href="https://zookeeper.apache.org">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/3.2.0.Final/debezium-connector-vitess-3.2.0.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>. You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
 <p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Zookeeper, Kafka and Kafka Connect with the Vitess connector already installed and ready to run. You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Debezium container images that you obtain from <code>quay.io</code> do not undergo rigorous testing or security analysis, and are provided for testing and evaluation purposes only.
+These images are not intended for use in production environments.
+To mitigate risk in production deployments, deploy only containers that are actively maintained by trusted vendors, and thoroughly tested for potential vulnerabilities.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="sect2">
 <h3 id="vitess-example-configuration"><a class="anchor" href="#vitess-example-configuration"></a>Connector configuration example</h3>
@@ -2507,7 +2711,7 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <div class="title">Example 1. How custom tags modify the connector MBean name</div>
 <div class="content">
 <div class="paragraph">
-<p>By default, the {connector-name} connector uses the following MBean name for streaming metrics:
+<p>By default, the Vitess connector uses the following MBean name for streaming metrics:
 <br></p>
 </div>
 <div class="listingblock">
@@ -2681,7 +2885,7 @@ The values will incorporate any differences between the clocks on the machines w
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Required connector configuration properties</caption>
+<caption class="title">Table 10. Required connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -2796,6 +3000,26 @@ The values will incorporate any differences between the clocks on the machines w
 <code>false</code> - the stream will be automatically migrated for the new shards after a reshard operation.<br>
 <br>
 If set to <code>true</code>, you should also consider setting <code>vitess.gtid</code> in the configuration.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-stream-keyspace-heartbeats"></a><a href="#vitess-property-stream-keyspace-heartbeats"><code>vitess.stream_keyspace_heartbeats</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Controls Vitess flag <code>StreamKeyspaceHeartbeats</code>.<br></p>
+</div>
+<div class="paragraph">
+<p>+
+<code>true</code> - the stream will receive events from <code>_vt.heartbeat</code> tables (must also be enabled for the tablets). <br></p>
+</div>
+<div class="paragraph">
+<p>+
+<code>false</code> - the stream will not receive events from the <code>_vt.heartbeat</code> tables.<br>
+If set to <code>true</code>, you may also want to add <code>&lt;keyspace&gt;.heartbeat</code> to the table include list in order to output the events.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3095,17 +3319,20 @@ Set the property to one of the following values:</p>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>You can set the following options to determine how Debezium represents the precision of time, date, and timestamp values:<br></p>
 </div>
-<div class="paragraph">
-<p>+
-<code>adaptive_time_microseconds</code>::
-(Default) Captures date, datetime, and timestamp values exactly as they exist in the database.
-Values are represented with a precision in milliseconds, microseconds, or nanoseconds, depending on the database column type, with the exception of <code>TIME</code> type fields, which are always captured as microseconds.</p>
-</div>
 <div class="dlist">
 <dl>
+<dt class="hdlist1"><code>adaptive_time_microseconds</code></dt>
+<dd>
+<p>(Default)
+Values are represented with a precision in milliseconds, microseconds, or nanoseconds, depending on the database column type, with the exception of <code>TIME</code> type fields, which are always captured as microseconds.</p>
+</dd>
 <dt class="hdlist1"><code>connect</code></dt>
 <dd>
 <p>Time and timestamp values are always represented in the default Kafka Connect formats for Time, Date, and Timestamp, which use millisecond precision regardless of the database columns' precision.</p>
+</dd>
+<dt class="hdlist1"><code>isostring</code></dt>
+<dd>
+<p>Temporal types are represented as strings. For certain temporal values that cannot be represented numerically (e.g., 0000-00-00) this sends the original string representation of the value.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -3137,7 +3364,7 @@ represents values as precise (Java&#8217;s 'BigDecimal') values. This is precise
 <p>The following <em>advanced</em> configuration properties have defaults that work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Advanced connector configuration properties</caption>
+<caption class="title">Table 11. Advanced connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 28%;">
@@ -3272,9 +3499,28 @@ For example, if you set <code>max.queue.size=1000</code>, and <code>max.queue.si
 <p><code>t</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A comma-separated list of operation types that will be skipped during streaming.
-The operations include: <code>c</code> for inserts/create, <code>u</code> for updates, <code>d</code> for deletes, <code>t</code> for truncates, and <code>none</code> to not skip any operations.
-By default, truncate operations are skipped (not emitted by this connector).</p>
+<p>A comma-separated list of the operation types that you want the connector to skip during streaming.
+You can configure the connector to skip the following types of operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>c</code> (insert/create)</p>
+</li>
+<li>
+<p><code>u</code> (update)</p>
+</li>
+<li>
+<p><code>d</code> (delete)</p>
+</li>
+<li>
+<p><code>t</code> (truncate)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Because the Debezium Vitess connector never emits <code>truncate</code> events to data change topics, setting the default <code>t</code> option has the same effect as setting the property to <code>none</code>.
+That is, the connector streams all <code>insert</code>, <code>update</code>, and <code>delete</code> operations.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3394,6 +3640,18 @@ Default is 4MiB</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The name of the TopicNamingStrategy class that should be used to determine the topic name for data change, schema change, transaction, heartbeat event etc., defaults to <code>SchemaTopicNamingStrategy</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-override-data-change-topic-prefix"></a><a href="#vitess-property-override-data-change-topic-prefix"><code>override.data.change.topic.prefix</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the prefix that the connector uses to create the names of data change topics when <a href="#vitess-property-topic-naming-strategy">topic.naming.strategy</a> is set to <code>io.debezium.connector.vitess.TableTopicNamingStrategy</code>.
+The connector uses the value of this property instead of the specified <a href="#vitess-property-topic-prefix"><code>topic.prefix</code></a>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3605,7 +3863,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

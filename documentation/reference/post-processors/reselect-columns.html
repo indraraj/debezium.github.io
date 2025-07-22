@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/mongodb.html">MongoDB</a>
@@ -127,10 +136,19 @@
     <a class="nav-link" href="../connectors/spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
+    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../connectors/informix.html">Informix</a>
+    <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="../integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version is-missing" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version is-missing" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version is-missing" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version is-missing" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version is-missing" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version is-missing" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/post-processors/reselect-columns.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/post-processors/reselect-columns.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/post-processors/reselect-columns.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/post-processors/reselect-columns.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/post-processors/reselect-columns.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/post-processors/reselect-columns.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/post-processors/reselect-columns.html" data-hash="true">2.5</a>
+                    <a class="version is-missing" href="#">2.4</a>
+                    <a class="version is-missing" href="#">2.3</a>
+                    <a class="version is-missing" href="#">2.2</a>
+                    <a class="version is-missing" href="#">2.1</a>
+                    <a class="version is-missing" href="#">2.0</a>
+                    <a class="version is-missing" href="#">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/post-processors/reselect-columns.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -403,7 +474,8 @@ When it detects an event with the specified columns, the post processor re-queri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can use the <code>ReselectColumnsPostProcessor</code> post processor only with Debezium SQL database connectors.
+You can use the <code>ReselectColumnsPostProcessor</code> post processor only with Debezium source connectors.<br>
+The post processor is not designed to work with the Debezium JDBC sink connector.
 </td>
 </tr>
 </table>
@@ -440,12 +512,13 @@ To enable the connector to use the <code>ReselectColumnsPostProcessor</code>, ad
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  "post.processors": "reselector", <i class="conum" data-value="1"></i><b>(1)</b>
-  "reselector.type": "io.debezium.processors.reselect.ReselectColumnsPostProcessor", <i class="conum" data-value="2"></i><b>(2)</b>
-  "reselector.reselect.columns.include.list": "<em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em>,<em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em>", <i class="conum" data-value="3"></i><b>(3)</b>
-  "reselector.reselect.unavailable.values": "true", <i class="conum" data-value="4"></i><b>(4)</b>
-  "reselector.reselect.null.values": "true" <i class="conum" data-value="5"></i><b>(5)</b>
-  "reselector.reselect.use.event.key": "false" <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  "post.processors" : "reselector", <i class="conum" data-value="1"></i><b>(1)</b>
+  "reselector.type" : "io.debezium.processors.reselect.ReselectColumnsPostProcessor", <i class="conum" data-value="2"></i><b>(2)</b>
+  "reselector.reselect.columns.include.list" : "<em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em>,<em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em>", <i class="conum" data-value="3"></i><b>(3)</b>
+  "reselector.reselect.unavailable.values" : "true", <i class="conum" data-value="4"></i><b>(4)</b>
+  "reselector.reselect.null.values" : "true", <i class="conum" data-value="5"></i><b>(5)</b>
+  "reselector.reselect.use.event.key" : "false", <i class="conum" data-value="6"></i><b>(6)</b>
+  "reselector.reselect.error.handling.mode" : "WARN" <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -483,6 +556,10 @@ To enable the connector to use the <code>ReselectColumnsPostProcessor</code>, ad
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enables or disables reselection based event key field names.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log a warning or throw an exception when reselection does not find the row or if a database exception is raised.</p></td>
 </tr>
 </tbody>
 </table>
@@ -522,9 +599,13 @@ To enable the connector to use the <code>ReselectColumnsPostProcessor</code>, ad
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Comma-separated list of column names to reselect from the source database.
-Use the following format to specify column names: + <code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:_&lt;column&gt;_</code> <br>
-<br>
-Do not set this property if you set the <code>reselect.columns.exclude.list</code> property.</p>
+Use the following format to specify column names:<br></p>
+</div>
+<div class="paragraph">
+<p><code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em></code></p>
+</div>
+<div class="paragraph">
+<p>Do not set this property if you set the <code>reselect.columns.exclude.list</code> property.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -536,9 +617,13 @@ Do not set this property if you set the <code>reselect.columns.exclude.list</cod
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Comma-separated list of column names in the source database to exclude from reselection.
-Use the following format to specify column names: + <code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:_&lt;column&gt;_</code><br>
-<br>
-Do not set this property if you set the <code>reselect.columns.include.list</code> property.</p>
+Use the following format to specify column names:<br></p>
+</div>
+<div class="paragraph">
+<p><code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em></code></p>
+</div>
+<div class="paragraph">
+<p>Do not set this property if you set the <code>reselect.columns.include.list</code> property.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -578,6 +663,21 @@ For tables that do not have a primary key, set this property to <code>true</code
 The post processor then uses the specified key field names as the primary key in the SQL reselection query.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-error-handling-mode"></a><a href="#reselect-columns-post-processor-property-reselect-error-handling-mode"><code>reselect.error.handling.mode</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>WARN</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies how the reselect post processor reacts to certain conditions.<br>
+<br>
+By default, the post-processor logs a warning message when the row cannot be found or if there is a database selection error.<br>
+<br>
+When set to <code>FAIL</code>, the connector will stop processing changes if the row no longer exists at the time of reselection or if there is a database failure when reselecting the row.</p>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -590,7 +690,7 @@ The post processor then uses the specified key field names as the primary key in
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

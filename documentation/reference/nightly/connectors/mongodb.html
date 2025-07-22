@@ -90,17 +90,26 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../configuration/notification.html">Receive notifications from Debezium</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/storage.html">Store Debezium state</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../configuration/eos.html">Exactly-once delivery</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -127,10 +136,19 @@
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
+    <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="informix.html">Informix</a>
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -184,7 +202,13 @@
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../transformations/convert-cloudevent-to-saveable-form.html">Convert CloudEvents to Saveable Form</a>
+    <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
   </li>
@@ -226,6 +250,9 @@
     <a class="nav-link" href="../integrations/cloudevents.html">CloudEvents</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/openlineage.html">OpenLineage</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -235,11 +262,29 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Operations</span>
+    <span class="nav-text">Debezium AI</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Standalone Debezium</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Operations</span>
+<ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/logging.html">Logging</a>
   </li>
@@ -251,9 +296,6 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/openshift.html">Running on Openshift</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../operations/debezium-ui.html">Debezium UI</a>
   </li>
 </ul>
   </li>
@@ -275,10 +317,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +366,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Source Connectors</li>
     <li><a href="mongodb.html">MongoDB</a></li>
   </ul>
 </nav>
@@ -324,20 +375,40 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                <a class="version is-current" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version is-current" href="/reference/connectors/mongodb.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/mongodb.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/mongodb.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/mongodb.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation//reference/2.7/connectors/mongodb.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/mongodb.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/mongodb.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/mongodb.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/mongodb.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/mongodb.html" data-hash="true">2.2</a>
+                        <a class="version" href="/documentation//reference/2.1/connectors/mongodb.html" data-hash="true">2.1</a>
+                        <a class="version" href="/documentation//reference/2.0/connectors/mongodb.html" data-hash="true">2.0</a>
+                        <a class="version" href="/documentation//reference/1.9/connectors/mongodb.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/main/documentation/modules/ROOT/pages/connectors/mongodb.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
@@ -621,6 +692,10 @@ Assign one of the following permissions to the user, depending on the <code>capt
 <dd>
 <p>Grant the user permission to read the database specified by the connector&#8217;s <a href="#mongodb-property-capture-target"><code>capture.target</code></a> property.</p>
 </dd>
+<dt class="hdlist1"><code>capture.scope</code> is set to <code>collection</code></dt>
+<dd>
+<p>Grant the user permission to read the collection specified by the connector&#8217;s <a href="#mongodb-property-capture-target"><code>capture.target</code></a> property.</p>
+</dd>
 </dl>
 </div>
 <div class="paragraph">
@@ -817,7 +892,7 @@ but it does not create <code>READ</code> events to represent the data set at the
 <p>The <code>custom</code> snapshot mode lets you inject your own implementation of the <code>io.debezium.spi.snapshot.Snapshotter</code> interface.
 Set the <code>snapshot.mode.custom.name</code> configuration property to the name provided by the <code>name()</code> method of your implementation.
 The name is specified on the classpath of your Kafka Connect cluster.
-If you use the Debezium <code>EmbeddedEngine</code>, the name is included in the connector JAR file.
+If you use the Debezium <code>DebeziumEngine</code>, the name is included in the connector JAR file.
 For more information, see <a href="#connector-custom-snapshot">custom snapshotter SPI</a>.</p>
 </div></div></td>
 </tr>
@@ -896,15 +971,15 @@ Currently, you can request <code>incremental</code> or <code>blocking</code> sna
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array that contains regular expressions matching the fully-qualified names of the collection to be snapshotted.<br>
-The format of the names is the same as for the <code>signal.data.collection</code> configuration option.</p>
+<p>An array that contains regular expressions matching the fully-qualified names of the collections to include in the snapshot.<br>
+For the MongoDB connector, use the following format to specify the fully qualified name of a collection: <code>database.collection</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
 <div class="title">Triggering an ad hoc incremental snapshot</div>
-<p>You initiate an ad hoc incremental snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling collection.
+<p>You initiate an ad hoc incremental snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling collection, or by <a href="#mongodb-triggering-an-incremental-snapshot-kafka">sending a signal message to a Kafka signaling topic</a>.
 After the connector processes the message, it begins the snapshot operation.
 The snapshot process reads the first and last primary key values and uses those values as the start and end point for each collection.
 Based on the number of entries in the collection, and the configured chunk size, Debezium divides the collection into chunks, and proceeds to snapshot each chunk, in succession, one at a time.</p>
@@ -914,7 +989,7 @@ Based on the number of entries in the collection, and the configured chunk size,
 </div>
 <div class="paragraph">
 <div class="title">Triggering an ad hoc blocking snapshot</div>
-<p>You initiate an ad hoc blocking snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling collection.
+<p>You initiate an ad hoc blocking snapshot by adding an entry with the <code>execute-snapshot</code> signal type to the signaling collection or signaling topic.
 After the connector processes the message, it begins the snapshot operation.
 The connector temporarily stops streaming, and then initiates a snapshot of the specified collection, following the same process that it uses during an initial snapshot.
 After the snapshot completes, the connector resumes streaming.</p>
@@ -979,7 +1054,7 @@ Only after collisions between the snapshot events and the streamed events are re
 <div class="paragraph">
 <div class="title">Snapshot window</div>
 <p>To assist in resolving collisions between late-arriving <code>READ</code> events and streamed events that modify the same collection row, Debezium employs a so-called <em>snapshot window</em>.
-The snapshot windows demarcates the interval during which an incremental snapshot captures data for a specified collection chunk.
+The snapshot window demarcates the interval during which an incremental snapshot captures data for a specified collection chunk.
 Before the snapshot window for a chunk opens, Debezium follows its usual behavior and emits events from the transaction log directly downstream to the target Kafka topic.
 But from the moment that the snapshot for a particular chunk opens, until it closes, Debezium performs a de-duplication step to resolve collisions between events that have the same primary key..</p>
 </div>
@@ -998,6 +1073,37 @@ Debezium emits these remaining <code>READ</code> events to the collection&#8217;
 </div>
 <div class="paragraph">
 <p>The connector repeats the process for each snapshot chunk.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To enable Debezium to perform incremental snapshots, you must grant the connector permission to write to the signaling collection.</p>
+</div>
+<div class="paragraph">
+<p>Write permission is unnecessary only for connectors that can be configured to perform read-only incrementals snapshots
+(<a href="#mariadb-read-only-incremental-snapshots">MariaDB</a>, <a href="#mysql-read-only-incremental-snapshots">MySQL</a>, or <a href="#postgresql-read-only-incremental-snapshots">PostgreSQL</a>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Currently, you can use either of the following methods to initiate an incremental snapshot:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#mongodb-triggering-an-incremental-snapshot">Send an ad hoc snapshot signal to the signaling collection on the source database</a>.</p>
+</li>
+<li>
+<p><a href="#mongodb-triggering-an-incremental-snapshot-kafka">Send a message to a configured Kafka signaling topic</a>.</p>
+</li>
+</ul>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -1020,22 +1126,12 @@ When performing incremental snapshots, it&#8217;s best to set the primary key to
 </div>
 <div class="paragraph">
 <div class="title">Incremental snapshots for sharded clusters</div>
-<p>To use incremental snapshots with sharded MongoDB clusters, you must set specific values for the following properties:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Set <a href="#mongodb-property-mongodb-connection-mode"><code>mongodb.connection.mode</code></a> to <code>sharded</code>.</p>
-</li>
-<li>
-<p>Set <a href="#mongodb-property-incremental-snapshot-chunk-size"><code>incremental.snapshot.chunk.size</code></a> to a value that is high enough to compensate for the <a href="https://www.mongodb.com/docs/manual/administration/change-streams-production-recommendations/#sharded-clusters">increased complexity</a> of change stream pipelines.</p>
-</li>
-</ul>
+<p>To use incremental snapshots with sharded MongoDB clusters, you must set <a href="#mongodb-property-incremental-snapshot-chunk-size"><code>incremental.snapshot.chunk.size</code></a> to a value that is high enough to compensate for the <a href="https://www.mongodb.com/docs/manual/administration/change-streams-production-recommendations/#sharded-clusters">increased complexity</a> of change stream pipelines.</p>
 </div>
 <div class="sect3">
 <h4 id="mongodb-triggering-an-incremental-snapshot"><a class="anchor" href="#mongodb-triggering-an-incremental-snapshot"></a>Triggering an incremental snapshot</h4>
 <div class="paragraph">
-<p>Currently, the only way to initiate an incremental snapshot is to send an <a href="../configuration/signalling.html#debezium-signaling-ad-hoc-snapshots" class="xref page">ad hoc snapshot signal</a> to the signaling collection on the source database.</p>
+<p>To initiate an incremental snapshot, you can send an <a href="../configuration/signalling.html#debezium-signaling-ad-hoc-incremental-snapshots" class="xref page">ad hoc snapshot signal</a> to the signaling collection on the source database.</p>
 </div>
 <div class="paragraph">
 <p>You submit a signal to the signaling collection by using the MongoDB <code>insert()</code> method.</p>
@@ -1282,27 +1378,6 @@ Specify the names by using the same format as is required for the <a href="#mong
 </div></div></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code><span class="line-through">additional-condition</span></code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An optional string that specifies a condition that the connector evaluates to designate a subset of records to include in a snapshot.<br></p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>This property is deprecated and should be replaced by the <code>additional-conditions</code> property.</p>
-</div>
-</td>
-</tr>
-</table>
-</div></div></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -1313,20 +1388,21 @@ You can set the following parameters for each additional condition:
 You can apply different filters to each collection.
 <code>filter</code>:: Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
 <br>
-The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.
-In earlier Debezium releases, an explicit <code>filter</code> parameter was not defined for snapshot signals; instead, filter criteria were implied by the values that were specified for the now deprecated <code>additional-condition</code> parameter.</p>
+The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.</p>
 </div></div></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>An example of the execute-snapshot Kafka message:</p>
-</div>
+<div class="exampleblock">
+<div class="title">Example 1. An <code>execute-snapshot</code> Kafka message</div>
+<div class="content">
 <div class="listingblock">
 <div class="content">
 <pre>Key = `test_connector`
 
-Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.table1", "schema1.table2"], "type": "INCREMENTAL"}}`</pre>
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["{collection-container}.table1", "{collection-container}.table2"], "type": "INCREMENTAL"}}`</pre>
+</div>
+</div>
 </div>
 </div>
 <div class="paragraph">
@@ -1340,42 +1416,50 @@ Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.table
 <p><code>SELECT * FROM <em>&lt;tableName&gt;</em> &#8230;&#8203;.</code></p>
 </div>
 <div class="paragraph">
-<p>When the snapshot request includes an <code>additional-conditions</code> property, the <code>data-collection</code> and <code>filter</code> parameters of the  property are appended to the SQL query, for example:</p>
+<p>When the snapshot request includes an <code>additional-conditions</code> property, the <code>data-collection</code> and <code>filter</code> parameters of the property are appended to the SQL query, for example:</p>
 </div>
 <div class="paragraph">
 <p><code>SELECT * FROM <em>&lt;data-collection&gt;</em> WHERE <em>&lt;filter&gt;</em> &#8230;&#8203;.</code></p>
 </div>
 <div class="paragraph">
-<p>For example, given a <code>products</code> collection with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:</p>
+<p>For example, given a <code>products</code> collection with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:
+:leveloffset: +1</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Key = `test_connector`
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">Key = `test_connector`
 
-Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "schema1.products" ,"filter":"color='blue'"}]}}`</pre>
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["db1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "db1.products" ,"filter":"color='blue'"}]}}`</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can use the <code>additional-conditions</code> property to pass conditions based on multiple columns.
-For example, using the same <code>products</code> collection as in the previous example, if you want a snapshot to include only the content from the <code>products</code> collection for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:</p>
+<p>You can also use the <code>additional-conditions</code> property to pass conditions based on multiple columns.
+For example, using the same <code>products</code> collection as in the previous example, if you want a snapshot to include only the content from the <code>products</code> collection for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:
+:leveloffset: +1</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Key = `test_connector`
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">Key = `test_connector`
 
-Value = `{"type":"execute-snapshot","data": {"data-collections": ["schema1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "schema1.products" ,"filter":"color='blue' AND brand='MyBrand'"}]}}`</pre>
+Value = `{"type":"execute-snapshot","data": {"data-collections": ["db1.products"], "type": "INCREMENTAL", "additional-conditions": [{"data-collection": "db1.products" ,"filter":"color='blue' AND brand='MyBrand'"}]}}`</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="mongodb-stopping-an-incremental-snapshot"><a class="anchor" href="#mongodb-stopping-an-incremental-snapshot"></a>Stopping an incremental snapshot</h4>
 <div class="paragraph">
-<p>You can also stop an incremental snapshot by sending a signal to the collection on the source database.
-You submit a stop snapshot signal by inserting a document into the to the signaling collection.
+<p>In some situations, it might be necessary to stop an incremental snapshot.
+For example, you might realize that snapshot was not configured correctly, or maybe you want to ensure that resources are available for other database operations.
+You can stop a snapshot that is already running by sending a signal to the collection on the source database.</p>
+</div>
+<div class="paragraph">
+<p>You submit a stop snapshot signal to the signaling collection by inserting a stop snapshot signal document into it.
+The stop snapshot signal that you submit specifies the <code>type</code> of the snapshot operation as <code>incremental</code>, and, optionally specifies the collections that you want to omit from the currently running snapshot.
 After Debezium detects the change in the signaling collection, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
 </div>
 <div class="paragraph">
-<p>The query that you submit specifies the snapshot operation of <code>incremental</code>, and, optionally, the collections of the current running snapshot to be removed.</p>
+<div class="title">Additional resources</div>
+<p>You can also stop an incremental snapshot by sending a JSON message to the <a href="#mongodb-stopping-an-incremental-snapshot-kafka">Kafka signaling topic</a>.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1461,8 +1545,8 @@ Debezium does not use this identifier string.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">An optional component of the <code>data</code> field of a signal that specifies an array of collection names or regular expressions to match collection names to remove from the snapshot.<br>
-The array lists regular expressions which match collections by their fully-qualified names, using the same format as you use to specify the name of the connector&#8217;s signaling collection in the <a href="#mongodb-property-signal-data-collection"><code>signal.data.collection</code></a> configuration property.
-If this component of the <code>data</code> field is omitted, the signal stops the entire incremental snapshot that is in progress.</p></td>
+The array lists regular expressions that match collections by their fully-qualified names in the format <code>database.collection</code>.</p>
+<p class="tableblock">If you omit the <code>data-collections</code> array from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
@@ -1516,8 +1600,8 @@ See the next section for more details.</p></td>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array of comma-separated regular expressions that match the fully-qualified names of the tables to include in the snapshot.<br>
-Specify the names by using the same format as is required for the <a href="#mongodb-property-signal-data-collection">signal.data.collection</a> configuration option.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array of comma-separated regular expressions that match the fully-qualified names of the tables an array of collection names or regular expressions to match collection names to remove from the snapshot.<br>
+Specify collection names by using the format <code>database.collection</code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1526,9 +1610,9 @@ Specify the names by using the same format as is required for the <a href="#mong
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>Key = `test_connector`
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">Key = `test_connector`
 
-Value = `{"type":"stop-snapshot","data": {"data-collections": ["schema1.table1", "schema1.table2"], "type": "INCREMENTAL"}}`</pre>
+Value = `{"type":"stop-snapshot","data": {"data-collections": ["db1.table1", "db1.table2"], "type": "INCREMENTAL"}}`</code></pre>
 </div>
 </div>
 </div>
@@ -1732,17 +1816,22 @@ After the snapshot completes, the streaming is resumed.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>data-collections: to specify which collections must be snapshot</p>
+<p>data-collections: to specify which collections must be snapshot.</p>
+</li>
+<li>
+<p>data-collections: Specifies the collections that you want the snapshot to include.<br>
+This property accepts a comma-separated list of regular expressions that match fully-qualified collection names.
+The behavior of the property is similar to the behavior of the <code>table.include.list</code> property, which specifies the tables to capture in a blocking snapshot.</p>
 </li>
 <li>
 <p>additional-conditions: You can specify different filters for different collection.<br></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The <code>data-collection</code> property is the fully-qualified name of the collection for which the filter will be applied.</p>
+<p>The <code>data-collection</code> property is the fully-qualified name of the collection for which the filter will be applied, and can be case-sensitive or case-insensitive depending on the database.</p>
 </li>
 <li>
-<p>The <code>filter</code> property will have the same value used in the  <code>snapshot.select.statement.overrides</code></p>
+<p>The <code>filter</code> property will have the same value used in the  <code>snapshot.select.statement.overrides</code>, the fully-qualified name of the collection that should match by case.</p>
 </li>
 </ul>
 </div>
@@ -2398,7 +2487,7 @@ The value of this field is the document&#8217;s identifier represented as a stri
     "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
       "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}", <i class="conum" data-value="6"></i><b>(6)</b>
       "source": { <i class="conum" data-value="7"></i><b>(7)</b>
-        "version": "2.7.0.Beta2",
+        "version": "3.2.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2612,7 +2701,7 @@ There is a new structured field <code>updateDescription</code> with a few additi
         "truncatedArrays": null
       },
       "source": { <i class="conum" data-value="6"></i><b>(6)</b>
-        "version": "2.7.0.Beta2",
+        "version": "3.2.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2668,9 +2757,8 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>before</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.
-+
-An <em>update</em> event value does not contain an <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.</p>
+<p class="tableblock">An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
@@ -2755,7 +2843,7 @@ It is thus possible if multiple updates are closely following one after the othe
       "ts_ns": 1465495462115748263, <i class="conum" data-value="2"></i><b>(2)</b>
       "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",<i class="conum" data-value="3"></i><b>(3)</b>
       "source": { <i class="conum" data-value="4"></i><b>(4)</b>
-        "version": "2.7.0.Beta2",
+        "version": "3.2.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2807,9 +2895,8 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>before</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.
-+
-An <em>update</em> event value does not contain an <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.</p>
+<p class="tableblock">An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
@@ -2957,7 +3044,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <ol class="arabic">
 <li>
 <p>Download the
-<a href="https://s01.oss.sonatype.org/service/local/artifact/maven/redirect?r=snapshots&g=io.debezium&a=debezium-connector-mongodb&v=LATEST&c=plugin&e=tar.gz">connector&#8217;s plug-in archive</a>,</p>
+<a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mongodb/3.2.0-SNAPSHOT/debezium-connector-mongodb-3.2.0-20250709.120434-175-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
@@ -2972,6 +3059,22 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 </div>
 <div class="paragraph">
 <p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Apache Zookeeper, Apache Kafka, and Kafka Connect with the MongoDB connector already installed and ready to run.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The Debezium container images that you obtain from <code>quay.io</code> do not undergo rigorous testing or security analysis, and are provided for testing and evaluation purposes only.
+These images are not intended for use in production environments.
+To mitigate risk in production deployments, deploy only containers that are actively maintained by trusted vendors, and thoroughly tested for potential vulnerabilities.</p>
+</div>
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
@@ -3116,13 +3219,20 @@ Many properties have default values. Information about the properties is organiz
 <li>
 <p><a href="#debezium-mongodb-connector-advanced-configuration-properties">Advanced Debezium MongoDB connector configuration properties</a></p>
 </li>
+<li>
+<p><a href="#debezium-mongodb-connector-pass-through-kafka-signals-configuration-properties">Pass-through Kafka signals configuration properties</a></p>
+</li>
+<li>
+<p><a href="#debezium-mongodb-connector-pass-through-kafka-sink-notification-configuration-properties">Pass-through sink notification configuration properties</a></p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
-<table id="debezium-mongodb-connector-required-configuration-properties" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Required Debezium MongoDB connector configuration properties</caption>
+<div class="sect3">
+<h4 id="debezium-mongodb-connector-required-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-required-configuration-properties"></a>Required Debezium MongoDB connector configuration properties</h4>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -3534,6 +3644,40 @@ Set this property to one of the following values:</p>
 </table>
 </div>
 </dd>
+<dt class="hdlist1"><code>collection</code></dt>
+<dd>
+<p>Opens a change stream cursor for a single collection to watch for changes to that collection.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is currently in an incubating state.
+The exact semantics, configuration options, and so forth are subject to change, based on the feedback that we receive.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Setting the value of the <code>capture.scope</code> property to <code>collection</code> prevents the connector from using the default <code>source</code> <a href="../configuration/signalling.html" class="xref page">signaling</a> channel.
+Because the <code>source</code> channel must be enabled to permit connectors to process incremental snapshot signals&#8201;&#8212;&#8201;even for signals are sent over the Kafka, JMX, or File channels&#8201;&#8212;&#8201;the connector cannot perform incremental snapshots when <code>capture-scope</code> is set to <code>collection</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</dd>
 </dl>
 </div></div></td>
 </tr>
@@ -3643,8 +3787,10 @@ After a source record is deleted, emitting a tombstone event (the default behavi
 <div class="paragraph">
 <p>The following <em>advanced</em> configuration properties have good defaults that will work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
-<table id="debezium-mongodb-connector-advanced-configuration-properties" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Debezium MongoDB connector advanced configuration properties</caption>
+</div>
+<div class="sect3">
+<h4 id="debezium-mongodb-connector-advanced-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-advanced-configuration-properties"></a>Debezium MongoDB connector advanced configuration properties</h4>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -3767,39 +3913,6 @@ For example, if you set <code>max.queue.size=1000</code>, and <code>max.queue.si
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="mongodb-property-poll-interval-ms"></a><a href="#mongodb-property-poll-interval-ms"><code>poll.interval.ms</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>1000</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Positive integer value that specifies the number of milliseconds the connector should wait during each iteration for new change events to appear. Defaults to 500 milliseconds, or 0.5 second.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="mongodb-property-connect-backoff-initial-delay-ms"></a><a href="#mongodb-property-connect-backoff-initial-delay-ms"><code>connect.backoff.initial.delay.ms</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>1000</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Positive integer value that specifies the initial delay when trying to reconnect to a primary after the first failed connection attempt or when no primary is available. Defaults to 1 second (1000 ms).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="mongodb-property-connect-backoff-max-delay-ms"></a><a href="#mongodb-property-connect-backoff-max-delay-ms"><code>connect.backoff.max.delay.ms</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>1000</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Positive integer value that specifies the maximum delay when trying to reconnect to a primary after repeated failed connection attempts or when no primary is available. Defaults to 120 seconds (120,000 ms).</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="mongodb-property-connect-max-attempts"></a><a href="#mongodb-property-connect-max-attempts"><code>connect.max.attempts</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -3807,6 +3920,72 @@ For example, if you set <code>max.queue.size=1000</code>, and <code>max.queue.si
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Positive integer value that specifies the maximum number of failed connection attempts to a replica set primary before an exception occurs and task is aborted. Defaults to 16, which with the defaults for <code>connect.backoff.initial.delay.ms</code> and <code>connect.backoff.max.delay.ms</code> results in just over 20 minutes of attempts before failing.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-ssl-keystore"></a><a href="#mongodb-property-ssl-keystore"><code>mongodb.ssl.keystore</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional setting that specifies the location of the key store file. A key store file can be used for two-way authentication between the client and the MongoDB server.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-mongodb-ssl-keystore-password"></a><a href="#mongodb-property-mongodb-ssl-keystore-password"><code>mongodb.ssl.keystore.password</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The password for the key store file. Specify a password only if the <a href="#mongodb-property-ssl-keystore"><code>mongodb.ssl.keystore</code></a> is configured.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-mongodb-ssl-keystore-type"></a><a href="#mongodb-property-mongodb-ssl-keystore-type"><code>mongodb.ssl.keystore.type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The type of key store file. Specify a type only if the <a href="#mongodb-property-ssl-keystore"><code>mongodb.ssl.keystore</code></a> is configured.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-mongodb-ssl-truststore"></a><a href="#mongodb-property-mongodb-ssl-truststore"><code>mongodb.ssl.truststore</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The location of the trust store file for the server certificate verification.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-mongodb-ssl-truststore-password"></a><a href="#mongodb-property-mongodb-ssl-truststore-password"><code>mongodb.ssl.truststore.password</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The password for the trust store file. Used to check the integrity of the truststore, and unlock the truststore. Specify a password only if the <a href="#mongodb-property-mongodb-ssl-truststore"><code>mongodb.ssl.truststore</code></a> is configured.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-mongodb-ssl-truststore-type"></a><a href="#mongodb-property-mongodb-ssl-truststore-type"><code>mongodb.ssl.truststore.type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>No Default</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The type of trust store file. Specify a type only if the <a href="#mongodb-property-mongodb-ssl-truststore"><code>mongodb.ssl.truststore</code></a> is configured.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3853,9 +4032,28 @@ Disabled by default.</p>
 <p><code>t</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A comma-separated list of operation types that will be skipped during streaming.
-The operations include: <code>c</code> for inserts/create, <code>u</code> for updates/replace, <code>d</code> for deletes, <code>t</code> for truncates, and <code>none</code> to not skip any aforementioned operations.
-By default, for consistency with other Debezium connectors, truncate operations are skipped (not emitted by this connector). However, since MongoDB <a href="https://www.mongodb.com/docs/manual/reference/change-events/#operation-types">does not support</a> truncate change events, this is effectively the same as specifying <code>none</code>.</p>
+<p>A comma-separated list of the operation types that you want the connector to skip during streaming.
+You can configure the connector to skip the following types of operations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>c</code> (insert/create)</p>
+</li>
+<li>
+<p><code>u</code> (update)</p>
+</li>
+<li>
+<p><code>d</code> (delete)</p>
+</li>
+<li>
+<p><code>t</code> (truncate)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Set the value to <code>none</code> if you do not want the connector to skip any operations.
+Because MongoDB <a href="https://www.mongodb.com/docs/manual/reference/change-events/#operation-types">does not support</a> truncate change events, setting the default <code>t</code> value has the same effect as setting the value to <code>none</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -4475,8 +4673,9 @@ After the next failure, the connector stops, and user intervention is required t
 </tr>
 </tbody>
 </table>
+</div>
 <div class="sect3">
-<h4 id="debezium-mongodb-connector-kafka-signals-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-kafka-signals-configuration-properties"></a>Debezium connector Kafka signals configuration properties</h4>
+<h4 id="debezium-mongodb-connector-pass-through-kafka-signals-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-pass-through-kafka-signals-configuration-properties"></a>Pass-through properties for configuring how the MongoDB connector interacts with the Kafka signaling topic</h4>
 <div class="paragraph">
 <p>Debezium provides a set of <code>signal.*</code> properties that control how the connector interacts with the Kafka signals topic.</p>
 </div>
@@ -4484,7 +4683,7 @@ After the next failure, the connector stops, and user intervention is required t
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Kafka signals configuration properties</caption>
+<caption class="title">Table 13. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -4533,7 +4732,7 @@ The signaling topic must have a single partition.</p>
 <p>kafka-signal</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The name of the group ID  that is used by Kafka consumers.</p>
+<p>The name of the group ID that is used by Kafka consumers.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -4544,7 +4743,7 @@ The signaling topic must have a single partition.</p>
 <p>No default</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A list of host/port pairs that the connector uses for establishing an initial connection to the Kafka cluster.
+<p>A list of the host and port pairs that the connector uses to establish its initial connection to the Kafka cluster.
 Each pair references the Kafka cluster that is used by the Debezium Kafka Connect process.</p>
 </div></div></td>
 </tr>
@@ -4559,38 +4758,16 @@ Each pair references the Kafka cluster that is used by the Debezium Kafka Connec
 <p>An integer value that specifies the maximum number of milliseconds that the connector waits when polling signals.</p>
 </div></div></td>
 </tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="mongodb-kafka-consumer-offset-commit-enabled"></a><a href="#mongodb-kafka-consumer-offset-commit-enabled"><code>kafka.consumer.offset.commit.enabled</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>false</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Enable the offset commit for the signal topic in order to guarantee At-Least-Once delivery. If disabled, only signals received when the consumer is up&amp;running are processed. Any signals received when the consumer is down are lost.</p>
-</div></div></td>
-</tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="debezium-mongodb-connector-pass-through-signals-kafka-consumer-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-pass-through-signals-kafka-consumer-configuration-properties"></a>Debezium connector pass-through signals Kafka consumer client configuration properties</h4>
+<h4 id="debezium-mongodb-connector-pass-through-kafka-sink-notification-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-pass-through-kafka-sink-notification-configuration-properties"></a>Pass-through properties for configuring the MongoDB connector sink notification channel</h4>
 <div class="paragraph">
-<p>The Debezium connector provides for pass-through configuration of the signals Kafka consumer.
-Pass-through signals properties begin with the prefix <code>signals.consumer.*</code>.
-For example, the connector passes properties such as <code>signal.consumer.security.protocol=SSL</code> to the Kafka consumer.</p>
-</div>
-<div class="paragraph">
-<p>Debezium strips the prefixes from the properties before it passes the properties to the Kafka signals consumer.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="debezium-mongodb-connector-kafka-notifications-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-kafka-notifications-configuration-properties"></a>Debezium connector sink notifications configuration properties</h4>
-<div class="paragraph">
-<p>The following table describes the <code>notification</code> properties.</p>
+<p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Sink notification configuration properties</caption>
+<caption class="title">Table 14. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -4676,7 +4853,7 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <p>The following example illustrates how tags modify the default MBean name.</p>
 </div>
 <div class="exampleblock">
-<div class="title">Example 1. How custom tags modify the connector MBean name</div>
+<div class="title">Example 2. How custom tags modify the connector MBean name</div>
 <div class="content">
 <div class="paragraph">
 <p>By default, the MongoDB connector uses the following MBean name for streaming metrics:
@@ -4864,6 +5041,17 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Whether the snapshot completed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-snaps-metric-snapshotskipped_mongodb"></a><a href="#connectors-snaps-metric-snapshotskipped_mongodb"><code>SnapshotSkipped</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>boolean</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Whether the snapshot was skipped.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -5565,7 +5753,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/30d3c9d97a6a03eb62af00286a7ba9e2ac5804b7">30d3c9d9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
             
         </div>
     </footer>

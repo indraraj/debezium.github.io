@@ -94,13 +94,16 @@
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">Connectors</span>
+    <span class="nav-text">Source Connectors</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="index.html">Overview</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mysql.html">MySQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mariadb.html">MariaDB</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="mongodb.html">MongoDB</a>
@@ -126,11 +129,20 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="spanner.html">Spanner</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="jdbc.html">JDBC</a>
-  </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="informix.html">Informix</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sink Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="index-sink.html">Overview</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
 </ul>
   </li>
@@ -275,10 +287,19 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.1/index.html">3.1</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.0/index.html">3.0</a>
         </li>
         <li class="version is-current">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/2.6/index.html">2.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/2.5/index.html">2.5</a>
@@ -315,7 +336,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
-    <li>Connectors</li>
+    <li>Sink Connectors</li>
     <li><a href="jdbc.html">JDBC</a></li>
   </ul>
 </nav>
@@ -324,28 +345,48 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">2.7</button>
         <div class="version-menu">
-                <a class="version" href="/documentation/reference/nightly/index.html">nightly</a>
-                <a class="version" href="/documentation/reference/2.6/index.html">2.6</a>
-                <a class="version is-current" href="/documentation/reference/2.7/index.html">2.7</a>
-                <a class="version" href="/documentation/reference/2.5/index.html">2.5</a>
-                <a class="version" href="/documentation/reference/2.4/index.html">2.4</a>
-                <a class="version" href="/documentation/reference/2.3/index.html">2.3</a>
-                <a class="version" href="/documentation/reference/2.2/index.html">2.2</a>
-                <a class="version is-missing" href="/documentation/reference/2.1/index.html">2.1</a>
-                <a class="version is-missing" href="/documentation/reference/2.0/index.html">2.0</a>
-                <a class="version is-missing" href="/documentation/reference/1.9/index.html">1.9</a>
+                        <a class="version" href="/documentation//reference/connectors/jdbc.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/jdbc.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.1/connectors/jdbc.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation//reference/3.0/connectors/jdbc.html" data-hash="true">3.0</a>
+                        <a class="version is-current" href="/reference/2.7/connectors/jdbc.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation//reference/2.6/connectors/jdbc.html" data-hash="true">2.6</a>
+                        <a class="version" href="/documentation//reference/2.5/connectors/jdbc.html" data-hash="true">2.5</a>
+                        <a class="version" href="/documentation//reference/2.4/connectors/jdbc.html" data-hash="true">2.4</a>
+                        <a class="version" href="/documentation//reference/2.3/connectors/jdbc.html" data-hash="true">2.3</a>
+                        <a class="version" href="/documentation//reference/2.2/connectors/jdbc.html" data-hash="true">2.2</a>
+                    <a class="version is-missing" href="#">2.1</a>
+                    <a class="version is-missing" href="#">2.0</a>
+                    <a class="version is-missing" href="#">1.9</a>
         </div>
         |
     </div>
     </div>
+    <script>
+        function updateAnchorsWithHash() {
+            const currentHash = window.location.hash;
+            if (currentHash) {
+                document.querySelectorAll('a[data-hash="true"]').forEach(link => {
+                    const baseHref = link.getAttribute('href').split('#')[0];
+                    link.setAttribute('href', baseHref + currentHash);
+                });
+            }
+        }
+
+        // Listen for hashchange and update anchors
+        window.addEventListener('hashchange', updateAnchorsWithHash);
+
+        // Update anchors on initial load
+        document.addEventListener('DOMContentLoaded', updateAnchorsWithHash);
+    </script>
   <div class="edit-this-page"><a href="https://github.com/debezium/debezium/edit/2.7/documentation/modules/ROOT/pages/connectors/jdbc.adoc">Edit this Page</a></div>
   </div>
 <div class="article-grid">
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
     <br/>
             If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
             
@@ -376,7 +417,15 @@
 <li><a href="#jdbc-connector-configuration">Debezium JDBC connector configuration</a></li>
 </ul>
 </li>
-<li><a href="#jdbc-connector-properties">Connector properties</a></li>
+<li><a href="#jdbc-connector-properties">Connector properties</a>
+<ul class="sectlevel2">
+<li><a href="#jdbc-connector-properties-generic">JDBC connector generic properties</a></li>
+<li><a href="#jdbc-connector-properties-connection">JDBC connector connection properties</a></li>
+<li><a href="#jdbc-connector-properties-runtime">JDBC connector runtime properties</a></li>
+<li><a href="#jdbc-connector-properties-extendable">JDBC connector extendable properties</a></li>
+<li><a href="#jdbc-connector-hibernate-passthrough-properties">JDBC connector <code>hibernate.*</code> passthrough properties</a></li>
+</ul>
+</li>
 <li><a href="#jdbc-faq">Frequently asked questions</a></li>
 </ul>
 </div>
@@ -586,6 +635,21 @@ To avoid this problem, apply the following settings in your environment:</p>
 <p>Create the database table and primary key mappings in advance.</p>
 </li>
 </ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If a column maps to a data type that isn&#8217;t permitted as a primary key for your target database, an explicit list of columns will be necessary in <code>primary.key.fields</code> excluding such columns.
+Consult your specific database vendor&#8217;s documentation for what data types are and are not permissible.</p>
 </div>
 </td>
 </tr>
@@ -1152,7 +1216,7 @@ If you find a mapping could be improved, please let us know.</p>
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/2.7.0.Beta2/debezium-connector-jdbc-2.7.0.Beta2-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/2.7.4.Final/debezium-connector-jdbc-2.7.4.Final-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -1326,10 +1390,14 @@ Information about the properties is organized as follows:</p>
 <li>
 <p><a href="#jdbc-connector-properties-extendable">JDBC connector extendable properties</a></p>
 </li>
+<li>
+<p><a href="#jdbc-connector-hibernate-passthrough-properties">JDBC connector <code>hibernate.*</code> passthrough properties</a></p>
+</li>
 </ul>
 </div>
-<table id="jdbc-connector-properties-generic" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Generic properties</caption>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-generic"><a class="anchor" href="#jdbc-connector-properties-generic"></a>JDBC connector generic properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1406,8 +1474,10 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 </tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-connection" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. JDBC connector connection properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-connection"><a class="anchor" href="#jdbc-connector-properties-connection"></a>JDBC connector connection properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1511,8 +1581,10 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 </tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-runtime" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. JDBC connector runtime properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-runtime"><a class="anchor" href="#jdbc-connector-properties-runtime"></a>JDBC connector runtime properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1678,7 +1750,7 @@ You can set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fi
 When <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> and the event&#8217;s key is a primitive type, it is expected that this property specifies the column name to be used for the key.<br>
 <br>
 When the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, it is expected that this property specifies a comma-separated list of field names from either the key or value.
-If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, and this property is not specifies, the connector derives the primary key from all fields of either the record key or record value, depending on the specified mode.</p>
+If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, and this property is not specified, the connector derives the primary key from all fields of either the record key or record value, depending on the specified mode.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1727,8 +1799,16 @@ The connector adds missing columns to the table by comparing the incoming event&
 <p><code>${topic}</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies a string that determines how the destination table name is formatted, based on the topic name of the event.
-The placeholder, <code>${topic}</code>, is replaced by the topic name.</p>
+<p>Specifies a string pattern that the connector uses to construct the names of destination tables.<br>
+When the property is set to its default value, <code>${topic}</code>, after the connector reads an event from Kafka, it writes the event record to a destination table with a name that matches the name of the source topic.<br>
+<br>
+You can also configure this property to extract values from specific fields in incoming event records and then use those values to dynamically generate the names of target tables.
+This ability to generate table names from values in the message source would otherwise require the use of a custom Kafka Connect single message transformation (SMT).<br>
+<br>
+To configure the property to dynamically generate the names of destination tables, set its value to a pattern such as <code>${source._field_}</code>.
+When you specify this type of pattern, the connector extracts values from the <code>source</code> block of the Debezium change event, and then uses those values to construct the table name.
+For example, you might set the value of the property to the pattern <code>${source.schema}_${source.table}</code>.
+Based on this pattern, if the connector reads an event in which the <code>schema</code> field in the source block contains the value, <code>user</code>, and the <code>table</code> field contains the value, <code>tab</code>, the connector writes the event record to a table with the name <code>user_tab</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1842,8 +1922,10 @@ If you include this property in the configuration, do not set the <code>field.in
 </tr>
 </tbody>
 </table>
-<table id="jdbc-connector-properties-extendable" class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. JDBC connector extendable properties</caption>
+</div>
+<div class="sect2">
+<h3 id="jdbc-connector-properties-extendable"><a class="anchor" href="#jdbc-connector-properties-extendable"></a>JDBC connector extendable properties</h3>
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -1896,6 +1978,19 @@ The default behavior is to:<br></p>
 </tbody>
 </table>
 </div>
+<div class="sect2">
+<h3 id="jdbc-connector-hibernate-passthrough-properties"><a class="anchor" href="#jdbc-connector-hibernate-passthrough-properties"></a>JDBC connector <code>hibernate.*</code> passthrough properties</h3>
+<div class="paragraph">
+<p>Kafka Connect supports passthrough configuration, enabling you to modify the behavior of an underlying system by passing certain properties directly from the connector configuration.
+By default, some Hibernate properties are exposed via the JDBC connector <a href="#jdbc-connector-properties-connection">connection properties</a> (for example, <code>connection.url</code>, <code>connection.username</code>, and <code>connection.pool.*_size</code>),
+and through the connector&#8217;s <a href="#jdbc-connector-properties-runtime">runtime properties</a> (for example, <code>database.time_zone</code>, <code>quote.identifiers</code>).</p>
+</div>
+<div class="paragraph">
+<p>If you want to customize other Hibernate behavior, you can take advantage of the passthrough mechanism by adding properties that use the <code>hibernate.*</code> namespace to the connector configuration.
+For example, to assist Hibernate in resolving the type and version of the target database, you can add the <code>hibernate.dialect</code> property and set it to the fully qualified class name of the database, for example, <code>org.hibernate.dialect.MariaDBDialect</code>.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect1">
 <h2 id="jdbc-faq"><a class="anchor" href="#jdbc-faq"></a>Frequently asked questions</h2>
@@ -1947,7 +2042,7 @@ Quoting behavior is dialect-specific, and varies among different types of databa
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2024 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2a6bb4a90176487cc38ff8cde10232cb213dc6cf">2a6bb4a9</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/2da43af5db7d86c1ead7a101531db65f6163c676">2da43af5</a></span>)
             
         </div>
     </footer>
