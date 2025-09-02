@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -202,9 +203,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -317,6 +315,9 @@
           <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
         </li>
         <li class="version">
@@ -374,6 +375,7 @@
         <div class="version-menu">
                         <a class="version" href="/documentation//reference/connectors/sqlserver.html" data-hash="true">nightly</a>
                         <a class="version is-current" href="/reference/stable/connectors/sqlserver.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/connectors/sqlserver.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/sqlserver.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/sqlserver.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/sqlserver.html" data-hash="true">2.7</a>
@@ -829,7 +831,7 @@ If the table schema is not present in the history topic, the connector fails to 
 </li>
 <li>
 <p>No schema changes were applied to the table between the LSNs of the earliest and latest change table entry that the connector reads.
-For information about capturing data from a new table that has undergone structural changes, see <a href="#db2-capturing-data-from-new-tables-with-schema-changes">[db2-capturing-data-from-new-tables-with-schema-changes]</a>.</p>
+For information about capturing data from a new table that has undergone structural changes, see <a href="#sqlserver-capturing-data-from-new-tables-with-schema-changes">Capturing data from tables not captured by the initial snapshot (schema change)</a>.</p>
 </li>
 </ul>
 </div>
@@ -2317,9 +2319,9 @@ The connector uses the stored schema representation to produce change events tha
 Based on the schema information that the connector reads from the database schema history topic, the connector applies the table structures that existed at the position where the connector restarts.</p>
 </div>
 <div class="paragraph">
-<p>If you update the schema of a Db2 table that is in capture mode, it&#8217;s important that you also update the schema of the corresponding change table.
+<p>If you update the schema of a SQL Server table that is in capture mode, it&#8217;s important that you also update the schema of the corresponding change table.
 You must be a SQL Server database administrator with elevated privileges to update database schema.
-For more information about updating SQL Server database schema in Debezium environmenbts, see <a href="#sqlserver-schema-evolution">Database schema evolution</a>.</p>
+For more information about updating SQL Server database schema in Debezium environments, see <a href="#sqlserver-schema-evolution">Database schema evolution</a>.</p>
 </div>
 <div class="paragraph">
 <p>The database schema history topic is for internal connector use only.
@@ -2469,7 +2471,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.2.0.Final",
+      "version": "3.2.1.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 0,
@@ -3094,7 +3096,7 @@ be sure that your settings permit the connector to capture the required primary 
       "email": "john.doe@example.org"
     },
     "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-      "version": "3.2.0.Final",
+      "version": "3.2.1.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729468470,
@@ -3272,7 +3274,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
       "email": "noreply@example.org"
     },
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.2.0.Final",
+      "version": "3.2.1.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729995937,
@@ -3419,7 +3421,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
     },
     "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.2.0.Final",
+      "version": "3.2.1.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559730445243,
@@ -4752,7 +4754,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.2.0.Final/debezium-connector-sqlserver-3.2.0.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.2.1.Final/debezium-connector-sqlserver-3.2.1.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -7929,7 +7931,7 @@ The values will incorporate any differences between the clocks on the machines w
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f3e388a7a17d7334b0115934dc8ee44c7266b60a">f3e388a7</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/631c331561a12f7ed8da8636ed3e4798b5d90bef">631c3315</a></span>)
             
         </div>
     </footer>

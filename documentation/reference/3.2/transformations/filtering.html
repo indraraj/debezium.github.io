@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -202,9 +203,6 @@
     <a class="nav-link" href="decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -317,6 +315,9 @@
           <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
         </li>
         <li class="version">
@@ -374,6 +375,7 @@
         <div class="version-menu">
                         <a class="version" href="/documentation//reference/transformations/filtering.html" data-hash="true">nightly</a>
                         <a class="version is-current" href="/reference/stable/transformations/filtering.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/transformations/filtering.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/transformations/filtering.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/transformations/filtering.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/transformations/filtering.html" data-hash="true">2.7</a>
@@ -448,7 +450,8 @@ For example:</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>The filter SMT supports scripting languages that integrate with <a href="https://jcp.org/en/jsr/detail?id=223">JSR 223</a> (Scripting for the Java&#8482; Platform) and incubating support for Go (<a href="https://tinygo.org/">TinyGo</a> + <a href="https://webassembly.org/">WebAssembly</a>).</p>
+<p>The filter SMT supports scripting languages that integrate with <a href="https://jcp.org/en/jsr/detail?id=223">JSR 223</a> (Scripting for the Java&#8482; Platform).
+Support for using Go to write SMTs is currently incubating (<a href="https://tinygo.org/">TinyGo</a> and <a href="https://webassembly.org/">WebAssembly</a>).</p>
 </div>
 </div>
 </div>
@@ -468,7 +471,10 @@ After you obtain the script engine files, you add them to your Debezium connecto
 <h2 id="_go"><a class="anchor" href="#_go"></a>Go</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Debezium offers a community maintained helper PDK(Plugin Development Kit) to ease the use with Go, you can get it with:</p>
+<p>Debezium offers a community-maintained helper PDK(Plugin Development Kit) to facilitate use with Go.</p>
+</div>
+<div class="paragraph">
+<p>You can obtain the Debezium SMT Go PDK by entering the following command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -476,7 +482,7 @@ After you obtain the script engine files, you add them to your Debezium connecto
 </div>
 </div>
 <div class="paragraph">
-<p>A minimal filtering logic would look like:</p>
+<p>The following example shows how you might use Go to implement minimal filtering logic:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -495,10 +501,11 @@ func main() {}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>main</code> function is required by the Wasm compilation target and the <code>process</code> function is the entrypoint to execute the actual filtering logic.</p>
+<p>In the preceding example, the <code>main</code> function is required by the Wasm compilation target.
+The <code>process</code> function is the entry point for executing the actual filtering logic.</p>
 </div>
 <div class="paragraph">
-<p>To compile the filter we suggest to use a recent version of TinyGo, for example:</p>
+<p>To compile the filter code to Wasm, use a recent version of TinyGo, as in the following example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -510,7 +517,7 @@ func main() {}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can find more details in the PDK repository: <a href="https://github.com/debezium/debezium-smt-go-pdk">Debezium SMT Go PDK</a>.</p>
+<p>For more information about using Go to develop Debezium single message transformations, see the PDK repository: <a href="https://github.com/debezium/debezium-smt-go-pdk">Debezium SMT Go PDK</a>.</p>
 </div>
 </div>
 </div>
@@ -519,7 +526,7 @@ func main() {}</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For security reasons, the filter SMT is not included with the Debezium connector archives.
-Instead, it is provided in a separate artifact, <code>debezium-scripting-3.2.0.Final.tar.gz</code>.</p>
+Instead, it is provided in a separate artifact, <code>debezium-scripting-3.2.1.Final.tar.gz</code>.</p>
 </div>
 <div class="paragraph">
 <p>To use the content-based routing SMT with a Debezium connector plug-in, you must explicitly add the SMT artifact to your Kafka Connect environment.
@@ -532,7 +539,7 @@ To ensure that scripting expressions can be run only by authorized users, be sur
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-scripting/3.2.0.Final/debezium-scripting-3.2.0.Final.tar.gz">scripting SMT archive</a></p>
+<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-scripting/3.2.1.Final/debezium-scripting-3.2.1.Final.tar.gz">scripting SMT archive</a></p>
 </li>
 <li>
 <p>Extract the contents of the archive into the Debezium plug-in directories of your Kafka Connect environment.</p>
@@ -949,7 +956,7 @@ It should be either <code>wasm.chicory</code> or <code>wasm.chicory-interpreter<
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f3e388a7a17d7334b0115934dc8ee44c7266b60a">f3e388a7</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/631c331561a12f7ed8da8636ed3e4798b5d90bef">631c3315</a></span>)
             
         </div>
     </footer>

@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -205,9 +206,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -256,6 +254,9 @@
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -275,6 +276,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-operator.html">Debezium Operator</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
@@ -318,6 +322,9 @@
         </li>
         <li class="version">
           <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -377,6 +384,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/sqlserver.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation//reference/stable/connectors/sqlserver.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/connectors/sqlserver.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/sqlserver.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/sqlserver.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/sqlserver.html" data-hash="true">2.7</a>
@@ -483,6 +491,7 @@
 <li><a href="#online-schema-updates">Online schema updates</a></li>
 </ul>
 </li>
+<li><a href="#sqlserver-notifications">Notifications</a></li>
 <li><a href="#sqlserver-monitoring">Monitoring</a>
 <ul class="sectlevel2">
 <li><a href="#customized-mbean-names">Customized MBean names</a></li>
@@ -837,7 +846,7 @@ If the table schema is not present in the history topic, the connector fails to 
 </li>
 <li>
 <p>No schema changes were applied to the table between the LSNs of the earliest and latest change table entry that the connector reads.
-For information about capturing data from a new table that has undergone structural changes, see <a href="#db2-capturing-data-from-new-tables-with-schema-changes">[db2-capturing-data-from-new-tables-with-schema-changes]</a>.</p>
+For information about capturing data from a new table that has undergone structural changes, see <a href="#sqlserver-capturing-data-from-new-tables-with-schema-changes">Capturing data from tables not captured by the initial snapshot (schema change)</a>.</p>
 </li>
 </ul>
 </div>
@@ -2325,9 +2334,9 @@ The connector uses the stored schema representation to produce change events tha
 Based on the schema information that the connector reads from the database schema history topic, the connector applies the table structures that existed at the position where the connector restarts.</p>
 </div>
 <div class="paragraph">
-<p>If you update the schema of a Db2 table that is in capture mode, it&#8217;s important that you also update the schema of the corresponding change table.
+<p>If you update the schema of a SQL Server table that is in capture mode, it&#8217;s important that you also update the schema of the corresponding change table.
 You must be a SQL Server database administrator with elevated privileges to update database schema.
-For more information about updating SQL Server database schema in Debezium environmenbts, see <a href="#sqlserver-schema-evolution">Database schema evolution</a>.</p>
+For more information about updating SQL Server database schema in Debezium environments, see <a href="#sqlserver-schema-evolution">Database schema evolution</a>.</p>
 </div>
 <div class="paragraph">
 <p>The database schema history topic is for internal connector use only.
@@ -2477,7 +2486,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.2.0.Final",
+      "version": "3.3.0.Alpha2",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 0,
@@ -3102,7 +3111,7 @@ be sure that your settings permit the connector to capture the required primary 
       "email": "john.doe@example.org"
     },
     "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-      "version": "3.2.0.Final",
+      "version": "3.3.0.Alpha2",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729468470,
@@ -3280,7 +3289,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
       "email": "noreply@example.org"
     },
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.2.0.Final",
+      "version": "3.3.0.Alpha2",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729995937,
@@ -3427,7 +3436,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
     },
     "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.2.0.Final",
+      "version": "3.3.0.Alpha2",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559730445243,
@@ -4749,7 +4758,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="https://zookeeper.apache.org/">Apache ZooKeeper</a>, <a href="http://kafka.apache.org/">Apache Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
+<p><a href="http://kafka.apache.org/">Apache Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
 </li>
 <li>
 <p>SQL Server is installed, is <a href="#setting-up-sqlserver">configured for CDC</a>, and is ready to be used with the Debezium connector.</p>
@@ -4760,7 +4769,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.2.0.Final/debezium-connector-sqlserver-3.2.0.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.3.0.Alpha2/debezium-connector-sqlserver-3.3.0.Alpha2-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -4777,7 +4786,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 </ol>
 </div>
 <div class="paragraph">
-<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s container images</a> for Åpache ZooKeeper, Apache Kafka, and Kafka Connect.
+<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s container images</a> for Apache Kafka and Kafka Connect.
 You can pull the official <a href="https://hub.docker.com/_/microsoft-mssql-server">container images for Microsoft SQL Server on Linux</a> from Docker Hub.</p>
 </div>
 <div class="admonitionblock important">
@@ -6592,6 +6601,39 @@ Set the value to <code>0</code> (zero) to remove the timeout limit.</p>
 The connector will read the table contents in multiple batches of this size. Defaults to <code>0</code> which means no limit.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="sqlserver-property-extended-headers-enabled"></a><a href="#sqlserver-property-extended-headers-enabled"><code>extended.headers.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>true</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This property specifies whether Debezium adds context headers with the prefix <code>__debezium.context.</code> to the messages that it emits.</p>
+</div>
+<div class="paragraph">
+<p>These headers are required by the OpenLineage integration and provide metadata that enables downstream processing systems to track and identify the sources of change events.</p>
+</div>
+<div class="paragraph">
+<p>The property adds following headers:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>__debezium.context.connectorLogicalName</code></dt>
+<dd>
+<p>The logical name of the Debezium connector.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.taskId</code></dt>
+<dd>
+<p>The unique identifier of the connector task.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.connectorName</code></dt>
+<dd>
+<p>The name of the Debezium connector.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -7072,7 +7114,9 @@ However, offline updates might not be feasible for use with applications that re
 <p>Start the Debezium connector.</p>
 </li>
 <li>
-<p>After the Debezium connector starts streaming from the new capture table, drop the old capture table by running the stored procedure <code>sys.sp_cdc_disable_table</code> with the parameter <code>@capture_instance</code> set to the old capture instance name.</p>
+<p>After the Debezium connector starts streaming from the new capture table, drop the old capture table by running the stored procedure <code>sys.sp_cdc_disable_table</code> with the parameter <code>@capture_instance</code> set to the old capture instance name.
+The connector emits a notification after it finishes reading from the old capture instance.
+For more information, see <a href="#sqlserver-notifications">Notifications</a>.</p>
 </li>
 </ol>
 </div>
@@ -7110,7 +7154,9 @@ If your application does not tolerate such a transition period, it is best to us
 <p>Create a new capture table for the update source table by running the <code>sys.sp_cdc_enable_table</code> stored procedure with a unique value for the parameter <code>@capture_instance</code>.</p>
 </li>
 <li>
-<p>When Debezium starts streaming from the new capture table, you can drop the old capture table by running the <code>sys.sp_cdc_disable_table</code> stored procedure with the parameter <code>@capture_instance</code> set to the old capture instance name.</p>
+<p>After Debezium starts streaming from the new capture table, you can drop the old capture table by running the <code>sys.sp_cdc_disable_table</code> stored procedure with the parameter <code>@capture_instance</code> set to the old capture instance name.
+The connector emits a notification after it finishes reading from the old capture instance.
+For more information, see <a href="#sqlserver-notifications">Notifications</a>.</p>
 </li>
 </ol>
 </div>
@@ -7208,10 +7254,41 @@ GO</code></pre>
 </div>
 </div>
 <div class="sect1">
+<h2 id="sqlserver-notifications"><a class="anchor" href="#sqlserver-notifications"></a>Notifications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you enable notifications for the connector, after you make a schema change, the connector emits a notification to report the status of the change.
+For more information about notifications and how to enable them, see the <a href="../configuration/notification.html#debezium-notification" class="xref page">Debezium notifications documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows a status notification that Debezium might emit after a schema evolution change.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+      "id":"ff81ba59-15ea-42ae-b5d0-4d74f1f4038f",
+      "aggregate_type":"Capture Instance",
+      "type":"COMPLETED",
+      "additional_data":{
+         "connector_name":"my-connector",
+         "capture_instance":"dbo_customers",
+         "server":"server1",
+         "database":"testDB",
+         "start_lsn":"00000027:00000758:0003",
+         "stop_lsn":"00000028:00000759:0004",
+         "commit_lsn":"00000029:00000760:0005"
+      },
+      "timestamp": "1695817046353"
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="sqlserver-monitoring"><a class="anchor" href="#sqlserver-monitoring"></a>Monitoring</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Debezium SQL Server connector provides three types of metrics that are in addition to the built-in support for JMX metrics that Zookeeper, Kafka, and Kafka Connect provide.
+<p>The Debezium SQL Server connector provides three types of metrics that are in addition to the built-in support for JMX metrics that Kafka and Kafka Connect provide.
 The connector provides the following metrics:</p>
 </div>
 <div class="ulist">
@@ -7937,7 +8014,7 @@ The values will incorporate any differences between the clocks on the machines w
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
             
         </div>
     </footer>

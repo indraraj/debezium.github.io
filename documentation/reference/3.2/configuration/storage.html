@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -202,9 +203,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -317,6 +315,9 @@
           <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
         </li>
         <li class="version">
@@ -374,6 +375,7 @@
         <div class="version-menu">
                         <a class="version" href="/documentation//reference/configuration/storage.html" data-hash="true">nightly</a>
                         <a class="version is-current" href="/reference/stable/configuration/storage.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/configuration/storage.html" data-hash="true">3.3</a>
                     <a class="version is-missing" href="#">3.1</a>
                     <a class="version is-missing" href="#">3.0</a>
                     <a class="version is-missing" href="#">2.7</a>
@@ -1513,7 +1515,7 @@ record_insert_seq   INTEGER NOT NULL)</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>SELECT id, history_data, history_data_seq FROM %s
+<pre>SELECT id, history_data FROM %s
     ORDER BY record_insert_ts, record_insert_seq, id, history_data_seq</pre>
 </div>
 </div>
@@ -2416,7 +2418,7 @@ This field must include a value if <a href="#schema-history-internal-rocketmq-ac
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f3e388a7a17d7334b0115934dc8ee44c7266b60a">f3e388a7</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/631c331561a12f7ed8da8636ed3e4798b5d90bef">631c3315</a></span>)
             
         </div>
     </footer>

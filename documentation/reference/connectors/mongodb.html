@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -205,9 +206,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -256,6 +254,9 @@
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -275,6 +276,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-operator.html">Debezium Operator</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
@@ -318,6 +322,9 @@
         </li>
         <li class="version">
           <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -377,6 +384,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/mongodb.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation//reference/stable/connectors/mongodb.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/connectors/mongodb.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/mongodb.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/mongodb.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/mongodb.html" data-hash="true">2.7</a>
@@ -2487,7 +2495,7 @@ The value of this field is the document&#8217;s identifier represented as a stri
     "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
       "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}", <i class="conum" data-value="6"></i><b>(6)</b>
       "source": { <i class="conum" data-value="7"></i><b>(7)</b>
-        "version": "3.2.0.Final",
+        "version": "3.3.0.Alpha2",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2701,7 +2709,7 @@ There is a new structured field <code>updateDescription</code> with a few additi
         "truncatedArrays": null
       },
       "source": { <i class="conum" data-value="6"></i><b>(6)</b>
-        "version": "3.2.0.Final",
+        "version": "3.3.0.Alpha2",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2843,7 +2851,7 @@ It is thus possible if multiple updates are closely following one after the othe
       "ts_ns": 1465495462115748263, <i class="conum" data-value="2"></i><b>(2)</b>
       "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",<i class="conum" data-value="3"></i><b>(3)</b>
       "source": { <i class="conum" data-value="4"></i><b>(4)</b>
-        "version": "3.2.0.Final",
+        "version": "3.3.0.Alpha2",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -3032,7 +3040,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="https://zookeeper.apache.org/">Apache Zookeeper</a>, <a href="http://kafka.apache.org/">Apache Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
+<p><a href="http://kafka.apache.org/">Apache Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
 </li>
 <li>
 <p>MongoDB is installed and is <a href="#setting-up-mongodb">set up to work with the Debezium connector</a>.</p>
@@ -3044,7 +3052,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <ol class="arabic">
 <li>
 <p>Download the
-<a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mongodb/3.2.0-SNAPSHOT/debezium-connector-mongodb-3.2.0-20250709.120434-175-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
+<a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mongodb/3.3.0-SNAPSHOT/debezium-connector-mongodb-3.3.0-20250902.060019-216-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
@@ -3058,7 +3066,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 </ol>
 </div>
 <div class="paragraph">
-<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Apache Zookeeper, Apache Kafka, and Kafka Connect with the MongoDB connector already installed and ready to run.</p>
+<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s container images</a> for Apache Kafka and Kafka Connect with the MongoDB connector already installed and ready to run.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -3607,6 +3615,15 @@ Set <a href="#mongodb-property-capture-mode-full-update-type">capture.mode.full.
 <p><code>update</code> events do not include the full document, but include a field that represents the state of the document <code>before</code> the change.</p>
 </dd>
 </dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-capture-start-op-time"></a><a href="#mongodb-property-capture-start-op-time"><code>capture.start.op.time</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the <a href="https://www.mongodb.com/docs/manual/changeStreams/#ref-start-time-id1">startAtOperationTime</a> change stream parameter. The value ought to be a long representation of Bson timestamp.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -4671,6 +4688,39 @@ After the next failure, the connector stops, and user intervention is required t
 </dl>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-extended-headers-enabled"></a><a href="#mongodb-property-extended-headers-enabled"><code>extended.headers.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>true</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This property specifies whether Debezium adds context headers with the prefix <code>__debezium.context.</code> to the messages that it emits.</p>
+</div>
+<div class="paragraph">
+<p>These headers are required by the OpenLineage integration and provide metadata that enables downstream processing systems to track and identify the sources of change events.</p>
+</div>
+<div class="paragraph">
+<p>The property adds following headers:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>__debezium.context.connectorLogicalName</code></dt>
+<dd>
+<p>The logical name of the Debezium connector.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.taskId</code></dt>
+<dd>
+<p>The unique identifier of the connector task.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.connectorName</code></dt>
+<dd>
+<p>The name of the Debezium connector.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4803,7 +4853,7 @@ This property is required when you configure the <a href="#mongodb-property-noti
 <h2 id="mongodb-monitoring"><a class="anchor" href="#mongodb-monitoring"></a>Monitoring</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Debezium MongoDB connector has two metric types in addition to the built-in support for JMX metrics that Zookeeper, Kafka, and Kafka Connect have.</p>
+<p>The Debezium MongoDB connector has two metric types in addition to the built-in support for JMX metrics that Kafka and Kafka Connect have.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -5753,7 +5803,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
             
         </div>
     </footer>

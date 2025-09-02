@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -205,9 +206,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -256,6 +254,9 @@
     <a class="nav-link" href="../integrations/tracing.html">OpenTelemetry</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -275,6 +276,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-operator.html">Debezium Operator</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
@@ -318,6 +322,9 @@
         </li>
         <li class="version">
           <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -377,6 +384,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/postgresql.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation//reference/stable/connectors/postgresql.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/connectors/postgresql.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/postgresql.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/postgresql.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/postgresql.html" data-hash="true">2.7</a>
@@ -2580,7 +2588,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2784,7 +2792,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -2933,7 +2941,7 @@ as a primary key change. For a primary key change, in place of sending an <code>
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -3073,7 +3081,7 @@ The message key is <code>null</code> in this case, the message value looks like 
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -3216,7 +3224,7 @@ The message value looks like this for transactional messages:</p>
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -3252,7 +3260,7 @@ The message value looks like this for non-transactional messages:</p>
     "schema": { ... },
     "payload": {
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.2.0.Final",
+            "version": "3.3.0.Alpha2",
             "connector": "postgresql",
             "name": "PostgreSQL_server",
             "ts_ms": 1559033904863,
@@ -5172,7 +5180,7 @@ shared_preload_libraries = 'decoderbufs' <i class="conum" data-value="1"></i><b>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Instructs the server to load the <code>decoderbufs</code> logical decoding plug-ins at startup (the name of the plug-in is set in the <a href="https://github.com/debezium/postgres-decoderbufs/blob/v3.2.0.Final/Makefile"><code>Protobuf</code></a> make file).</td>
+<td>Instructs the server to load the <code>decoderbufs</code> logical decoding plug-ins at startup (the name of the plug-in is set in the <a href="https://github.com/debezium/postgres-decoderbufs/blob/v3.3.0.Alpha2/Makefile"><code>Protobuf</code></a> make file).</td>
 </tr>
 </table>
 </div>
@@ -5696,7 +5704,7 @@ If necessary, you can confirm whether the connector read all changes from the re
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="https://zookeeper.apache.org/">Zookeeper</a>, <a href="http://kafka.apache.org/">Kafka</a>, and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
+<p><a href="http://kafka.apache.org/">Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> are installed.</p>
 </li>
 <li>
 <p>PostgreSQL is installed and is <a href="#setting-up-postgresql">set up to run the Debezium connector</a>.</p>
@@ -5707,7 +5715,7 @@ If necessary, you can confirm whether the connector read all changes from the re
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/3.2.0.Final/debezium-connector-postgres-3.2.0.Final-plugin.tar.gz">PostgreSQL connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/3.3.0.Alpha2/debezium-connector-postgres-3.3.0.Alpha2-plugin.tar.gz">PostgreSQL connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -5721,7 +5729,8 @@ If necessary, you can confirm whether the connector read all changes from the re
 </ol>
 </div>
 <div class="paragraph">
-<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s Container images</a> for Zookeeper, Kafka, PostgreSQL and Kafka Connect with the PostgreSQL connector already installed and ready to run. You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
+<p>If you are working with immutable containers, see <a href="https://quay.io/organization/debezium">Debezium&#8217;s container images</a> for Kafka, PostgreSQL and Kafka Connect with the PostgreSQL connector already installed and ready to run.
+You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -8065,6 +8074,39 @@ After the next failure, the connector stops, and user intervention is required t
 Set the value to <code>0</code> (zero) to remove the timeout limit.</p>
 </div></div></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="postgresql-property-extended-headers-enabled"></a><a href="#postgresql-property-extended-headers-enabled"><code>extended.headers.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>true</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This property specifies whether Debezium adds context headers with the prefix <code>__debezium.context.</code> to the messages that it emits.</p>
+</div>
+<div class="paragraph">
+<p>These headers are required by the OpenLineage integration and provide metadata that enables downstream processing systems to track and identify the sources of change events.</p>
+</div>
+<div class="paragraph">
+<p>The property adds following headers:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>__debezium.context.connectorLogicalName</code></dt>
+<dd>
+<p>The logical name of the Debezium connector.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.taskId</code></dt>
+<dd>
+<p>The unique identifier of the connector task.</p>
+</dd>
+<dt class="hdlist1"><code>__debezium.context.connectorName</code></dt>
+<dd>
+<p>The name of the Debezium connector.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -8226,7 +8268,7 @@ For example, the connector passes properties such as <code>driver.foobar=false</
 <h2 id="postgresql-monitoring"><a class="anchor" href="#postgresql-monitoring"></a>Monitoring</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Debezium PostgreSQL connector provides two types of metrics that are in addition to the built-in support for JMX metrics that Zookeeper, Kafka, and Kafka Connect provide.</p>
+<p>The Debezium PostgreSQL connector provides two types of metrics that are in addition to the built-in support for JMX metrics that Kafka and Kafka Connect provide.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -8832,8 +8874,10 @@ The values will incorporate any differences between the clocks on the machines w
 <div class="sectionbody">
 <div class="paragraph">
 <p>Debezium is a distributed system that captures all changes in multiple upstream databases; it never misses or loses an event.
-When the system is operating normally or being managed carefully then Debezium provides <em>exactly once</em> delivery of every change event record.
-If a fault does happen then the system does not lose any events.
+When the system is operating normally or being managed carefully then Debezium provides <em>exactly once</em> delivery of every change event record.</p>
+</div>
+<div class="paragraph">
+<p>If a fault does happen then the system does not lose any events.
 However, while it is recovering from the fault, it&#8217;s possible that the connector might emit some duplicate change events.
 In these abnormal situations, Debezium, like Kafka, provides <em>at least once</em> delivery of change events.</p>
 </div>
@@ -9047,7 +9091,7 @@ For example, verify that the configuration includes the correct values for the f
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
             
         </div>
     </footer>

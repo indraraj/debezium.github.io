@@ -36,6 +36,7 @@
         <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
         <a class="navbar-item" href="/releases">RELEASES</a>
         <a class="navbar-item" href="/community">COMMUNITY</a>
+        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
         <a class="navbar-item" href="/blog">BLOG</a>
       </div>
     </div>
@@ -205,9 +206,6 @@
     <a class="nav-link" href="../transformations/decode-logical-decoding-message-content.html">Decode Logical Decoding Message Content</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#transformations/convert-cloudevent-to-saveable-form.adoc">Convert CloudEvents to Saveable Form</a>
-  </li>
-  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
   </li>
 </ul>
@@ -255,6 +253,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="tracing.html">OpenTelemetry</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
@@ -275,6 +276,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-server.html">Debezium Server</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../operations/debezium-operator.html">Debezium Operator</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../operations/debezium-platform.html">Debezium Management Platform</a>
@@ -318,6 +322,9 @@
         </li>
         <li class="version">
           <a href="/documentation/reference/3.2/index.html">3.2</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -377,6 +384,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/reference/integrations/testcontainers.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation//reference/stable/integrations/testcontainers.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/3.3/integrations/testcontainers.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.1/integrations/testcontainers.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/integrations/testcontainers.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/integrations/testcontainers.html" data-hash="true">2.7</a>
@@ -489,7 +497,7 @@ allowing you to focus on the essential logic of your tests.</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.debezium&lt;/groupId&gt;
   &lt;artifactId&gt;debezium-testing-testcontainers&lt;/artifactId&gt;
-  &lt;version&gt;3.2.0.Final&lt;/version&gt;
+  &lt;version&gt;3.3.0.Alpha2&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
@@ -539,7 +547,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
                 .withNetworkAliases("postgres"); <i class="conum" data-value="3"></i><b>(3)</b>
 
     public static DebeziumContainer debeziumContainer =
-            new DebeziumContainer("quay.io/debezium/connect:3.2.0.Final")
+            new DebeziumContainer("quay.io/debezium/connect:3.3.0.Alpha2")
                 .withNetwork(network)
                 .withKafka(kafkaContainer)
                 .dependsOn(kafkaContainer); <i class="conum" data-value="4"></i><b>(4)</b>
@@ -569,7 +577,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set up a container for Kafka Connect with Debezium 3.2.0.Final</td>
+<td>Set up a container for Kafka Connect with Debezium 3.3.0.Alpha2</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -705,7 +713,7 @@ private List&lt;ConsumerRecord&lt;String, String&gt;&gt; drain(
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/137a4020d362a818e968c25b65e8c0056b53ed90">137a4020</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
             
         </div>
     </footer>
