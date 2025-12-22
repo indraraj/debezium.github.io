@@ -15,10 +15,6 @@
 </head>
 <body class="article">
 <header class="header">
-  <div id="rhbar">
-      <a class="jbdevlogo" href="https://developers.redhat.com"></a>
-      <a class="rhlogo" href="https://www.redhat.com"></a>
-  </div>
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
@@ -151,6 +147,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mongodb-sink.html">MongoDB Sink</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -200,6 +199,9 @@
     <a class="nav-link" href="../transformations/timezone-converter.html">Timezone Converter</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/geometry-format-transformer.html">Geometry Format Conversion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -207,6 +209,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
   </li>
 </ul>
   </li>
@@ -321,10 +326,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.2/index.html">3.2</a>
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -383,8 +391,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/vitess.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/vitess.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/vitess.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/vitess.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation//reference/3.2/connectors/vitess.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/vitess.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/vitess.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/vitess.html" data-hash="true">2.7</a>
@@ -549,6 +558,13 @@ As a result, the connector is unable to read the entire history of the database 
 For this reason, the first time that the connector starts, it performs an initial consistent snapshot of the database.
 You can change this behavior by setting the <a href="#vitess-property-snapshot-mode"><code>snapshot.mode</code> connector configuration property</a> to a value other than <code>initial</code>.
 This snapshot feature is built on <a href="https://vitess.io/docs/design-docs/vreplication/vstream/vscopy/">VStream Copy</a> introduced in version 7.0.</p>
+</div>
+<div class="paragraph">
+<p>+
+When starting from an empty GTID, you can control which tables are copied during the snapshot phase by setting
+the <a href="#vitess-property-snapshot-include-collection-list"><code>snapshot.include.collection.list</code> connector
+configuration property</a> to specify a comma-separated list of table patterns. If this property is not set or is empty,
+all tables are copied during the snapshot phase.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1359,7 +1375,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1531,7 +1547,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1676,7 +1692,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -2437,7 +2453,7 @@ Represents the number of milliseconds elapsed since the UNIX epoch, and does not
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="http://kafka.apache.org/">Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/3.3.0.Alpha2/debezium-connector-vitess-3.3.0.Alpha2-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>.
+<p>With <a href="http://kafka.apache.org/">Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/3.4.0.Final/debezium-connector-vitess-3.4.0.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>.
 You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
@@ -3321,6 +3337,32 @@ Set the property to one of the following values:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="vitess-property-snapshot-include-collection-list"></a><a href="#vitess-property-snapshot-include-collection-list"><code>snapshot.include.collection.list</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>none</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional, comma-separated list of regular expressions that match the fully-qualified names of tables to include in the snapshot when using VStream Copy.<br></p>
+</div>
+<div class="paragraph">
+<p>The connector uses this property to determine which tables should be copied during the snapshot phase (VStream when starting from an empty GTID.
+Table names must be specified in the format <code>keyspace.table</code>. You can use regular expressions to match multiple tables. For example:
+<code>test_keyspace.numeric_.*,test_keyspace.string_.*</code></p>
+</div>
+<div class="paragraph">
+<p>If this property is not set or is empty, all tables are copied during the snapshot phase.</p>
+</div>
+<div class="paragraph">
+<p>This property only applies when <code>snapshot.mode</code> is set to <code>initial</code> or the connector resumes from an empty GTID.</p>
+</div>
+<div class="paragraph">
+<p>When starting from a non-empty GTID (such as <code>current</code>, or a valid binlog position),
+the copy phase is skipped regardless of this setting.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="vitess-property-time-precision-mode"></a><a href="#vitess-property-time-precision-mode"><code>time.precision.mode</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -3906,7 +3948,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/24bf66eb5494c69e3909dd363ffc477795ac5457">24bf66eb</a></span>)
             
         </div>
     </footer>

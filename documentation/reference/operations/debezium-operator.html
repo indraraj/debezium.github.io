@@ -4,6 +4,7 @@
         <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Debezium Operator :: Debezium Documentation</title>
+    <link rel="canonical" href="https://debezium.io/documentation/reference/stable/operations/debezium-operator.html">
     <meta name="generator" content="Antora 3.1.7">
 <link rel="stylesheet" href="../../debezium-antora/css/site.css">
 <link rel="stylesheet" href="../../debezium-antora/css/debezium-antora.css">
@@ -14,10 +15,6 @@
 </head>
 <body class="article">
 <header class="header">
-  <div id="rhbar">
-      <a class="jbdevlogo" href="https://developers.redhat.com"></a>
-      <a class="rhlogo" href="https://www.redhat.com"></a>
-  </div>
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
@@ -150,6 +147,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/jdbc.html">JDBC</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/mongodb-sink.html">MongoDB Sink</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -199,6 +199,9 @@
     <a class="nav-link" href="../transformations/timezone-converter.html">Timezone Converter</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/geometry-format-transformer.html">Geometry Format Conversion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -206,6 +209,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
   </li>
 </ul>
   </li>
@@ -320,10 +326,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.2/index.html">3.2</a>
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -382,8 +391,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/operations/debezium-operator.html" data-hash="true">nightly</a>
-                    <a class="version is-missing" href="#">3.2</a>
+                        <a class="version" href="/documentation//reference/stable/operations/debezium-operator.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/operations/debezium-operator.html" data-hash="true">3.3</a>
+                    <a class="version is-missing" href="#">3.2</a>
                     <a class="version is-missing" href="#">3.1</a>
                     <a class="version is-missing" href="#">3.0</a>
                     <a class="version is-missing" href="#">2.7</a>
@@ -525,25 +535,11 @@ You can install the operator to an existing namespace, or to a new namespace.</p
 helm install my-debezium-operator debezium/debezium-operator --version 3.2.0-final -n debezium</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Due to a versioning problem, you must currently specify a version number, even if you just want to install the last stable version.</p>
-</div>
-</td>
-</tr>
-</table>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>You can find the available versions of the operator in the <a href="https://charts.debezium.io/index.yaml">Debezium Helm Chart Repository</a>.</p>
-</div>
-</li>
-</ol>
 </div>
 </div>
 </div>
@@ -3744,7 +3740,7 @@ spec:
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/24bf66eb5494c69e3909dd363ffc477795ac5457">24bf66eb</a></span>)
             
         </div>
     </footer>

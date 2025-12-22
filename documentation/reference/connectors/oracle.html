@@ -15,10 +15,6 @@
 </head>
 <body class="article">
 <header class="header">
-  <div id="rhbar">
-      <a class="jbdevlogo" href="https://developers.redhat.com"></a>
-      <a class="rhlogo" href="https://www.redhat.com"></a>
-  </div>
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
@@ -151,6 +147,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="jdbc.html">JDBC</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mongodb-sink.html">MongoDB Sink</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -200,6 +199,9 @@
     <a class="nav-link" href="../transformations/timezone-converter.html">Timezone Converter</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/geometry-format-transformer.html">Geometry Format Conversion</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/timescaledb.html">TimescaleDB Integration</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -207,6 +209,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
   </li>
 </ul>
   </li>
@@ -321,10 +326,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.2/index.html">3.2</a>
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.2/index.html">3.2</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.1/index.html">3.1</a>
@@ -383,8 +391,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/oracle.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/oracle.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/oracle.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/oracle.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation//reference/3.2/connectors/oracle.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/oracle.html" data-hash="true">3.1</a>
                         <a class="version" href="/documentation//reference/3.0/connectors/oracle.html" data-hash="true">3.0</a>
                         <a class="version" href="/documentation//reference/2.7/connectors/oracle.html" data-hash="true">2.7</a>
@@ -443,11 +452,13 @@
 <li><a href="#debezium-oracle-incremental-snapshots">Incremental snapshots</a></li>
 <li><a href="#connector-custom-snapshot">Custom snapshotter SPI</a></li>
 <li><a href="#oracle-blocking-snapshots">Blocking snapshots</a></li>
+<li><a href="#oracle-drop-transaction-signal">Dropping a transaction</a></li>
 <li><a href="#oracle-topic-names">Topic names</a></li>
 <li><a href="#oracle-schema-history-topic">Schema history topic</a></li>
 <li><a href="#oracle-schema-change-topic">Schema change topic</a></li>
 <li><a href="#oracle-transaction-metadata">Transaction Metadata</a></li>
 <li><a href="#oracle-logminer-mining-strategies">LogMiner Mining Strategies</a></li>
+<li><a href="#oracle-logminer-mining-database">Using a downstream mining database</a></li>
 <li><a href="#oracle-logminer-query-modes">Query Modes</a></li>
 <li><a href="#oracle-event-buffering">Event buffering</a></li>
 <li><a href="#scn-jumps">SCN gap detection</a></li>
@@ -466,12 +477,14 @@
 </li>
 <li><a href="#oracle-data-type-mappings">Data type mappings</a>
 <ul class="sectlevel2">
+<li><a href="#oracle-unsupported-types">Unsupported data types</a></li>
 <li><a href="#oracle-character-types">Character types</a></li>
 <li><a href="#oracle-binary-character-lob-types">Binary and Character LOB types</a></li>
 <li><a href="#oracle-numeric-types">Numeric types</a></li>
 <li><a href="#oracle-boolean-types">Boolean types</a></li>
 <li><a href="#oracle-temporal-types">Temporal types</a></li>
 <li><a href="#oracle-rowid-types">ROWID types</a></li>
+<li><a href="#oracle-vector-types">Vector types</a></li>
 <li><a href="#oracle-xml-types">XML types</a></li>
 <li><a href="#oracle-user-defined-types">User-defined types</a></li>
 <li><a href="#oracle-supplied-types">Oracle-supplied types</a></li>
@@ -492,7 +505,7 @@
 <li><a href="#tables-that-the-debezium-oracle-connector-excludes-when-capturing-change-events">Tables excluded from capture</a></li>
 <li><a href="#_preparing_the_database">Preparing the database</a></li>
 <li><a href="#oracle-redo-log-sizing">Redo log sizing</a></li>
-<li><a href="#_archive_log_destinations">Archive log destinations</a></li>
+<li><a href="#archive-log-destinations">Archive log destinations</a></li>
 <li><a href="#creating-users-for-the-connector">Creating a user account for the connector</a></li>
 <li><a href="#support-for-oracle-standby-databases">Standby databases</a></li>
 <li><a href="#support-for-extended-max-string-size">Extended max string size</a></li>
@@ -1456,10 +1469,11 @@ Debezium currently supports the <code>incremental</code> and <code>blocking</cod
 <p>To specify the tables to include in the snapshot, provide a <code>data-collections</code> array that lists the tables, or an array of regular expressions used to match tables, for example,<br></p>
 </div>
 <div class="paragraph">
-<p><code>{"data-collections": ["public.MyFirstTable", "public.MySecondTable"]}</code><br></p>
+<p><code>{"data-collections": ["public.MyFirstTable", "public.MySecondTable"]}</code></p>
 </div>
 <div class="paragraph">
-<p>The <code>data-collections</code> array for an incremental snapshot signal has no default value.
+<p>Data collection names are case-sensitive.
+The <code>data-collections</code> array for an incremental snapshot signal has no default value.
 If the <code>data-collections</code> array is empty, Debezium interprets the empty array to mean that no action is required, and it does not perform a snapshot.</p>
 </div>
 <div class="admonitionblock note">
@@ -1481,7 +1495,7 @@ For example, to include a table that exists in the <code><strong>public</strong>
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1512,78 +1526,84 @@ For example, to include a table that exists in the <code><strong>public</strong>
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
-values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
-    'execute-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
-    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
-    "type":"incremental", <i class="conum" data-value="5"></i><b>(5)</b>
-    "additional-conditions":[{"data-collection": "db1.schema1.table1" ,"filter":"color=\'blue\'"}]}'); <i class="conum" data-value="6"></i><b>(6)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data)
+values ('ad-hoc-1',
+    'execute-snapshot',
+    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"],
+    "type":"incremental",
+    "additional-conditions":[{"data-collection": "db1.schema1.table1" ,"filter":"color=\'blue\'"}]}');</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>,<code>type</code>, and <code>data</code> parameters in the command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.<br>
-The following table describes the parameters in the example:</p>
+<p>The values of the <code>id</code>,<code>type</code>, and <code>data</code> parameters in the command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.
+The following list describes the parameters in the preceding example:</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Descriptions of fields in a SQL command for sending an incremental snapshot signal to the signaling table</caption>
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database.schema.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.<br>
-Use this string to identify logging messages to entries in the signaling table.
-Debezium does not use this string.
-Rather, during the snapshot, Debezium generates its own <code>id</code> string as a watermarking signal.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>execute-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>type</code> parameter specifies the operation that the signal is intended to trigger.<br></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A required component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to include in the snapshot.<br>
-The array lists regular expressions that use the format <code>database.schema.table</code> to match the fully-qualified names of the tables.
-This format is the same as the one that you use to specify the name of the connector&#8217;s <a href="../configuration/signalling.html#format-for-specifying-fully-qualified-names-for-data-collections" class="xref page">signaling table</a>.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional <code>type</code> component of the <code>data</code> field of a signal that specifies the type of snapshot operation to run.<br>
-Valid values are <code>incremental</code> and <code>blocking</code>.<br>
-If you do not specify a value, the connector defaults to performing an incremental snapshot.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.<br>
-Each additional condition is an object with <code>data-collection</code> and <code>filter</code> properties.
-You can specify different filters for each data collection.<br>
-* The <code>data-collection</code> property is the fully-qualified name of the data collection that the filter applies to.
-For more information about the <code>additional-conditions</code> parameter, see <a href="#oracle-incremental-snapshots-additional-conditions">Running an ad hoc incremental snapshots with <code>additional-conditions</code></a>.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>INSERT INTO database.schema.debezium_signal</code></dt>
+<dd>
+<p>Specifies the fully-qualified name of the signaling table on the source database.</p>
+</dd>
+<dt class="hdlist1"><code>values</code></dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>id</code></dt>
+<dd>
+<p>The <code>id</code> parameter contains the value <code>ad-hoc</code>, an arbitrary string that serves as the <code>id</code> identifier for the signal request.</p>
+</dd>
+<dt class="hdlist1"><code>type</code></dt>
+<dd>
+<p>The <code>type</code> parameter specifies the type of operation to perform, in this case, <code>execute-snapshot</code>.</p>
+</dd>
+<dt class="hdlist1"><code>data</code></dt>
+<dd>
+<p>The the <code>data</code> field of a signal contains the following fields:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>data-collections</code></dt>
+<dd>
+<p>An array of table names or regular expressions to match table names to include in the snapshot.</p>
+</dd>
+<dt class="hdlist1"><code>type</code></dt>
+<dd>
+<p>An optional <code>type</code> component of the <code>data</code> field of a signal that specifies the type of snapshot operation to run.</p>
+<div class="paragraph">
+<p>Valid values are <code>incremental</code> and <code>blocking</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you do not specify a value, the connector defaults to performing an incremental snapshot.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>additional-conditions</code></dt>
+<dd>
+<p>An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.
+Each additional condition in the array is an object with <code>data-collection</code> and <code>filter</code> properties.</p>
+<div class="paragraph">
+<p>Each <code>data-collection</code> in the <code>additional-conditions</code> array is specified by its fully-qualified name.
+You can specify one or more data collections.
+Each collection can be paired with an optional <code>filter</code> parameter.
+You can pair a unique filter with each data collection.
+The value of a <code>filter</code> property consists a column label and a value.
+When the snapshot runs, for each collection that is named in the array, it captures only the rows that contain the specified filter criteria.</p>
+</div>
+<div class="paragraph">
+<p>In the example, for the <code>table1</code> data collection, the signal results in a snapshot that captures only the rows that include the field <code>color</code> where the field value is <code>'blue'</code>.</p>
+</div>
+<div class="paragraph">
+<p>For more information about the <code>additional-conditions</code> parameter, see <a href="#oracle-incremental-snapshots-additional-conditions">Running an ad hoc incremental snapshots with <code>additional-conditions</code></a>.</p>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+</dl>
+</div>
 </li>
 </ol>
 </div>
@@ -1666,9 +1686,9 @@ For example, using the <code>products</code> table from the previous example, yo
     },
     "source": {
         ...
-        "snapshot":"incremental" <i class="conum" data-value="1"></i><b>(1)</b>
+        "snapshot":"incremental"
     },
-    "op":"r", <i class="conum" data-value="2"></i><b>(2)</b>
+    "op":"r",
     "ts_ms":"1620393591654",
     "ts_us":"1620393591654547",
     "ts_ns":"1620393591654547920",
@@ -1678,37 +1698,22 @@ For example, using the <code>products</code> table from the previous example, yo
 </div>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Description of fields in an incremental snapshot event message</caption>
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 66.6668%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the type of snapshot operation to run.<br>
-Currently, the only valid options are <code>blocking</code> and <code>incremental</code>.<br>
-Specifying a <code>type</code> value in the SQL query that you submit to the signaling table is optional.<br>
-If you do not specify a value, the connector runs an incremental snapshot.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>op</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the event type.<br>
-The value for snapshot events is <code>r</code>, signifying a <code>READ</code> operation.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding example of an incremental snapshot event message:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>snapshot</code></dt>
+<dd>
+<p>Specifies the type of the snapshot.</p>
+</dd>
+<dt class="hdlist1"><code>op</code></dt>
+<dd>
+<p>Specifies the type of operation.
+For snapshot events, the value of the <code>op</code> field value is <code>r</code>, because a snapshot is a <code>READ</code> operation.</p>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect3">
 <h4 id="oracle-triggering-an-incremental-snapshot-kafka"><a class="anchor" href="#oracle-triggering-an-incremental-snapshot-kafka"></a>Using the Kafka signaling channel to trigger an incremental snapshot</h4>
@@ -1725,7 +1730,7 @@ The value for snapshot events is <code>r</code>, signifying a <code>READ</code> 
 <p>The signal type is <code>execute-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Execute snapshot data fields</caption>
+<caption class="title">Table 3. Execute snapshot data fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -1752,22 +1757,38 @@ See the next section for more details.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array of comma-separated regular expressions that match the fully-qualified names of tables to include in the snapshot.<br>
-Specify the names by using the same format as is required for the <a href="#oracle-property-signal-data-collection">signal.data.collection</a> configuration option.</p>
+<p>An array of comma-separated regular expressions that match the fully-qualified names of tables to include in the snapshot.</p>
+</div>
+<div class="paragraph">
+<p>Specify the names by using the same format as is required for the <a href="#oracle-property-signal-data-collection">signal.data.collection</a> configuration option.
+Data collection names are case-sensitive.</p>
 </div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An optional array of additional conditions that specifies criteria that the connector evaluates to designate a subset of records to include in a snapshot.<br>
-Each additional condition is an object that specifies the criteria for filtering the data that an ad hoc snapshot captures.
-You can set the following parameters for each additional condition:
-<code>data-collection</code>:: The fully-qualified name of the table that the filter applies to.
-You can apply different filters to each table.
-<code>filter</code>:: Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
-<br>
-The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.</p>
+<p>An optional array of additional conditions that specifies criteria that the connector evaluates to designate a subset of records to include in a snapshot.</p>
+</div>
+<div class="paragraph">
+<p>Each additional condition is an object that specifies the criteria for filtering the data that an ad hoc snapshot captures.
+You can set the following parameters for each additional condition:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>data-collection</code></dt>
+<dd>
+<p>The fully-qualified name of the table that the filter applies to.
+You can apply different filters to each table.</p>
+</dd>
+<dt class="hdlist1"><code>filter</code></dt>
+<dd>
+<p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -1889,7 +1910,7 @@ values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
 The following table describes the parameters in the example:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
+<caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
 <colgroup>
 <col style="width: 11.1111%;">
 <col style="width: 22.2222%;">
@@ -1955,7 +1976,7 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <p>The signal type is <code>stop-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Execute snapshot data fields</caption>
+<caption class="title">Table 5. Execute snapshot data fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -2229,6 +2250,80 @@ The behavior of the property is similar to the behavior of the <code>table.inclu
 <div class="title">Possible duplicates</div>
 <p>A delay might exist between the time that you send the signal to trigger the snapshot, and the time when streaming stops and the snapshot starts.
 As a result of this delay, after the snapshot completes, the connector might emit some event records that duplicate records captured by the snapshot.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="oracle-drop-transaction-signal"><a class="anchor" href="#oracle-drop-transaction-signal"></a>Dropping a transaction</h3>
+<div class="paragraph">
+<p>You can use Debezium signaling to send a <code>drop-transaction</code> signal to the connector at run time to remove a transaction from the LogMiner buffer.
+Removing a transaction can be helpful when a long-running transaction negatively affects connector performance.</p>
+</div>
+<div class="paragraph">
+<p>A long-running transaction prevents the connector from processing subsequent change events.
+Further, the stalled transaction can result in excessive memory buffering, affect log mining continuity, and result in SCN (system change number) drift, a condition in which the connector’s current SCN falls behind the range that is available in the redo logs.</p>
+</div>
+<div class="paragraph">
+<p>During normal processing, Debezium periodically flushes offsets to the Kafka Connect offset topic.
+If a transaction runs longer than the defined offset flush interval, the connector is unable to commit an offset.
+If the connector restarts after the last known offset is removed from the redo logs, it cannot find the resume point, which results in an error.</p>
+</div>
+<div class="paragraph">
+<p>By submitting a <code>drop-transaction</code> signal, you can avoid errors by removing a problem transaction from the connector&#8217;s internal LogMiner buffer before it results in negative consequences.</p>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>The connector is configured to use one of the available <a href="configuration/signalling.adoc#sending-signals-to-a-debezium-connector">Debezium signaling channels</a>.</p>
+</li>
+<li>
+<p>You have access to the connector log file and can identify the ID of the transaction that you want to drop.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>After you drop a transaction, the connector abandons uncommitted changes for that transaction and does not emit change events for them.
+Use the <code>drop-transaction</code> signal only when you are certain that the transaction should not be processed.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<div class="title">Procedure</div>
+<ul>
+<li>
+<p>Send a signal that includes the standard <code>id</code>, <code>type</code>, and <code>data</code> properties of a Debezium signal to your preferred signaling channel.
+In the  <code>data</code> component of the signal, specify the ID of the transaction that you want to remove.</p>
+<div class="paragraph">
+<p>For example, to drop a transaction with ID <code>1a.2b.001f</code>, send the signal based on your chosen signal channel:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example SQL using the <code>source</code> signal channel</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO debezium.debezium_signal VALUES('drop-tx-1', 'drop-transaction', '{"transaction-id": "1a.2b.001f"}');</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example message payload using the <code>kafka</code> signal channel</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "type": "drop-transaction",
+  "data": {
+    "transaction-id": "1a.2b.001f"
+  }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
@@ -2507,7 +2602,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.3.0.Alpha2",
+      "version": "3.4.0.Final",
       "connector": "oracle",
       "name": "server1",
       "ts_ms": 1588252618953,
@@ -2616,7 +2711,7 @@ The message contains a logical representation of the table schema.</p>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Descriptions of fields in messages emitted to the schema change topic</caption>
+<caption class="title">Table 6. Descriptions of fields in messages emitted to the schema change topic</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 40%;">
@@ -2966,6 +3061,103 @@ If you require streaming <code>CLOB</code>, <code>BLOB</code>, or <code>XML</cod
 </td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="oracle-logminer-mining-database"><a class="anchor" href="#oracle-logminer-mining-database"></a>Using a downstream mining database</h3>
+<div class="paragraph">
+<p>You can use the Debezium Oracle connector to capture changes from an Oracle Database mining database.
+Log mining operations consume system resources and increase the load on a database, which can result in decreased performance.
+Configuring the connector to perform change data capture processing on a secondary mining database, can reduce the load on the primary database.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This feature is in an incubating state. This means that exact semantics, configuration options, and other details may change in future revisions based on feedback.
+Please let us know your specific requirements or if you encounter any problems while using this feature.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>An Oracle downstream mining database is configured and synchronized with the primary instance.</p>
+</li>
+<li>
+<p>The downstream mining database has access to the external dictionary file that the primary database instance generates.</p>
+</li>
+<li>
+<p>The connector configuration includes following key properties:</p>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>log.mining.strategy</code></dt>
+<dd>
+<p>This property is set to <code>dictionary_from_file</code>.</p>
+</dd>
+<dt class="hdlist1"><code>internal.log.mining.read.only</code></dt>
+<dd>
+<p>This property is set to <code>true</code> to enable capturing changes from a downstream mining database, rather than from the primary instance.</p>
+</dd>
+<dt class="hdlist1"><code>log.mining.read.only.hostname</code></dt>
+<dd>
+<p>Specifies the hostname of the downstream mining database from which you want the Debezium Oracle connector to read and capture transaction logs.
+Because the connector uses this downstream mining instance to capture changes, changes must be replicated from the primary to the downstream instance before Debezium can emit change events.</p>
+</dd>
+<dt class="hdlist1"><code>log.mining.path.dictionary</code></dt>
+<dd>
+<p>Specifies the absolute file path on the downstream mining database server where Oracle LogMiner can access the data dictionary file that is exported from the primary Oracle instance.
+The LogMiner process on the downstream database must have access to the specified path.</p>
+</dd>
+</dl>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_how_this_works"><a class="anchor" href="#_how_this_works"></a>How this works</h4>
+<div class="paragraph">
+<p>When Debezium Oracle connector is configured to capture changes from a downstream mining database, the connector operates as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The primary Oracle instance generates an external dictionary file containing the database schema and metadata information.</p>
+</li>
+<li>
+<p>This dictionary file is made available to the downstream mining database at the specified path.</p>
+</li>
+<li>
+<p>The connector connects to the downstream mining database and uses LogMiner with the external dictionary file to read transaction logs.</p>
+</li>
+<li>
+<p>Changes are captured from the downstream mining database without impacting the primary database performance.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_important_considerations"><a class="anchor" href="#_important_considerations"></a>Important considerations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Ensure that network and file access settings permit the mining database to access the dictionary file and redo logs on the primary database.</p>
+</li>
+<li>
+<p>Keep the dictionary file on the primary instance updated to ensure that it properly reflects schema changes.</p>
+</li>
+<li>
+<p>To prevent issues with schema change detection, keep the dictionary file on the mining database synchronized with the file on the primary.</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -3719,7 +3911,7 @@ This field is only present when using the LogMiner connection adapter.</p>
             "EMAIL": "annek@noanswer.org"
         },
         "source": {
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "name": "server1",
             "ts_ms": 1520085154000,
             "ts_us": 1520085154000000,
@@ -3820,7 +4012,7 @@ You can use the <a href="../configuration/avro.html#avro-serialization" class="x
             "EMAIL": "anne@example.com"
         },
         "source": {
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "name": "server1",
             "ts_ms": 1520085811000,
             "ts_us": 1520085811000000,
@@ -3923,7 +4115,7 @@ The <code>schema</code> portion of the <em>delete</em> event is identical to the
         },
         "after": null,
         "source": {
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "name": "server1",
             "ts_ms": 1520085153000,
             "ts_us": 1520085153000000,
@@ -4000,7 +4192,7 @@ The message key is <code>null</code> in this case, the message value looks like 
         "before": null,
         "after": null,
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.3.0.Alpha2",
+            "version": "3.4.0.Final",
             "connector": "oracle",
             "name": "oracle_server",
             "ts_ms": 1638974535000,
@@ -4033,7 +4225,7 @@ The message key is <code>null</code> in this case, the message value looks like 
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Descriptions of <em>truncate</em> event value fields</caption>
+<caption class="title">Table 7. Descriptions of <em>truncate</em> event value fields</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -4163,7 +4355,55 @@ For more information about how Debezium properties control mappings for these da
 </div>
 <div class="paragraph">
 <p>Support for further data types is planned for subsequent releases.
-Please file a <a href="https://issues.redhat.com/browse/DBZ">JIRA issue</a> for any specific types that might be missing.</p>
+Please file a <a href="https://github.com/debezium/dbz/issues">GitHub issue</a> for any specific types that might be missing.</p>
+</div>
+<div class="sect2">
+<h3 id="oracle-unsupported-types"><a class="anchor" href="#oracle-unsupported-types"></a>Unsupported data types</h3>
+<div class="paragraph">
+<p>The Debezium Oracle connector does not support the full range of data types that are used in Oracle.
+The connector cannot process columns that include the following types of data:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>BFILE (Binary file)</p>
+</li>
+<li>
+<p>BOOLEAN. For more information, see <a href="#oracle-boolean-types">Boolean types</a>.</p>
+</li>
+<li>
+<p>Direct Joins in the FROM clause of UPDATE and DELETE statements</p>
+</li>
+<li>
+<p>Data Use Case Domains</p>
+</li>
+<li>
+<p>JavaScript-based stored procedures</p>
+</li>
+<li>
+<p>LONG</p>
+</li>
+<li>
+<p>LONG RAW</p>
+</li>
+<li>
+<p>ROWID (not supported on XStream)</p>
+</li>
+<li>
+<p>Table value constructor (TVCs)</p>
+</li>
+<li>
+<p>UROWID (Universal ROWID)</p>
+</li>
+<li>
+<p>VECTOR</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the connector attempts to capture an event that includes a column with one of these unsupported data types, it skips the event and then continues to process subsequent events.
+The connector continues to process other columns and tables that are configured for capture, but data from the unsupported column is lost.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="oracle-character-types"><a class="anchor" href="#oracle-character-types"></a>Character types</h3>
@@ -4171,7 +4411,7 @@ Please file a <a href="https://issues.redhat.com/browse/DBZ">JIRA issue</a> for 
 <p>The following table describes how the connector maps basic character types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Mappings for Oracle basic character types</caption>
+<caption class="title">Table 8. Mappings for Oracle basic character types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4249,7 +4489,7 @@ Please file a <a href="https://issues.redhat.com/browse/DBZ">JIRA issue</a> for 
 <p>The following table describes how the connector maps binary and character large object (LOB) data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Mappings for Oracle binary and character LOB types</caption>
+<caption class="title">Table 9. Mappings for Oracle binary and character LOB types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4418,7 +4658,7 @@ For more information, see the <em>Semantic type and Notes</em> column in the fol
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Mappings for Oracle numeric data types</caption>
+<caption class="title">Table 10. Mappings for Oracle numeric data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4656,8 +4896,12 @@ zero_scale.decimal.mode=precise</code></pre>
 <div class="sect2">
 <h3 id="oracle-boolean-types"><a class="anchor" href="#oracle-boolean-types"></a>Boolean types</h3>
 <div class="paragraph">
-<p>Oracle does not provide native support for a <code>BOOLEAN</code> data type.
-However, it is common practice to use other data types with certain semantics to simulate the concept of a logical <code>BOOLEAN</code> data type.</p>
+<p>Beginning with Oracle 23, the database provides native support for a <code>BOOLEAN</code> data type.
+However, the Debezium connector for Oracle does not support this type.</p>
+</div>
+<div class="paragraph">
+<p>Earlier versions of Oracle did not include native support for Boolean types.
+In these earlier versions, some users adopted the practice of using other data types with certain semantics to simulate the concept of a logical <code>BOOLEAN</code> data type.</p>
 </div>
 <div class="paragraph">
 <p>To enable you to convert source columns to Boolean data types, Debezium provides a <code>NumberOneToBooleanConverter</code> <a href="../development/converters.html#custom-converters" class="xref page">custom converter</a> that you can use in one of the following ways:</p>
@@ -4957,7 +5201,7 @@ A string representation of a timestamp in UTC.</p>
 <p>The following table describes how the connector maps ROWID (row address) data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Mappings for Oracle ROWID data types</caption>
+<caption class="title">Table 11. Mappings for Oracle ROWID data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4997,6 +5241,12 @@ A string representation of a timestamp in UTC.</p>
 </table>
 </div>
 <div class="sect2">
+<h3 id="oracle-vector-types"><a class="anchor" href="#oracle-vector-types"></a>Vector types</h3>
+<div class="paragraph">
+<p>The Debezium connector for Oracle does not support the Oracle VECTOR data type.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="oracle-xml-types"><a class="anchor" href="#oracle-xml-types"></a>XML types</h3>
 <div class="admonitionblock note">
 <table>
@@ -5018,7 +5268,7 @@ Please let us know if you encounter any problems while using these data types.</
 <p>The following table describes how the connector maps XMLTYPE data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Mappings for Oracle XMLTYPE data types</caption>
+<caption class="title">Table 12. Mappings for Oracle XMLTYPE data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -5388,7 +5638,7 @@ If the redo log lacks sufficient capacity, both the database and the Debezium co
 </div>
 </div>
 <div class="sect2">
-<h3 id="_archive_log_destinations"><a class="anchor" href="#_archive_log_destinations"></a>Archive log destinations</h3>
+<h3 id="archive-log-destinations"><a class="anchor" href="#archive-log-destinations"></a>Archive log destinations</h3>
 <div class="paragraph">
 <p>Oracle database administrators can configure up to 31 different destinations for archive logs.
 Administrators can set parameters for each destination to designate it for a specific use, for example, log shipping for physical standbys, or external storage to allow for extended log retention.
@@ -5405,7 +5655,7 @@ If your Oracle environment includes multiple destinations that satisfy that crit
 <p>To specify the archive log destination that you want Debezium to use, set the <a href="#oracle-property-archive-destination-name"><code>archive.destination.name</code></a> property in the connector configuration.<br>
 <br>
 For example, suppose that a database is configured with two archive destination paths, <code>/path/one</code> and <code>/path/two</code>, and that the <code>V$ARCHIVE_DEST_STATUS</code> table associates these paths with destination names that are specified in the column <code>DEST_NAME</code>.
-If both destinations satisfy the criteria for Debezium&#8201;&#8212;&#8201;that is, their <code>status</code> is <code>VALID</code> and their <code>type</code> is <code>LOCAL</code>&#8201;&#8212;&#8201;to configure the connector to use the archive logs that the database writes to <code>/path/two</code>, set the value of <code>archive.destination.name</code> to the value in the <code>DEST_NAME</code> column that is associated with <code>/path/two</code> in the <code>V$ARCHIVE_DEST_STATUS</code> table.
+If both destinations satisfy the criteria for Debezium&#8201;&#8212;&#8201;that is, if their <code>status</code> is <code>VALID</code> and their <code>type</code> is <code>LOCAL</code>&#8201;&#8212;&#8201;to configure the connector to use the archive logs that the database writes to <code>/path/two</code>, set the value of <code>archive.destination.name</code> to the value in the <code>DEST_NAME</code> column that is associated with <code>/path/two</code> in the <code>V$ARCHIVE_DEST_STATUS</code> table.
 For example, if the <code>DEST_NAME</code> is <code>LOG_ARCHIVE_DEST_3</code> for <code>/path/two</code>, you would configure Debezium as follows:</p>
 </li>
 </ul>
@@ -5442,6 +5692,30 @@ Set the property to the name of an archive log destination in the <code>DEST_NAM
 <div class="paragraph">
 <p>If your Oracle environment includes multiple destinations that satisfy that criteria, and you fail to specify the preferred destination, the Debezium Oracle connector selects the destination path at random.
 Because the retention policy that is configured for each destination might differ, this can lead to errors if the connector selects a path from which the requested log data was deleted.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When using the Debezium Oracle connector in an environment where the standby uses a different archive destination name than the primary instance, the <code>archive.destination.name</code> property can include a comma-separated list of destination names.
+The values should be ordered by preference as the Debezium connector will use the first destination that is <code>LOCAL</code> and <code>VALID</code>.
+This is useful to minimize the reconfiguration necessary when the standby becomes the new primary during a failover scenario.</p>
+</div>
+<div class="paragraph">
+<p>For example, if the destination for the primary is <code>LOG_ARCHIVE_DEST_2</code> and the destination for the standby is <code>LOG_ARCHIVE_DEST_5</code>, set the <code>archive.destination.name</code> property to <code>LOG_ARCHIVE_DEST_2,LOG_ARCHIVE_DEST_5</code>.
+This will prioritize destination #2 and it will be used on the primary and destination #5 will be used on the standby.</p>
+</div>
+<div class="paragraph">
+<p>If the destination for CDC is the same for both the primary and standby instances, using a single value is sufficient.
+In fact, the property is only required if either instance has more than one archive destination that is both <code>LOCAL</code> and <code>VALID</code>.</p>
 </div>
 </td>
 </tr>
@@ -5543,7 +5817,7 @@ sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Descriptions of permissions / grants</caption>
+<caption class="title">Table 13. Descriptions of permissions / grants</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 40%;">
@@ -5752,7 +6026,7 @@ You can use the <code>internal.log.mining.read.only</code> property with an Orac
 <div class="sect2">
 <h3 id="support-for-extended-max-string-size"><a class="anchor" href="#support-for-extended-max-string-size"></a>Extended max string size</h3>
 <div class="paragraph">
-<p>The database parameter <code>max_string_size</code> controls how the Oracle database, and by extension, Debezium, interprets values for <code>VARCHAR2</code>, <code>NVARCHAR2</code>, and <code>RAW</code> fields.
+<p>The database parameter <code>max_string_size</code> controls how the Oracle database, and by extension, the Debezium Oracle connector, interprets values for <code>VARCHAR2</code>, <code>NVARCHAR2</code>, and <code>RAW</code> fields.
 The default, <code>STANDARD</code>, means the lengths for these data types align with the same limits with releases prior to Oracle 12c (4000 bytes for <code>VARCHAR2</code> and <code>NVARCHAR2</code> and 2000 bytes for <code>RAW</code>).
 When configured as <code>EXTENDED</code>, these columns now allow up to 32767 bytes of data to be stored.</p>
 </div>
@@ -5832,29 +6106,10 @@ For more information, see <a href="https://issues.redhat.com/browse/DBZ-8034">DB
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-oracle/3.3.0.Alpha2/debezium-connector-oracle-3.3.0.Alpha2-plugin.tar.gz">Oracle connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-oracle/3.4.0.Final/debezium-connector-oracle-3.4.0.Final-plugin.tar.gz">Oracle connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
-</li>
-<li>
-<p>Download the <a href="https://repo1.maven.org/maven2/com/oracle/database/jdbc/ojdbc11/21.15.0.0/ojdbc11-21.15.0.0.jar">JDBC driver for Oracle</a> from Maven Central and extract the downloaded driver file to the directory that contains the Debezium Oracle connector JAR file.</p>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-If you use the Debezium Oracle connector with Oracle XStream, obtain the JDBC driver as part of the Oracle Instant Client package.
-For more information, see <a href="#obtaining-oracle-jdbc-driver-and-xstreams-api-files">Obtaining the Oracle JDBC driver and XStream API files</a>.
-</td>
-</tr>
-</table>
-</div>
-</li>
-<li>
-<p>Download the <a href="https://repo1.maven.org/maven2/com/oracle/database/xml/xdb/21.15.0.0/xdb-21.15.0.0.jar">XDB library for Oracle</a> from Maven Central and extract the downloaded file to the directory that contains the Debezium Oracle connector JAR file.</p>
 </li>
 <li>
 <p>Add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>.</p>
@@ -7478,6 +7733,17 @@ Using a value of <code>0</code> will use the JDBC driver&#8217;s default fetch s
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-property-log-mining-readonly-hostname"></a><a href="#oracle-property-log-mining-readonly-hostname"><code>log.mining.readonly.hostname</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>null</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the hostname of the downstream read-only mining database from which you want the Debezium Oracle connector to capture transaction logs.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="oracle-property-log-mining-strategy"></a><a href="#oracle-property-log-mining-strategy"><code>log.mining.strategy</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -7504,6 +7770,11 @@ If the captured table(s) schema changes infrequently or never, this is the ideal
 <dd>
 <p>Uses a combination of the database&#8217;s current data dictionary and the Debezium in-memory schema model to resolve table and column names seamlessly.
 This mode performs at the level of the <code>online_catalog</code> LogMiner strategy with the schema tracking resilience of the <code>redo_log_catalog</code> strategy while not incurring the overhead of archive log generation and performance costs of the <code>redo_log_catalog</code> strategy.</p>
+</dd>
+<dt class="hdlist1"><code>dictionary_from_file</code></dt>
+<dd>
+<p>The connector uses the dictionary from a file located in an Oracle directory object.
+For more information, see <a href="#oracle-logminer-mining-database">Capturing changes from downstream mining databases</a>.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -7832,10 +8103,14 @@ Any transaction that exceeds this configured value is discarded entirely, and th
 <p>No default</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the configured Oracle archive destination to use when mining archive logs with LogMiner.<br>
-<br>
-The default behavior automatically selects the first valid, local configured destination.
+<p>Specifies the configured Oracle archive destination(s) to use when mining archive logs with LogMiner.</p>
+</div>
+<div class="paragraph">
+<p>The default behavior automatically selects the first valid, local configured destination.
 However, you can use a specific destination can be used by providing the destination name, for example, <code>LOG_ARCHIVE_DEST_5</code>.</p>
+</div>
+<div class="paragraph">
+<p>For information about specifying the archive destination in environments where the primary and standby instances use different names, see <a href="#archive-log-destinations">Archive log destinations</a>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -8045,9 +8320,14 @@ You can configure the connector to skip the following types of operations:</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Fully-qualified name of the data collection that is used to send <a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">signals</a> to the connector.
-When you use this property with an Oracle pluggable database (PDB), set its value to the name of the root database.<br>
-Use the following format to specify the collection name:<br>
-<code><em>&lt;databaseName&gt;</em>.<em>&lt;schemaName&gt;</em>.<em>&lt;tableName&gt;</em></code></p>
+When you use this property with an Oracle pluggable database (PDB), set its value to the name of the root database.
+The collection name is case-sensitive.</p>
+</div>
+<div class="paragraph">
+<p>Use the following format to specify the collection name:</p>
+</div>
+<div class="paragraph">
+<p><code><em>&lt;databaseName&gt;</em>.<em>&lt;schemaName&gt;</em>.<em>&lt;tableName&gt;</em></code></p>
 </div></div></td>
 </tr>
 <tr>
@@ -8319,6 +8599,44 @@ After the next failure, the connector stops, and user intervention is required t
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-property-guardrail-collections-max"></a><a href="#oracle-property-guardrail-collections-max"><code>guardrail.collections.max</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>0</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the maximum number of tables that the connector can capture.
+This limit applies not only to tables being captured for data changes but also to any tables whose schemas are tracked as part of schema history.
+Exceeding this limit triggers the action specified by <code>guardrail.collections.limit.action</code>.
+Set this property to  <code>0</code> to prevent the connector from triggering guardrail actions.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-property-guardrail-collections-limit-action"></a><a href="#oracle-property-guardrail-collections-limit-action"><code>guardrail.collections.limit.action</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>warn</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the action to trigger if the number of tables that the connector captures exceeds the number that you specify in the <code>guardrail.collections.max</code> property.
+Set the property to one of the following values:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>fail</code></dt>
+<dd>
+<p>The connector fails and reports an exception.</p>
+</dd>
+<dt class="hdlist1"><code>warn</code></dt>
+<dd>
+<p>The connector logs a warning.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="oracle-property-extended-headers-enabled"></a><a href="#oracle-property-extended-headers-enabled"><code>extended.headers.enabled</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -8361,7 +8679,7 @@ After the next failure, the connector stops, and user intervention is required t
 <p>The following table describes the <code>schema.history.internal</code> properties for configuring the Debezium connector.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Connector database schema history configuration properties</caption>
+<caption class="title">Table 14. Connector database schema history configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -8556,7 +8874,7 @@ schema.history.internal.consumer.ssl.key.password=test1234</code></pre>
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Kafka signals configuration properties</caption>
+<caption class="title">Table 15. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -8638,7 +8956,7 @@ Each pair references the Kafka cluster that is used by the Debezium Kafka Connec
 <h5 id="debezium-oracle-connector-pass-through-signals-kafka-consumer-client-configuration-properties"><a class="anchor" href="#debezium-oracle-connector-pass-through-signals-kafka-consumer-client-configuration-properties"></a>Pass-through properties for configuring the Kafka consumer client for the signaling channel</h5>
 <div class="paragraph">
 <p>The Debezium connector provides for pass-through configuration of the signals Kafka consumer.
-Pass-through signals properties begin with the prefix <code>signals.consumer.*</code>.
+Pass-through signals properties begin with the prefix <code>signal.consumer.*</code>.
 For example, the connector passes properties such as <code>signal.consumer.security.protocol=SSL</code> to the Kafka consumer.</p>
 </div>
 <div class="paragraph">
@@ -8651,7 +8969,7 @@ For example, the connector passes properties such as <code>signal.consumer.secur
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Sink notification configuration properties</caption>
+<caption class="title">Table 16. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -8787,9 +9105,9 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
+<col style="width: 35%;">
+<col style="width: 20%;">
 <col style="width: 45%;">
-<col style="width: 25%;">
-<col style="width: 30%;">
 </colgroup>
 <thead>
 <tr>
@@ -8819,6 +9137,21 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The number of milliseconds since the connector has read and processed the most recent event.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-snaps-metric-numberoferroneousevents_oracle"></a><a href="#connectors-snaps-metric-numberoferroneousevents_oracle"><code>NumberOfErroneousEvents</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Records the number of change events that the connector identifies as erroneous during a snapshot operation.
+The connector increments this metric each time that it encounters an event that it cannot process during an initial, incremental, or ad hoc snapshot.
+Events might fail processing if they are malformed, are incompatible with the schema, or if they encounter failures during transformation.
+The metric value persists for the lifetime of the connector task.
+If the snapshot is interrupted, and the connector task restarts, the metric count resets to <code>0</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -9097,9 +9430,9 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
+<col style="width: 35%;">
+<col style="width: 20%;">
 <col style="width: 45%;">
-<col style="width: 25%;">
-<col style="width: 30%;">
 </colgroup>
 <thead>
 <tr>
@@ -9129,6 +9462,21 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The number of milliseconds since the connector has read and processed the most recent event.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-numberoferroneousevents_oracle"></a><a href="#connectors-strm-metric-numberoferroneousevents_oracle"><code>NumberOfErroneousEvents</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Records the number of change events that the connector identifies as erroneous during streaming.
+The connector increments this metric each time that it encounters an event that it cannot process during the lifetime of the streaming session.
+Events might fail processing if they are malformed, are incompatible with the schema, or if they encounter failures during transformation.
+The metric value persists for the lifetime of the connector task.
+After a connector restart, the metric count resets to <code>0</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -9304,7 +9652,7 @@ The values will incorporate any differences between the clocks on the machines w
 <p>The Debezium Oracle connector also provides the following additional streaming metrics:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Descriptions of additional streaming metrics</caption>
+<caption class="title">Table 17. Descriptions of additional streaming metrics</caption>
 <colgroup>
 <col style="width: 45%;">
 <col style="width: 25%;">
@@ -9372,6 +9720,50 @@ If the buffer is empty, the value will be <code>0</code>.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The system change number currently written to the connector&#8217;s offsets.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-streaming-metrics-mining-session-lower-bounds"></a><a href="#oracle-streaming-metrics-mining-session-lower-bounds"><code>MiningSessionLowerBounds</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>BigInteger</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The system change number currently used as the LogMiner session lower boundary.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-streaming-metrics-mining-session-upper-bounds"></a><a href="#oracle-streaming-metrics-mining-session-upper-bounds"><code>MiningSessionUpperBounds</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>BigInteger</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The system change number currently used as the LogMiner session upper boundary.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-streaming-metrics-mining-fetch-lower-bounds"></a><a href="#oracle-streaming-metrics-mining-fetch-lower-bounds"><code>MiningFetchLowerBounds</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>BigInteger</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The system change number currently used as the LogMiner fetch query lower boundary.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-streaming-metrics-mining-fetch-upper-bounds"></a><a href="#oracle-streaming-metrics-mining-fetch-upper-bounds"><code>MiningFetchUpperBounds</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>BigInteger</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The system change number currently used as the LogMiner fetch query upper boundary.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -9596,6 +9988,17 @@ If the buffer is empty, the value will be <code>0</code>.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="oracle-streaming-metrics-totalcommittimeinmilliseconds"></a><a href="#oracle-streaming-metrics-totalcommittimeinmilliseconds"><code>TotalCommitTimeInMilliseconds</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The total duration in milliseconds spent emitting a transaction after a commit is observed.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="oracle-streaming-metrics-totalresultsetnexttimeinmilliseconds"></a><a href="#oracle-streaming-metrics-totalresultsetnexttimeinmilliseconds"><code>TotalResultSetNextTimeInMilliseconds</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -9768,7 +10171,7 @@ For more information, see <a href="#oracle-property-log-mining-transaction-reten
 <p><code>long</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The average number of committed transactions per second in the transaction buffer.</p>
+<p>The number of emitted events per second during transaction commit windows.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -10098,7 +10501,7 @@ The message does not contain the update to the schema.
 Instead, it contains the complete new schema structure.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Action parameters</caption>
+<caption class="title">Table 18. Action parameters</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -10197,7 +10600,7 @@ Instead, it contains the complete new schema structure.</p>
 After the connector&#8217;s commit SCN advances beyond the DDL change, to prevent unparseable DDL statements from being skipped unexpectedly, return the connector configuration to its previous state.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. Example of a logging record</caption>
+<caption class="title">Table 19. Example of a logging record</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 90%;">
@@ -10868,7 +11271,7 @@ sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
 <h3 id="_create_an_xstream_outbound_server"><a class="anchor" href="#_create_an_xstream_outbound_server"></a>Create an XStream Outbound Server</h3>
 <div class="paragraph">
 <p>Create an <a href="https://docs.oracle.com/en/database/oracle/oracle-database/19/xstrm/xstream-out-concepts.html">XStream Outbound server</a>.
-(given the right privileges, this might be done automatically by the connector going forward, see <a href="https://issues.redhat.com/browse/DBZ-721">DBZ-721</a>):</p>
+(given the right privileges, this might be done automatically by the connector going forward, see <a href="https://issues.redhat.com/browse//browse/DBZ-721">DBZ-721</a>):</p>
 </div>
 <div class="listingblock">
 <div class="title">Create an XStream Outbound Server</div>
@@ -11278,25 +11681,32 @@ An example of an ORA-25191 exception might look like this:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If an ORA-25191 exception is thrown, please raise a Jira issue with the details about the table and it&#8217;s mappings, related to other parent tables, etc.
+<p>If an ORA-25191 exception is thrown, please raise a GitHub issue with the details about the table and it&#8217;s mappings, related to other parent tables, etc.
 As a workaround, the include/exclude configuration options can be adjusted to prevent the connector from accessing such tables.</p>
 </div>
 </dd>
 <dt class="hdlist1"><strong>How to solve SAX feature external-general-entities not supported</strong></dt>
 <dd>
-<p>Debezium 2.4 introduced support for Oracle&#8217;s <code>XMLTYPE</code> column type.
-To use this feature, the Oracle <code>xdb</code> and <code>xmlparserv2</code> dependencies are required.<br>
-<br>
-Oracle&#8217;s <code>xmlparserv2</code> dependency implements a SAX-based parser and if the runtime finds an uses this implementation rather than the other on the classpath, this error will occur.
+<p>Debezium 2.4 introduced support for Oracle&#8217;s <code>XMLTYPE</code> column type.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Oracle&#8217;s <code>xmlparserv2</code> dependency implements a SAX-based parser and if the runtime finds an uses this implementation rather than the other on the classpath, this error will occur.
 In order to influence specifically which SAX implementation is used generally, the JVM will need to be started with a specific argument.<br>
 <br>
 When the following JVM argument is provided, the Oracle connector will start successfully without this error.</p>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-bash hljs" data-lang="bash">-Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl</code></pre>
 </div>
 </div>
-</dd>
+<div class="dlist">
+<dl>
 <dt class="hdlist1"><strong>What&#8217;s the cause for ORA-00600 and how to handle it?</strong></dt>
 <dd>
 <p>ORA-00600 is a generic internal error. It indicates the relevant process has encountered a low-level unexpected condition - which typically means you have encountered a bug. See this <a href="https://blogs.oracle.com/database/post/ora-00600">Oracle Blog</a> for more information.</p>
@@ -11337,7 +11747,7 @@ By setting this to <code>true</code>, the connector will no longer treat all zer
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/a8e1557b321334c851070acf9f443520c0764e0b">a8e1557b</a></span>)
+            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/24bf66eb5494c69e3909dd363ffc477795ac5457">24bf66eb</a></span>)
             
         </div>
     </footer>
