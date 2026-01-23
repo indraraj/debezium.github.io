@@ -329,6 +329,9 @@
           <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
@@ -392,6 +395,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/sqlserver.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation//reference/stable/connectors/sqlserver.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation//reference/3.5/connectors/sqlserver.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/sqlserver.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/connectors/sqlserver.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/sqlserver.html" data-hash="true">3.1</a>
@@ -921,7 +925,7 @@ This setting causes the snapshot to capture the schema for all tables, and guara
 <p>When you restart the connector, it takes a full snapshot of the database that captures the table data and table structures.<br>
 If you select this option, consider setting the value of the <a href="#sqlserver-property-database-history-store-only-captured-tables-ddl"><code>schema.history.internal.store.only.captured.tables.ddl</code></a> property to <code>false</code> to enable the connector to capture the schema of all tables.</p>
 </dd>
-<dt class="hdlist1"><code>schema_only</code></dt>
+<dt class="hdlist1"><code>no_data</code></dt>
 <dd>
 <p>When you restart the connector, it takes a snapshot that captures only the table schema.
 Unlike a full data snapshot, this option does not capture any table data.
@@ -938,7 +942,7 @@ Use this option if you want to restart the connector more quickly than with a fu
 The connector completes the type of snapshot specified by the <code>snapshot.mode</code>.</p>
 </li>
 <li>
-<p>(Optional) If the connector performed a <code>schema_only</code> snapshot, after the snapshot completes, initiate an <a href="#sqlserver-incremental-snapshots">incremental snapshot</a> to capture data from the tables that you added.
+<p>(Optional) If the connector performed a <code>no_data</code> snapshot, after the snapshot completes, initiate an <a href="#sqlserver-incremental-snapshots">incremental snapshot</a> to capture data from the tables that you added.
 The connector runs the snapshot while it continues to stream real-time changes from the tables.
 Running an incremental snapshot captures the following data changes:</p>
 <div class="ulist">
@@ -1037,7 +1041,7 @@ This operation is potentially destructive, and should be performed only as a las
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Set the value of the <a href="#sqlserver-property-snapshot-mode"><code>snapshot.mode</code></a> property to <code>schema_only</code>.</p>
+<p>Set the value of the <a href="#sqlserver-property-snapshot-mode"><code>snapshot.mode</code></a> property to <code>no_data</code>.</p>
 </li>
 <li>
 <p>Edit the <a href="#sqlserver-property-table-include-list"><code>table.include.list</code></a> to add the tables that you want to capture.</p>
@@ -2503,7 +2507,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.4.0.Final",
+      "version": "3.5.0.Alpha1",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 0,
@@ -3128,7 +3132,7 @@ be sure that your settings permit the connector to capture the required primary 
       "email": "john.doe@example.org"
     },
     "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-      "version": "3.4.0.Final",
+      "version": "3.5.0.Alpha1",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729468470,
@@ -3306,7 +3310,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
       "email": "noreply@example.org"
     },
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.4.0.Final",
+      "version": "3.5.0.Alpha1",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729995937,
@@ -3453,7 +3457,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
     },
     "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.4.0.Final",
+      "version": "3.5.0.Alpha1",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559730445243,
@@ -4516,7 +4520,10 @@ SQL Server CDC must be enabled for every table that you want to capture.</p>
 <p>Expand <strong>Change Data Capture &gt; Configuration</strong>, and then click <strong>Enable Table Specifying Filegroup Option</strong>.</p>
 </li>
 <li>
-<p>In the template, replace the table name in the <code>USE</code> statement with the name of the table that you want to capture.</p>
+<p>In the template, replace the database name in the <code>USE</code> statement with the name of the database that you want to capture.</p>
+</li>
+<li>
+<p>Replace the <code>source_schema</code>, the <code>source_name</code>, the <code>role_name</code> and the <code>filegroup_name</code> parameters with the table&#8217;s schema name, the table name, the database user or role name used by Debezium, and the filegroup name. You can use <code>CTRL+SHIFT+M</code> to open a parameters' replacement dialog box.</p>
 </li>
 <li>
 <p>Run the stored procedure <code>sys.sp_cdc_enable_table</code>.</p>
@@ -4786,7 +4793,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.4.0.Final/debezium-connector-sqlserver-3.4.0.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.5.0.Alpha1/debezium-connector-sqlserver-3.5.0.Alpha1-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -8104,7 +8111,7 @@ The values will incorporate any differences between the clocks on the machines w
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/24bf66eb5494c69e3909dd363ffc477795ac5457">24bf66eb</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/02ae175c9f8550569651ab804634f0c69797ddd7">02ae175c</a></span>)
             
         </div>
     </footer>

@@ -329,6 +329,9 @@
           <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
         </li>
         <li class="version">
@@ -392,6 +395,7 @@
         <div class="version-menu">
                         <a class="version" href="/documentation//reference/connectors/oracle.html" data-hash="true">nightly</a>
                         <a class="version is-current" href="/reference/stable/connectors/oracle.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation//reference/3.5/connectors/oracle.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/oracle.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/connectors/oracle.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/oracle.html" data-hash="true">3.1</a>
@@ -5701,15 +5705,15 @@ Because the retention policy that is configured for each destination might diffe
 <td class="content">
 <div class="paragraph">
 <p>When using the Debezium Oracle connector in an environment where the standby uses a different archive destination name than the primary instance, the <code>archive.destination.name</code> property can include a comma-separated list of destination names.
-The values should be ordered by preference as the Debezium connector will use the first destination that is <code>LOCAL</code> and <code>VALID</code>.
+The values should be ordered by preference as the Debezium connector will use the destinations to collect logs, and the order to define the log precedence.
 This is useful to minimize the reconfiguration necessary when the standby becomes the new primary during a failover scenario.</p>
 </div>
 <div class="paragraph">
 <p>For example, if the destination for the primary is <code>LOG_ARCHIVE_DEST_2</code> and the destination for the standby is <code>LOG_ARCHIVE_DEST_5</code>, set the <code>archive.destination.name</code> property to <code>LOG_ARCHIVE_DEST_2,LOG_ARCHIVE_DEST_5</code>.
-This will prioritize destination #2 and it will be used on the primary and destination #5 will be used on the standby.</p>
+When a failover occurs and the standby becomes the primary, Debezium will prioritize destination #2, falling back to destination #5 to pickup any logs that existed prior to the standby being promoted.</p>
 </div>
 <div class="paragraph">
-<p>If the destination for CDC is the same for both the primary and standby instances, using a single value is sufficient.
+<p>If the archive destination is the same for both the primary and standby instances, using a single destination name value is sufficient.
 In fact, the property is only required if either instance has more than one archive destination that is both <code>LOCAL</code> and <code>VALID</code>.</p>
 </div>
 </td>
@@ -11742,7 +11746,7 @@ By setting this to <code>true</code>, the connector will no longer treat all zer
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2025 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/71a798adb0b9bdfcfcb5f1c0958ecdc258c33ce4">71a798ad</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/b8e02cc26508aa9382e68bf9dc672d5d998b7f80">b8e02cc2</a></span>)
             
         </div>
     </footer>
