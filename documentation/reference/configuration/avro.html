@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -262,6 +268,9 @@
     <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/hibernate-cache.html">Hibernate Cache Invalidation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -272,6 +281,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/docling.html">Docling Transformation</a>
   </li>
 </ul>
   </li>
@@ -326,10 +338,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.4/index.html">3.4</a>
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
@@ -394,8 +409,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/configuration/avro.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/configuration/avro.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.5/configuration/avro.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/stable/configuration/avro.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/3.6/configuration/avro.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation//reference/3.4/configuration/avro.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/configuration/avro.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/configuration/avro.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/configuration/avro.html" data-hash="true">3.1</a>
@@ -485,7 +501,7 @@ For each change event record, the Debezium connector completes the following act
 <p>You can specify converters for each individual Debezium connector instance.
 Kafka Connect provides a JSON converter that serializes the record keys and values into JSON documents.
 The default behavior is that the JSON converter includes the record&#8217;s message schema, which makes each record very verbose.
-The <a href="../tutorial.html" class="xref page">Debezium Tutorial</a> shows what the records look like when both payload and schemas are included.
+The <a href="../kc-tutorial.html" class="xref page">Debezium Tutorial</a> shows what the records look like when both payload and schemas are included.
 If you want records to be serialized with JSON, consider setting the following connector configuration properties to <code>false</code>:</p>
 </div>
 <div class="ulist">
@@ -915,7 +931,7 @@ value.converter.schema.registry.url=http://localhost:8081</code></pre>
 <h2 id="avro-naming"><a class="anchor" href="#avro-naming"></a>Naming</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>As stated in the Avro <a href="https://avro.apache.org/docs/current/spec.html#names">documentation</a>, names must adhere to the following rules:</p>
+<p>As stated in the Avro <a href="https://avro.apache.org/docs/1.12.0/specification/#names">documentation</a>, names must adhere to the following rules:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -957,7 +973,7 @@ see <a href="https://github.com/debezium/debezium-examples/tree/main/tutorial#us
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/02ae175c9f8550569651ab804634f0c69797ddd7">02ae175c</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/64abfe5a65d1725ff1ac97f8f49ab0f2dff49b8b">64abfe5a</a></span>)
             
         </div>
     </footer>

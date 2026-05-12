@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -262,6 +268,9 @@
     <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/hibernate-cache.html">Hibernate Cache Invalidation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -272,6 +281,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/docling.html">Docling Transformation</a>
   </li>
 </ul>
   </li>
@@ -326,10 +338,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.4/index.html">3.4</a>
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
@@ -394,8 +409,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/jdbc.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/jdbc.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.5/connectors/jdbc.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/jdbc.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/3.6/connectors/jdbc.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation//reference/3.4/connectors/jdbc.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/jdbc.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/connectors/jdbc.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/jdbc.html" data-hash="true">3.1</a>
@@ -900,21 +916,21 @@ In the event of a network disruption, if Debezium attempts to use a terminated c
 </div>
 <div class="paragraph">
 <p>By default, the Debezium JDBC sink connector does not conduct idle timeout tests.
-However, you can configure the connector to request the pool to perform timeout tests at a specified interval by setting the <code>hibernate.c3p0.idle_test_period</code> property.
+However, you can configure the connector to request the pool to perform timeout tests at a specified interval by setting the <code>hibernate.agroal.idleValidation</code> property.
 For example:</p>
 </div>
 <div class="listingblock">
 <div class="title">Example timeout configuration</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "hibernate.c3p0.idle_test_period": "300"
+  "hibernate.agroal.idleValidation": "300"
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The Debezium JDBC sink connector uses the Hibernate C3P0 connection pool.
-You can customize the CP30 connection pool by setting properties in the hibernate.c3p0.*` configuration namespace.
-In the preceding example, the setting of the hibernate.c3p0.idle_test_period property configures the connection pool to perform idle timeout tests every 300 seconds.
+<p>The Debezium JDBC sink connector uses the Hibernate Agroal connection pool.
+You can customize the Agroal connection pool by setting properties in the <code>hibernate.agroal.*</code> configuration namespace.
+In the preceding example, the setting of the hibernate.agroal.idleValidation property configures the connection pool to perform idle timeout tests every 300 seconds.
 After you apply the configuration, the connection pool begins to assess unused connections every five minutes.</p>
 </div>
 </div>
@@ -1317,6 +1333,17 @@ As a workaround, if you need a BOOLEAN data type for an Oracle 23 sink, add the 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>uuid</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>text</code>
 <code>varchar(n)</code><sup>1</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clob</code>
+<code>varchar2(n)</code><sup>1</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>varchar</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">io.debezium.data.Tsvector</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>clob</code>
+<code>varchar(n)</code><sup>1</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>longtext</code>
+<code>varchar</code><sup>1</sup></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tsvector</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>clob</code>
 <code>varchar2(n)</code><sup>1</sup></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>varchar</code></p></td>
@@ -1757,7 +1784,7 @@ After you apply the SMT to an event that includes a field with the name <code>ID
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.5.0.Alpha1/debezium-connector-jdbc-3.5.0.Alpha1-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.6.0.Alpha1/debezium-connector-jdbc-3.6.0.Alpha1-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -2034,7 +2061,7 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 <p><a id="jdbc-property-connection-provider"></a><a href="#jdbc-property-connection-provider"><code>connection.provider</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>org.hibernate.c3p0.internal.C3P0ConnectionProvider</code></p>
+<p><code>org.hibernate.agroal.internal.AgroalConnectionProvider</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The connection provider implementation to use.</p>
@@ -2093,17 +2120,6 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Specifies the maximum number of concurrent connections that the pool maintains.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><a id="jdbc-property-connection-pool-acquire-increment"></a><a href="#jdbc-property-connection-pool-acquire-increment"><code>connection.pool.acquire_increment</code></a></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>32</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the number of connections that the connector attempts to acquire if the connection pool exceeds its maximum size.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2395,6 +2411,24 @@ The default is <code>public</code>; however, if the PostGIS extension was instal
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-property-dialect-postgres-unnest-insert-enabled"></a><a href="#jdbc-property-dialect-postgres-unnest-insert-enabled"><code>dialect.postgres.unnest.insert.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether to enable <code>UNNEST</code>-based batch inserts for PostgreSQL.</p>
+</div>
+<div class="paragraph">
+<p>When enabled, uses PostgreSQL <code>UNNEST()</code> for batch inserts, which can significantly improve performance by reducing the number of SQL statements executed.
+This optimization is compatible with <code>INSERT</code> and <code>UPSERT</code> modes.</p>
+</div>
+<div class="paragraph">
+<p>For information about the performance benefits of enabling the UNNEST function, see <a href="https://www.tigerdata.com/blog/boosting-postgres-insert-performance" target="_blank" rel="noopener">"Boosting Postgres Insert Performance"</a> in the Tiger Data blog.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="jdbc-property-dialect-sqlserver-identity-insert"></a><a href="#jdbc-property-dialect-sqlserver-identity-insert"><code>dialect.sqlserver.identity.insert</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -2650,7 +2684,7 @@ Quoting behavior is dialect-specific, and varies among different types of databa
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/02ae175c9f8550569651ab804634f0c69797ddd7">02ae175c</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/64abfe5a65d1725ff1ac97f8f49ab0f2dff49b8b">64abfe5a</a></span>)
             
         </div>
     </footer>

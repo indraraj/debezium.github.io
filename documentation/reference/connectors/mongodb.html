@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -262,6 +268,9 @@
     <a class="nav-link" href="../integrations/quarkus-debezium-engine-extension.html">Debezium Extensions for Quarkus</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../integrations/hibernate-cache.html">Hibernate Cache Invalidation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../integrations/testcontainers.html">Integration Testing with Testcontainers</a>
   </li>
 </ul>
@@ -272,6 +281,9 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/docling.html">Docling Transformation</a>
   </li>
 </ul>
   </li>
@@ -326,10 +338,13 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.4/index.html">3.4</a>
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
@@ -394,8 +409,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
                         <a class="version is-current" href="/reference/connectors/mongodb.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/mongodb.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.5/connectors/mongodb.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/mongodb.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/3.6/connectors/mongodb.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation//reference/3.4/connectors/mongodb.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/mongodb.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/connectors/mongodb.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/mongodb.html" data-hash="true">3.1</a>
@@ -1427,8 +1443,7 @@ Value = `{"type":"execute-snapshot","data": {"data-collections": ["{collection-c
 <p><code>SELECT * FROM <em>&lt;data-collection&gt;</em> WHERE <em>&lt;filter&gt;</em> &#8230;&#8203;.</code></p>
 </div>
 <div class="paragraph">
-<p>For example, given a <code>products</code> collection with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:
-:leveloffset: +1</p>
+<p>For example, given a <code>products</code> collection with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1439,8 +1454,7 @@ Value = `{"type":"execute-snapshot","data": {"data-collections": ["db1.products"
 </div>
 <div class="paragraph">
 <p>You can also use the <code>additional-conditions</code> property to pass conditions based on multiple columns.
-For example, using the same <code>products</code> collection as in the previous example, if you want a snapshot to include only the content from the <code>products</code> collection for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:
-:leveloffset: +1</p>
+For example, using the same <code>products</code> collection as in the previous example, if you want a snapshot to include only the content from the <code>products</code> collection for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2473,7 +2487,7 @@ The value of this field is the document&#8217;s identifier represented as a stri
     "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
       "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}", <i class="conum" data-value="6"></i><b>(6)</b>
       "source": { <i class="conum" data-value="7"></i><b>(7)</b>
-        "version": "3.5.0.Alpha1",
+        "version": "3.6.0.Alpha1",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2687,7 +2701,7 @@ There is a new structured field <code>updateDescription</code> with a few additi
         "truncatedArrays": null
       },
       "source": { <i class="conum" data-value="6"></i><b>(6)</b>
-        "version": "3.5.0.Alpha1",
+        "version": "3.6.0.Alpha1",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2829,7 +2843,7 @@ It is thus possible if multiple updates are closely following one after the othe
       "ts_ns": 1465495462115748263, <i class="conum" data-value="2"></i><b>(2)</b>
       "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",<i class="conum" data-value="3"></i><b>(3)</b>
       "source": { <i class="conum" data-value="4"></i><b>(4)</b>
-        "version": "3.5.0.Alpha1",
+        "version": "3.6.0.Alpha1",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -3030,7 +3044,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <ol class="arabic">
 <li>
 <p>Download the
-<a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mongodb/3.5.0-SNAPSHOT/debezium-connector-mongodb-3.5.0-20260123.060018-138-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
+<a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mongodb/3.6.0-SNAPSHOT/debezium-connector-mongodb-3.6.0-20260512.120247-165-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
@@ -3066,7 +3080,7 @@ To mitigate risk in production deployments, deploy only containers that are acti
 <p>You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
 </div>
 <div class="paragraph">
-<p>The Debezium <a href="../tutorial.html" class="xref page">tutorial</a> walks you through using these images, and this is a great way to learn about Debezium.</p>
+<p>The Debezium <a href="../kc-tutorial.html" class="xref page">tutorial</a> walks you through using these images, and this is a great way to learn about Debezium.</p>
 </div>
 <div class="sect2">
 <h3 id="mongodb-example-configuration"><a class="anchor" href="#mongodb-example-configuration"></a>MongoDB connector configuration example</h3>
@@ -3599,9 +3613,32 @@ Set <a href="#mongodb-property-capture-mode-full-update-type">capture.mode.full.
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="mongodb-property-capture-start-op-time"></a><a href="#mongodb-property-capture-start-op-time"><code>capture.start.op.time</code></a></p>
 </div></div></td>
-<td class="tableblock halign-left valign-top"><div class="content"></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the <a href="https://www.mongodb.com/docs/manual/changeStreams/#ref-start-time-id1">startAtOperationTime</a> change stream parameter. The value ought to be a long representation of Bson timestamp.</p>
+<p>No default value</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies the <a href="https://www.mongodb.com/docs/manual/changeStreams/#ref-start-time-id1">startAtOperationTime</a> change stream parameter.
+Set the value to be a long representation of the BSON timestamp.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The ability to set the <code>capture.start.op.time`</code> property to override the normal offset-based behavior and begin streaming from a specific timestamp is a Technology Preview feature.
+Technology Preview features are not supported with Red&#160;Hat production service level agreements (SLAs) and might not be functionally complete.
+Red&#160;Hat does not recommend using them in production.
+These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.</p>
+</div>
+<div class="paragraph">
+<p>For more information about the support scope of Red&#160;Hat Technology Preview features, see <a href="https://access.redhat.com/support/offerings/techpreview/">Technology Preview Features Support Scope</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div></div></td>
 </tr>
 <tr>
@@ -3769,7 +3806,7 @@ After a source record is deleted, emitting a tombstone event (the default behavi
 <p><code>avro</code> replaces the characters that cannot be used in the Avro type name with underscore.<br></p>
 </li>
 <li>
-<p><code>avro_unicode</code> replaces the underscore or characters that cannot be used in the Avro type name with corresponding unicode like _uxxxx. Note: _ is an escape sequence like backslash in Java<br></p>
+<p><code>avro_unicode</code> replaces the underscore or characters that cannot be used in the Avro type name with corresponding unicode like _uxxxx. Note: _ is an escape sequence like backslash in Java.</p>
 </li>
 </ul>
 </div>
@@ -4162,10 +4199,6 @@ After the snapshot completes, the connector begins to stream event records for s
 <p>The connector performs a database a snapshot only when no offsets have been recorded for the logical server name.
 After the snapshot completes, the connector stops.
 It does not transition to streaming event records for subsequent database changes.</p>
-</dd>
-<dt class="hdlist1"><code>never</code></dt>
-<dd>
-<p>Deprecated, see <code>no_data</code>.</p>
 </dd>
 <dt class="hdlist1"><code>no_data</code></dt>
 <dd>
@@ -4603,7 +4636,26 @@ Set this option to prevent rapid growth of the signaling data collection.</p>
 <br>
 <em>topic.heartbeat.prefix</em>.<em>topic.prefix</em><br>
 <br>
-For example, if the topic prefix is <code>fulfillment</code>, the default topic name is <code>__debezium-heartbeat.fulfillment</code>.</p>
+For example, if the topic prefix is <code>fulfillment</code>, the default topic name is <code>__debezium-heartbeat.fulfillment</code>.<br>
+<br>
+This property is ignored if <code>topic.heartbeat.name</code> is set.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-topic-heartbeat-name"></a><a href="#mongodb-property-topic-heartbeat-name"><code>topic.heartbeat.name</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>empty</em></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies an explicit, full name for the topic to which the connector sends heartbeat messages, overriding the prefix-based naming derived from <code>topic.heartbeat.prefix</code> and <code>topic.prefix</code>.<br>
+<br>
+When set, all heartbeat messages are routed to this exact topic name, regardless of the connector&#8217;s <code>topic.prefix</code>. This is useful when running multiple connectors and you want to consolidate heartbeat events into a single shared topic, avoiding the creation of a large number of single-partition heartbeat topics.<br>
+<br>
+For example, setting this to <code>debezium-heartbeat</code> routes all heartbeat messages to a topic named <code>debezium-heartbeat</code>.<br>
+<br>
+If this property is empty or unset, the connector falls back to the default behavior: <em>topic.heartbeat.prefix</em>.<em>topic.prefix</em>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -4639,6 +4691,47 @@ Each key represents a tag for the MBean object name, and the corresponding value
 Tags can help you to organize and categorize metrics data.
 You can define tags to identify particular application instances, environments, regions, versions, and so forth.
 For more information, see <a href="#customized-mbean-names">Customized MBean names</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="mongodb-property-custom-sanitize-pattern"></a><a href="#mongodb-property-custom-sanitize-pattern"><code>custom.sanitize.pattern</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>.*secret$|.*password$|.*sasl\.jaas\.config$|.*basic\.auth\.user\.info$|.*registry\.auth\.client-secret</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional regular expression that specifies a custom pattern for masking sensitive configuration keys.</p>
+</div>
+<div class="paragraph">
+<p>By default, Debezium masks the value of configuration keys that match a predefined pattern for commonly known sensitive properties such as passwords and authentication tokens.
+To customize the way that the connector masks configuration key values, set this property to a regular expression that matches specific configuration key values that you want to mask.</p>
+</div>
+<div class="paragraph">
+<p>For example, to mask keys the contain the strings <code>api.key</code> or <code>token</code>, set this property to the following value:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>"custom.sanitize.pattern": ".*api\\.key.*\|.*token.*"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you set this property for the connector, Debezium masks any matching instances of configuration key values that it returns for display, logging, or in response to API calls.
+A string of asterisks replaces the original values, for example,  <code>********</code>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The pattern that you specify for the <code>custom.sanitize.pattern</code> property overrides the default Debezium masking pattern; the specified value does not extend or augment the default pattern.</p>
+</div>
+</td>
+</tr>
+</table>
 </div></div></td>
 </tr>
 <tr>
@@ -5176,6 +5269,28 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-snaps-metric-tablechunkcounts_mongodb"></a><a href="#connectors-snaps-metric-tablechunkcounts_mongodb"><code>TableChunkCounts</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>Map&lt;String, Long&gt;</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Map containing the number of chunks for each table in the snapshot when using chunk-based multithreaded snapshots.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-snaps-metric-tablechunkscompletedcounts_mongodb"></a><a href="#connectors-snaps-metric-tablechunkscompletedcounts_mongodb"><code>TableChunksCompletedCounts</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>Map&lt;String, Long&gt;</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Map containing the number of chunks that have completed for each table in the snapshot when using chunk-based multithreaded snapshots.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="connectors-snaps-metric-maxqueuesizeinbytes_mongodb"></a><a href="#connectors-snaps-metric-maxqueuesizeinbytes_mongodb"><code>MaxQueueSizeInBytes</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -5336,6 +5451,18 @@ Represents the data change workload for Debezium to process.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The number of events that have been filtered by include/exclude list filtering rules configured on the connector.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-numberofunchangedeventsskipped_mongodb"></a><a href="#connectors-strm-metric-numberofunchangedeventsskipped_mongodb"><code>NumberOfUnchangedEventsSkipped</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Number of update events skipped since the last connector start or metrics reset because no monitored columns changed. Defaults to <code>-1</code> if <a href="#mongodb-property-skip-messages-without-change"><code>skip.messages.without.change</code></a> is <code>false</code>.
+May remain <code>0</code> for MongoDB and other connectors that do not support skipping unchanged events, even if the property is set to <code>true</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -5853,7 +5980,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/02ae175c9f8550569651ab804634f0c69797ddd7">02ae175c</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/64abfe5a65d1725ff1ac97f8f49ab0f2dff49b8b">64abfe5a</a></span>)
             
         </div>
     </footer>

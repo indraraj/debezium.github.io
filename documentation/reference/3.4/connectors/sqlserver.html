@@ -38,7 +38,7 @@
     </div>
   </nav>
 </header><div class="body">
-<div class="nav-container" data-component="reference" data-version="stable">
+<div class="nav-container" data-component="reference" data-version="3.4">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -325,11 +325,14 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version is-current">
-          <a href="/documentation/reference/3.4/index.html">3.4</a>
-        </li>
         <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version is-current">
+          <a href="/documentation/reference/3.4/index.html">3.4</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.3/index.html">3.3</a>
@@ -380,7 +383,7 @@
 <main role="main" class="main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../index.html" class="home-link"></a>
+  <a href="../../stable/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -394,8 +397,9 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.4</button>
         <div class="version-menu">
                         <a class="version" href="/documentation//reference/connectors/sqlserver.html" data-hash="true">nightly</a>
-                        <a class="version is-current" href="/reference/stable/connectors/sqlserver.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.5/connectors/sqlserver.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/stable/connectors/sqlserver.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation//reference/3.6/connectors/sqlserver.html" data-hash="true">3.6</a>
+                        <a class="version is-current" href="/reference/3.4/connectors/sqlserver.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation//reference/3.3/connectors/sqlserver.html" data-hash="true">3.3</a>
                         <a class="version" href="/documentation//reference/3.2/connectors/sqlserver.html" data-hash="true">3.2</a>
                         <a class="version" href="/documentation//reference/3.1/connectors/sqlserver.html" data-hash="true">3.1</a>
@@ -436,7 +440,12 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <!-- This partial is a placeholder -->            <h1 class="page">Debezium connector for SQL Server</h1>
+    <div class="version-banner version-banner-outdated">
+    You are viewing documentation for an outdated version of Debezium.
+    <br/>
+            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
+            
+</div>            <h1 class="page">Debezium connector for SQL Server</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div class="admonitionblock note">
@@ -1764,8 +1773,7 @@ Value = `{"type":"execute-snapshot","data": {"data-collections": ["{collection-c
 <p><code>SELECT * FROM <em>&lt;data-collection&gt;</em> WHERE <em>&lt;filter&gt;</em> &#8230;&#8203;.</code></p>
 </div>
 <div class="paragraph">
-<p>For example, given a <code>products</code> table with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:
-:leveloffset: +1</p>
+<p>For example, given a <code>products</code> table with the columns <code>id</code> (primary key), <code>color</code>, and <code>brand</code>, if you want a snapshot to include only content for which <code>color='blue'</code>, when you request the snapshot, you could add the <code>additional-conditions</code> property to filter the content:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1776,8 +1784,7 @@ Value = `{"type":"execute-snapshot","data": {"data-collections": ["db1.schema1.p
 </div>
 <div class="paragraph">
 <p>You can also use the <code>additional-conditions</code> property to pass conditions based on multiple columns.
-For example, using the same <code>products</code> table as in the previous example, if you want a snapshot to include only the content from the <code>products</code> table for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:
-:leveloffset: +1</p>
+For example, using the same <code>products</code> table as in the previous example, if you want a snapshot to include only the content from the <code>products</code> table for which <code>color='blue'</code>, and <code>brand='MyBrand'</code>, you could send the following request:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1848,8 +1855,11 @@ values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.<br>
+<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.
 The following table describes the parameters in the example:</p>
+</div>
+</li>
+</ol>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
@@ -1899,9 +1909,6 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 </tr>
 </tbody>
 </table>
-</li>
-</ol>
-</div>
 </div>
 <div class="sect3">
 <h4 id="sqlserver-stopping-an-incremental-snapshot-kafka"><a class="anchor" href="#sqlserver-stopping-an-incremental-snapshot-kafka"></a>Using the Kafka signaling channel to stop an incremental snapshot</h4>
@@ -2502,7 +2509,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.4.0.Final",
+      "version": "3.4.3.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 0,
@@ -3127,7 +3134,7 @@ be sure that your settings permit the connector to capture the required primary 
       "email": "john.doe@example.org"
     },
     "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-      "version": "3.4.0.Final",
+      "version": "3.4.3.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729468470,
@@ -3305,7 +3312,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
       "email": "noreply@example.org"
     },
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.4.0.Final",
+      "version": "3.4.3.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559729995937,
@@ -3452,7 +3459,7 @@ By comparing the value for <code>payload.source.ts_ms</code> with the value for 
     },
     "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
     "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-      "version": "3.4.0.Final",
+      "version": "3.4.3.Final",
       "connector": "sqlserver",
       "name": "server1",
       "ts_ms": 1559730445243,
@@ -4530,31 +4537,31 @@ GO
 
 EXEC sys.sp_cdc_enable_table
 @source_schema = N'dbo',
-@source_name   = N'MyTable', <i class="conum" data-value="1"></i><b>(1)</b>
-@role_name     = N'MyRole',  <i class="conum" data-value="2"></i><b>(2)</b>
-@filegroup_name = N'MyDB_CT',<i class="conum" data-value="3"></i><b>(3)</b>
+@source_name   = N'MyTable',
+@role_name     = N'MyRole',
+@filegroup_name = N'MyDB_CT',
 @supports_net_changes = 0
 GO</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>Specifies the name of the table that you want to capture.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Specifies a role <code>MyRole</code> to which you can add users to whom you want to grant <code>SELECT</code> permission on the captured columns of the source table.
-Users in the <code>sysadmin</code> or <code>db_owner</code> role also have access to the specified change tables. If the the value of <code>@role_name</code> is explicitly set to <code>NULL</code>, no role is used to restrict access to captured information.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Specifies the <code>filegroup</code> where SQL Server places the change table for the captured table.
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>@source_name</code></dt>
+<dd>
+<p>Specifies the name of the table that you want to capture.</p>
+</dd>
+<dt class="hdlist1"><code>@role_name</code></dt>
+<dd>
+<p>Specifies a role <code>MyRole</code> to which you can add users to whom you want to grant <code>SELECT</code> permission on the captured columns of the source table.
+Users in the <code>sysadmin</code> or <code>db_owner</code> role also have access to the specified change tables. If the the value of <code>@role_name</code> is explicitly set to <code>NULL</code>, no role is used to restrict access to captured information.</p>
+</dd>
+<dt class="hdlist1"><code>@filegroup_name</code></dt>
+<dd>
+<p>Specifies the <code>filegroup</code> where SQL Server places the change table for the captured table.
 The named <code>filegroup</code> must already exist.
-It is best not to locate change tables in the same <code>filegroup</code> that you use for source tables.</td>
-</tr>
-</table>
+It is best not to locate change tables in the same <code>filegroup</code> that you use for source tables.</p>
+</dd>
+</dl>
 </div>
 </li>
 </ol>
@@ -4785,7 +4792,7 @@ If the <code>continuous</code> parameter is set to <code>1</code>, the job pause
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.4.0.Final/debezium-connector-sqlserver-3.4.0.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-sqlserver/3.4.3.Final/debezium-connector-sqlserver-3.4.3.Final-plugin.tar.gz">SQL Server connector plug-in archive</a></p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -6292,6 +6299,34 @@ The collection name is case-sensitive.</p>
 </div>
 <div class="paragraph">
 <p><code><em>&lt;databaseName&gt;</em>.<em>&lt;schemaName&gt;</em>.<em>&lt;tableName&gt;</em></code></p>
+</div>
+<div class="paragraph">
+<p>For multi-database deployments, if <code>tasks.max &gt; 1</code>, you can configure one signal table per database by providing a comma-separated list of fully-qualified signal table names. For example:</p>
+</div>
+<div class="paragraph">
+<p><code>signal.data.collection=db1.dbo.debezium_signal,db2.dbo.debezium_signal</code></p>
+</div>
+<div class="paragraph">
+<p>Specifying a dedicated signal table for each database, permits each task to process signals for its assigned databases correctly.
+If you configure only a single signal table for a multi-task connector, signals might not be processed correctly for all databases.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Support for using multiple signaling tables with the Debezium SQL Server connector is a Technology Preview feature.
+Technology Preview features are not supported with Red&#160;Hat production service level agreements (SLAs) and might not be functionally complete.
+Red&#160;Hat does not recommend using them in production.
+These features provide early access to upcoming product features, enabling customers to test functionality and provide feedback during the development process.
+For more information about the support scope of Red&#160;Hat Technology Preview features, see <a href="https://access.redhat.com/support/offerings/techpreview/">Technology Preview Features Support Scope</a>.</p>
+</div>
+</td>
+</tr>
+</table>
 </div></div></td>
 </tr>
 <tr>
@@ -8103,7 +8138,7 @@ The values will incorporate any differences between the clocks on the machines w
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/b8e02cc26508aa9382e68bf9dc672d5d998b7f80">b8e02cc2</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/d00e0a6688d96ba8d952d68bd855791deef699fb">d00e0a66</a></span>)
             
         </div>
     </footer>
