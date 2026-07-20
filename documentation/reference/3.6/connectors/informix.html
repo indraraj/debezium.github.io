@@ -38,7 +38,7 @@
     </div>
   </nav>
 </header><div class="body">
-<div class="nav-container" data-component="reference" data-version="3.6">
+<div class="nav-container" data-component="reference" data-version="stable">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -135,6 +141,12 @@
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="informix.html">Informix</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cockroachdb.html">CockroachDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="yashandb.html">YashanDB</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -209,6 +221,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
@@ -331,11 +346,11 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
-        </li>
         <li class="version is-current">
           <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.4/index.html">3.4</a>
@@ -356,27 +371,6 @@
           <a href="/documentation/reference/2.7/index.html">2.7</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.5/index.html">2.5</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.4/index.html">2.4</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.3/index.html">2.3</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.2/index.html">2.2</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.1/index.html">2.1</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
-        </li>
-        <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
         </li>
       </ul>
@@ -389,7 +383,7 @@
 <main role="main" class="main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../stable/index.html" class="home-link"></a>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -402,22 +396,15 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.6</button>
         <div class="version-menu">
-                        <a class="version" href="/documentation//reference/connectors/informix.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/informix.html" data-hash="true">3.5</a>
-                        <a class="version is-current" href="/reference/3.6/connectors/informix.html" data-hash="true">3.6</a>
-                        <a class="version" href="/documentation//reference/3.4/connectors/informix.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.3/connectors/informix.html" data-hash="true">3.3</a>
-                        <a class="version" href="/documentation//reference/3.2/connectors/informix.html" data-hash="true">3.2</a>
-                        <a class="version" href="/documentation//reference/3.1/connectors/informix.html" data-hash="true">3.1</a>
-                        <a class="version" href="/documentation//reference/3.0/connectors/informix.html" data-hash="true">3.0</a>
-                        <a class="version" href="/documentation//reference/2.7/connectors/informix.html" data-hash="true">2.7</a>
-                        <a class="version" href="/documentation//reference/2.6/connectors/informix.html" data-hash="true">2.6</a>
-                        <a class="version" href="/documentation//reference/2.5/connectors/informix.html" data-hash="true">2.5</a>
-                    <a class="version is-missing" href="#">2.4</a>
-                    <a class="version is-missing" href="#">2.3</a>
-                    <a class="version is-missing" href="#">2.2</a>
-                    <a class="version is-missing" href="#">2.1</a>
-                    <a class="version is-missing" href="#">2.0</a>
+                        <a class="version" href="/documentation/reference/connectors/informix.html" data-hash="true">nightly</a>
+                        <a class="version is-current" href="/documentation/reference/stable/connectors/informix.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.5/connectors/informix.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation/reference/3.4/connectors/informix.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation/reference/3.3/connectors/informix.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation/reference/3.2/connectors/informix.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation/reference/3.1/connectors/informix.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation/reference/3.0/connectors/informix.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation/reference/2.7/connectors/informix.html" data-hash="true">2.7</a>
                     <a class="version is-missing" href="#">1.9</a>
         </div>
         |
@@ -446,12 +433,7 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
-    <br/>
-            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
-            
-</div>            <h1 class="page">Debezium connector for Informix</h1>
+    <!-- This partial is a placeholder -->            <h1 class="page">Debezium connector for Informix</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div id="toc" class="toc">
@@ -970,7 +952,7 @@ Running an incremental snapshot captures the following data changes:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>For tables that the connector previously captured, the incremental snapsot captures changes that occur while the connector was down, that is, in the interval between the time that the connector was stopped, and the current restart.</p>
+<p>For tables that the connector previously captured, the incremental snapshot captures changes that occur while the connector was down, that is, in the interval between the time that the connector was stopped, and the current restart.</p>
 </li>
 <li>
 <p>For newly added tables, the incremental snapshot captures all existing table rows.</p>
@@ -1212,7 +1194,7 @@ Set the type of the <code>execute-snapshot</code> signal to <code>incremental</c
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the type of snapshot that you want to run.<br>
+<p>Specifies the type of snapshot that you want to run.
 Currently, you can request <code>incremental</code> or <code>blocking</code> snapshots.</p>
 </div></div></td>
 </tr>
@@ -1220,7 +1202,7 @@ Currently, you can request <code>incremental</code> or <code>blocking</code> sna
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array that contains regular expressions matching the fully-qualified names of the tables to include in the snapshot.<br>
+<p>An array that contains regular expressions matching the fully-qualified names of the tables to include in the snapshot.
 For the Informix connector, use the following format to specify the fully qualified name of a table: <code>database.schema.table</code>.</p>
 </div></div></td>
 </tr>
@@ -1228,7 +1210,7 @@ For the Informix connector, use the following format to specify the fully qualif
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>additional-conditions</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.<br>
+<p>An optional array that specifies a set of additional conditions that the connector evaluates to determine the subset of records to include in a snapshot.
 Each additional condition is an object that specifies the criteria for filtering the data that an ad hoc snapshot captures.
 You can set the following parameters for each additional condition:</p>
 </div>
@@ -1241,11 +1223,12 @@ You can apply different filters to each table.</p>
 </dd>
 <dt class="hdlist1"><code>filter</code></dt>
 <dd>
-<p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.<br>
-<br>
-The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.</p>
+<p>Specifies column values that must be present in a database record for the snapshot to include it, for example,  <code>"color='blue'"</code>.</p>
 </dd>
 </dl>
+</div>
+<div class="paragraph">
+<p>The values that you assign to the <code>filter</code> parameter are the same types of values that you might specify in the <code>WHERE</code> clause of <code>SELECT</code> statements when you set the <code>snapshot.select.statement.overrides</code> property for a blocking snapshot.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -1413,7 +1396,7 @@ You submit snapshot signals as SQL <code>INSERT</code> queries.</p>
 Debezium currently supports the <code>incremental</code> and <code>blocking</code> snapshot types.</p>
 </div>
 <div class="paragraph">
-<p>To specify the tables to include in the snapshot, provide a <code>data-collections</code> array that lists the tables, or an array of regular expressions used to match tables, for example,<br></p>
+<p>To specify the tables to include in the snapshot, provide a <code>data-collections</code> array that lists the tables, or an array of regular expressions used to match tables, for example,</p>
 </div>
 <div class="paragraph">
 <p><code>{"data-collections": ["public.MyFirstTable", "public.MySecondTable"]}</code></p>
@@ -1431,7 +1414,7 @@ If the <code>data-collections</code> array is empty, Debezium interprets the emp
 </td>
 <td class="content">
 <div class="paragraph">
-<p>If the name of a table that you want to include in a snapshot contains a dot (<code>.</code>), a space, or some other non-alphanumeric character, you must escape the table name in double quotes.<br>
+<p>If the name of a table that you want to include in a snapshot contains a dot (<code>.</code>), a space, or some other non-alphanumeric character, you must escape the table name in double quotes.
 For example, to include a table that exists in the <code><strong>public</strong></code> schema in the <code><strong>db1</strong></code> database, and that has the name <code><strong>My.Table</strong></code>, use the following format: <code><strong>"db1.public.\"My.Table\""</strong></code>.</p>
 </div>
 </td>
@@ -1773,7 +1756,7 @@ For snapshot events, the value of the <code>op</code> field value is <code>r</co
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The type of the snapshot to be executed.
-Currently Debezium supports the <code>incremental</code> and <code>blocking</code> types.<br>
+Currently Debezium supports the <code>incremental</code> and <code>blocking</code> types.
 See the next section for more details.</p>
 </div></div></td>
 </tr>
@@ -1887,7 +1870,7 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1957,28 +1940,38 @@ The following table describes the parameters in the example:</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.<br>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.
 Use this string to identify logging messages to entries in the signaling table.
-Debezium does not use this string.</p></td>
+Debezium does not use this string.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>stop-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies <code>type</code> parameter specifies the operation that the signal is intended to trigger.<br></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The <code>type</code> parameter, which identifies the operation that the signal is intended to trigger.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.<br>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.
 The array lists regular expressions which match tables by their fully-qualified names in the format <code>database.schema.table</code></p>
-<p class="tableblock">If you omit this component from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p></td>
+</div>
+<div class="paragraph">
+<p>If you omit this component from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">A required component of the <code>data</code> field of a signal that specifies the type of snapshot operation that is to be stopped.<br>
-Currently, the only valid option is <code>incremental</code>.<br>
-If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A required component of the <code>data</code> field of a signal that specifies the type of snapshot operation that is to be stopped.
+Currently, the only valid option is <code>incremental</code>.
+If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -2016,14 +2009,16 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The type of the snapshot to be executed.
-Currently Debezium supports only the <code>incremental</code> type. <br>
+Currently Debezium supports only the <code>incremental</code> type.
 See the next section for more details.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array of comma-separated regular expressions that match the fully-qualified names of the tables an array of table names or regular expressions to match table names to remove from the snapshot.<br>
-Specify table names by using the format <code>database.schema.table</code>.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional array of comma-separated regular expressions that match the fully-qualified names of the tables an array of table names or regular expressions to match table names to remove from the snapshot.
+Specify table names by using the format <code>database.schema.table</code>.</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -2241,12 +2236,12 @@ After the snapshot completes, the streaming is resumed.</p>
 <p>data-collections: to specify which tables must be snapshot.</p>
 </li>
 <li>
-<p>data-collections: Specifies the tables that you want the snapshot to include.<br>
+<p>data-collections: Specifies the tables that you want the snapshot to include.
 This property accepts a comma-separated list of regular expressions that match fully-qualified table names.
 The behavior of the property is similar to the behavior of the <code>table.include.list</code> property, which specifies the tables to capture in a blocking snapshot.</p>
 </li>
 <li>
-<p>additional-conditions: You can specify different filters for different table.<br></p>
+<p>additional-conditions: You can specify different filters for different table.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2598,7 +2593,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.6.0.Alpha1",
+      "version": "3.6.0.Final",
       "connector": "informix",
       "name": "informix",
       "ts_ms": 1588252618953,
@@ -3399,7 +3394,7 @@ The payload of each event value varies according to the event type:</p>
       "email": "john.doe@example.org"
     },
     "source": {
-      "version": "3.6.0.Alpha1",
+      "version": "3.6.0.Final",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559729468470,
@@ -3556,7 +3551,7 @@ The following example shows the change event value for an event record that the 
       "email": "noreply@example.org"
     },
     "source": {
-      "version": "3.6.0.Alpha1",
+      "version": "3.6.0.Final",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559729995937,
@@ -3695,7 +3690,7 @@ After a user performs a <em>delete</em> operation in the sample <code>customers<
     },
     "after": null,
     "source": {
-      "version": "3.6.0.Alpha1",
+      "version": "3.6.0.Final",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559730445243,
@@ -4117,6 +4112,9 @@ The following sections describe these mappings:</p>
 <li>
 <p><a href="#informix-time-precision-mode-connect"><code>time.precision.mode=connect</code></a></p>
 </li>
+<li>
+<p><a href="#informix-time-precision-mode-isostring"><code>time.precision.mode=isostring</code></a></p>
+</li>
 </ul>
 </div>
 <div id="informix-time-precision-mode-adaptive" class="paragraph">
@@ -4215,6 +4213,56 @@ However, because Informix supports tens of microsecond precision, if a connector
 </div>
 <div class="paragraph">
 <p>Represents the number of milliseconds since the epoch, and does not include timezone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="informix-time-precision-mode-isostring" class="paragraph">
+<div class="title"><code>time.precision.mode=isostring</code></div>
+<p>Set the <code>time.precision.mode</code> property to <code>isostring</code> to configure the connector to map temporal values as ISO-8601 formatted strings at the UTC time zone.
+When you apply this setting, the connector uses the semantic types <code>io.debezium.time.IsoDate</code> and <code>io.debezium.time.IsoTimestamp</code> to map date and timestamp values.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Mappings when <code>time.precision.mode</code> is <code>isostring</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Informix data type</th>
+<th class="tableblock halign-left valign-top">Literal type (schema type)</th>
+<th class="tableblock halign-left valign-top">Semantic type (schema name) and Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.IsoDate</code></p>
+</div>
+<div class="paragraph">
+<p>Represents date values in UTC format, according to the ISO 8601 standard, for example, <code>2017-09-15Z</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.IsoTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents timestamp values in UTC format, according to the ISO 8601 standard, for example, <code>2019-07-09T02:28:57.123456Z</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -4345,13 +4393,13 @@ The <code>connect.decimal.precision</code> schema parameter contains an integer 
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-informix/3.6.0.Alpha1/debezium-connector-informix-3.6.0.Alpha1-plugin.tar.gz">Debezium Informix connector plug-in archive</a> from Maven Central.</p>
+<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-informix/3.6.0.Final/debezium-connector-informix-3.6.0.Final-plugin.tar.gz">Debezium Informix connector plug-in archive</a> from Maven Central.</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
 </li>
 <li>
-<p>Download the <a href="https://repo1.maven.org/maven2/com/ibm/informix/jdbc/4.50.11/jdbc-4.50.11.jar">JDBC driver for Informix</a> and <a href="https://repo1.maven.org/maven2/com/ibm/informix/ifx-changestream-client/1.1.3/ifx-changestream-client-1.1.3.jar">Informix Change Stream client</a> from Maven Central, and copy the downloaded JAR files to the directory that contains the Debezium Informix connector JAR file (that is, <code>debezium-connector-informix-3.6.0.Alpha1.jar</code>).</p>
+<p>Download the <a href="https://repo1.maven.org/maven2/com/ibm/informix/jdbc/15.0.1.1/jdbc-15.0.1.1.jar">JDBC driver for Informix</a> and <a href="https://repo1.maven.org/maven2/com/ibm/informix/ifx-changestream-client/1.1.3/ifx-changestream-client-1.1.3.jar">Informix Change Stream client</a> from Maven Central, and copy the downloaded JAR files to the directory that contains the Debezium Informix connector JAR file (that is, <code>debezium-connector-informix-3.6.0.Final.jar</code>).</p>
 </li>
 </ol>
 </div>
@@ -4594,7 +4642,7 @@ Information about the properties is organized as follows:</p>
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Required connector configuration properties</caption>
+<caption class="title">Table 10. Required connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -5146,7 +5194,7 @@ Specify one of the following values:</p>
 <p>The following <em>advanced</em> configuration properties have defaults that work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Advanced connector configuration properties</caption>
+<caption class="title">Table 11. Advanced connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -5539,6 +5587,17 @@ Specify one of the following values:</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="informix-property-cdc-max-records"></a><a href="#informix-property-cdc-max-records"><code>cdc.max.records</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Positive integer value that specifies the maximum number of CDC records that the Informix Change Stream Client processes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="informix-property-cdc-stop-logging-on-close"></a><a href="#informix-property-cdc-stop-logging-on-close"><code>cdc.stop.logging.on.close</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -5702,6 +5761,59 @@ If you start multiple connectors in a cluster, this property is useful for avoid
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="informix-property-statistics-metrics-enabled"></a><a href="#informix-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>true</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether the connector collects advanced statistical metrics for streaming metrics, such as quantiles.
+When set to <code>true</code>, the connector collects the following statistics:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Minimum value</p>
+</li>
+<li>
+<p>Maximum value</p>
+</li>
+<li>
+<p>Average value</p>
+</li>
+<li>
+<p>P50 (median) percentile</p>
+</li>
+<li>
+<p>P95 percentile</p>
+</li>
+<li>
+<p>P99 percentile</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Currently only <code>MilliSecondsBehindSource</code> metric supports collecting quantiles.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The statistics are computed using a probabilistic data structure (DDSketch) that provides approximate quantile values with 1% relative accuracy.
+When set to <code>false</code>, the connector does not collect quantiles, and the quantile JMX metrics return <code>null</code> values.
+The connector continues to collect minimum, maximum, and average values.
+Disabling quantile collection reduces memory overhead slightly.
+For more information, see <a href="#informix-streaming-metrics">Streaming metrics</a>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="informix-property-streaming-delay-ms"></a><a href="#informix-property-streaming-delay-ms"><code>streaming.delay.ms</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -5725,7 +5837,7 @@ Setting a delay interval helps to prevent the connector from restarting snapshot
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>An optional, comma-separated list of regular expressions that match the fully-qualified names (<code><em>databaseName</em>.<em>schemaName</em>.<em>tableName</em></code>) of the tables to include in a snapshot.
 The specified items must be named in the connector&#8217;s <a href="#informix-property-table-include-list"><code>table.include.list</code></a> property.
-This property takes effect only if the connector&#8217;s <a href="#informix-property-snapshot-mode"><code>snapshot.mode</code></a> property is set to a value other than <code>never</code>.</p>
+This property takes effect only if the connector&#8217;s <a href="#informix-property-snapshot-mode"><code>snapshot.mode</code></a> property is set to a value other than <code>no_data</code>.</p>
 </div>
 <div class="paragraph">
 <p>This property does not affect the behavior of incremental snapshots.</p>
@@ -6083,9 +6195,10 @@ The resulting topic name has the following pattern:</p>
 <p><code><em>topic.heartbeat.prefix</em>.<em>topic.prefix</em></code></p>
 </div>
 <div class="paragraph">
-<p>For example, if the topic prefix is <code>fulfillment</code>, based on the default value of the prefix, the connector assigns the following name to the heartbeat topic : <code>__debezium-heartbeat.fulfillment</code>.<br>
-<br>
-This property is ignored if <code>topic.heartbeat.name</code> is set.</p>
+<p>For example, if the topic prefix is <code>fulfillment</code>, based on the default value of the prefix, the connector assigns the following name to the heartbeat topic : <code>__debezium-heartbeat.fulfillment</code>.</p>
+</div>
+<div class="paragraph">
+<p>This property is ignored if <code>topic.heartbeat.name</code> is set.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -6096,13 +6209,16 @@ This property is ignored if <code>topic.heartbeat.name</code> is set.</p>
 <p><em>empty</em></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies an explicit, full name for the topic to which the connector sends heartbeat messages, overriding the prefix-based naming derived from <code>topic.heartbeat.prefix</code> and <code>topic.prefix</code>.<br>
-<br>
-When set, all heartbeat messages are routed to this exact topic name, regardless of the connector&#8217;s <code>topic.prefix</code>. This is useful when running multiple connectors and you want to consolidate heartbeat events into a single shared topic, avoiding the creation of a large number of single-partition heartbeat topics.<br>
-<br>
-For example, setting this to <code>debezium-heartbeat</code> routes all heartbeat messages to a topic named <code>debezium-heartbeat</code>.<br>
-<br>
-If this property is empty or unset, the connector falls back to the default behavior: <em>topic.heartbeat.prefix</em>.<em>topic.prefix</em>.</p>
+<p>Specifies an explicit, full name for the topic to which the connector sends heartbeat messages, overriding the prefix-based naming derived from <code>topic.heartbeat.prefix</code> and <code>topic.prefix</code>.</p>
+</div>
+<div class="paragraph">
+<p>When set, all heartbeat messages are routed to this exact topic name, regardless of the connector&#8217;s <code>topic.prefix</code>. This is useful when running multiple connectors and you want to consolidate heartbeat events into a single shared topic, avoiding the creation of a large number of single-partition heartbeat topics.</p>
+</div>
+<div class="paragraph">
+<p>For example, setting this to <code>debezium-heartbeat</code> routes all heartbeat messages to a topic named <code>debezium-heartbeat</code>.</p>
+</div>
+<div class="paragraph">
+<p>If this property is empty or unset, the connector falls back to the default behavior: <em>topic.heartbeat.prefix</em>.<em>topic.prefix</em>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -6156,6 +6272,19 @@ After the snapshot completes, the connector is unable to close the connection, r
 </td>
 </tr>
 </table>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="informix-property-legacy-snapshot-max-threads"></a><a href="#informix-property-legacy-snapshot-max-threads"><code>legacy.snapshot.max.threads</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Specifies whether the parallel initial snapshot uses the legacy table-per-thread algorithm.
+When set to <code>false</code> (the default), the connector will chunk the contents of the source table across all parallel initial snapshot threads for maximum performance.
+When set to <code>true</code>, the connector will process each table per thread.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -6316,7 +6445,7 @@ Set the value to <code>0</code> (zero) to remove the timeout limit.</p>
 <p>The following table describes the <code>schema.history.internal</code> properties for configuring the Debezium connector.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Connector database schema history configuration properties</caption>
+<caption class="title">Table 12. Connector database schema history configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6417,7 +6546,7 @@ Skipping should be used only with care as it can lead to data loss or mangling w
 <p><code>false</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A Boolean value that specifies whether the connector records schema structures from all tables in a schema or database, or only from tables that are designated for capture.<br>
+<p>A Boolean value that specifies whether the connector records schema structures from all tables in a schema or database, or only from tables that are designated for capture.
 Specify one of the following values:</p>
 </div>
 <div class="dlist">
@@ -6432,7 +6561,7 @@ Debezium requires the schema history of a table so that it can identify the stru
 <dt class="hdlist1"><code>true</code></dt>
 <dd>
 <p>During a database snapshot, the connector records the table schemas only for the tables from which Debezium captures change events.
-If you change the default value, and you later configure the connector to capture data from other tables in the database, the connector lacks the schema information that it requires to capture change events from the tables.<br></p>
+If you change the default value, and you later configure the connector to capture data from other tables in the database, the connector lacks the schema information that it requires to capture change events from the tables.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -6445,7 +6574,7 @@ If you change the default value, and you later configure the connector to captur
 <p><code>false</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A Boolean value that specifies whether the connector records schema structures from all logical databases in the database instance.<br>
+<p>A Boolean value that specifies whether the connector records schema structures from all logical databases in the database instance.
 Specify one of the following values:</p>
 </div>
 <div class="dlist">
@@ -6457,6 +6586,34 @@ Specify one of the following values:</p>
 <dt class="hdlist1"><code>false</code></dt>
 <dd>
 <p>The connector records schema structures for all logical databases.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="informix-property-database-history-memory-optimization"></a><a href="#informix-property-database-history-memory-optimization"><code>schema.history.internal.memory.optimization</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>off</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Controls how Debezium deduplicates identical schema objects (tables, columns, attributes) in memory using an interner.
+Specify one of the following values:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>off</code></dt>
+<dd>
+<p>No deduplication is performed (the default).</p>
+</dd>
+<dt class="hdlist1"><code>on</code></dt>
+<dd>
+<p>Each connector uses its own isolated intern pool. Reduces heap usage within a single connector without interfering with other connectors.</p>
+</dd>
+<dt class="hdlist1"><code>shared</code></dt>
+<dd>
+<p>All connectors configured with <code>shared</code> share a single global intern pool. Maximises deduplication when many connectors track tables with similar structures.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -6511,7 +6668,7 @@ schema.history.internal.consumer.ssl.key.password=test1234</code></pre>
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Kafka signals configuration properties</caption>
+<caption class="title">Table 13. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6606,7 +6763,7 @@ For example, the connector passes properties such as <code>signal.consumer.secur
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Sink notification configuration properties</caption>
+<caption class="title">Table 14. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6710,8 +6867,7 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <div class="title">Example 3. How custom tags modify the connector MBean name</div>
 <div class="content">
 <div class="paragraph">
-<p>By default, the Informix connector uses the following MBean name for streaming metrics:
-<br></p>
+<p>By default, the Informix connector uses the following MBean name for streaming metrics:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7263,6 +7419,78 @@ The values will incorporate any differences between the clocks on the machines w
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourceminvalue_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourceminvalue_informix"><code>MilliSecondsBehindSourceMinValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The minimum lag in milliseconds behind the source that is observed during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcemaxvalue_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourcemaxvalue_informix"><code>MilliSecondsBehindSourceMaxValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum lag in milliseconds behind the source that is observed during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourceaveragevalue_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourceaveragevalue_informix"><code>MilliSecondsBehindSourceAverageValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The average lag in milliseconds behind the source calculated across all observations during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep50_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep50_informix"><code>MilliSecondsBehindSourceP50</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 50th percentile (median) of the lag in milliseconds behind the source.
+This metric provides a more robust measure of typical lag than the average, as it is less affected by outlier values.
+Available when <a href="#informix-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep95_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep95_informix"><code>MilliSecondsBehindSourceP95</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 95th percentile of the lag in milliseconds behind the source.
+This metric indicates that 95% of lag measurements are below this value, useful for identifying tail latencies and setting SLA thresholds.
+Available when <a href="#informix-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep99_informix"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep99_informix"><code>MilliSecondsBehindSourceP99</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 99th percentile of the lag in milliseconds behind the source.
+This metric indicates that 99% of lag measurements are below this value, useful for understanding worst-case performance scenarios.
+Available when <a href="#informix-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="connectors-strm-metric-numberofcommittedtransactions_informix"></a><a href="#connectors-strm-metric-numberofcommittedtransactions_informix"><code>NumberOfCommittedTransactions</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -7517,7 +7745,7 @@ You must stop the Debezium Informix connector before you perform a schema update
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e38d98d180e722ef9e19fe6409850e8323c44968">e38d98d1</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f2f75b8e3b8a3c2a631abc8fdd3c82633e494acf">f2f75b8e</a></span>)
             
         </div>
     </footer>

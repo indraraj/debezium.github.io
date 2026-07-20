@@ -38,7 +38,7 @@
     </div>
   </nav>
 </header><div class="body">
-<div class="nav-container" data-component="reference" data-version="3.6">
+<div class="nav-container" data-component="reference" data-version="stable">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -135,6 +141,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="informix.html">Informix</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cockroachdb.html">CockroachDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="yashandb.html">YashanDB</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -209,6 +221,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
@@ -331,11 +346,11 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
-        </li>
         <li class="version is-current">
           <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.4/index.html">3.4</a>
@@ -356,27 +371,6 @@
           <a href="/documentation/reference/2.7/index.html">2.7</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.5/index.html">2.5</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.4/index.html">2.4</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.3/index.html">2.3</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.2/index.html">2.2</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.1/index.html">2.1</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
-        </li>
-        <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
         </li>
       </ul>
@@ -389,7 +383,7 @@
 <main role="main" class="main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../stable/index.html" class="home-link"></a>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -402,22 +396,15 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.6</button>
         <div class="version-menu">
-                        <a class="version" href="/documentation//reference/connectors/jdbc.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/jdbc.html" data-hash="true">3.5</a>
-                        <a class="version is-current" href="/reference/3.6/connectors/jdbc.html" data-hash="true">3.6</a>
-                        <a class="version" href="/documentation//reference/3.4/connectors/jdbc.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.3/connectors/jdbc.html" data-hash="true">3.3</a>
-                        <a class="version" href="/documentation//reference/3.2/connectors/jdbc.html" data-hash="true">3.2</a>
-                        <a class="version" href="/documentation//reference/3.1/connectors/jdbc.html" data-hash="true">3.1</a>
-                        <a class="version" href="/documentation//reference/3.0/connectors/jdbc.html" data-hash="true">3.0</a>
-                        <a class="version" href="/documentation//reference/2.7/connectors/jdbc.html" data-hash="true">2.7</a>
-                        <a class="version" href="/documentation//reference/2.6/connectors/jdbc.html" data-hash="true">2.6</a>
-                        <a class="version" href="/documentation//reference/2.5/connectors/jdbc.html" data-hash="true">2.5</a>
-                        <a class="version" href="/documentation//reference/2.4/connectors/jdbc.html" data-hash="true">2.4</a>
-                        <a class="version" href="/documentation//reference/2.3/connectors/jdbc.html" data-hash="true">2.3</a>
-                        <a class="version" href="/documentation//reference/2.2/connectors/jdbc.html" data-hash="true">2.2</a>
-                    <a class="version is-missing" href="#">2.1</a>
-                    <a class="version is-missing" href="#">2.0</a>
+                        <a class="version" href="/documentation/reference/connectors/jdbc.html" data-hash="true">nightly</a>
+                        <a class="version is-current" href="/documentation/reference/stable/connectors/jdbc.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.5/connectors/jdbc.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation/reference/3.4/connectors/jdbc.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation/reference/3.3/connectors/jdbc.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation/reference/3.2/connectors/jdbc.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation/reference/3.1/connectors/jdbc.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation/reference/3.0/connectors/jdbc.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation/reference/2.7/connectors/jdbc.html" data-hash="true">2.7</a>
                     <a class="version is-missing" href="#">1.9</a>
         </div>
         |
@@ -446,12 +433,7 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
-    <br/>
-            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
-            
-</div>            <h1 class="page">Debezium connector for JDBC</h1>
+    <!-- This partial is a placeholder -->            <h1 class="page">Debezium connector for JDBC</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div id="toc" class="toc">
@@ -667,26 +649,35 @@ To define a consistent primary key, you can configure the connector to use one o
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record_key</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The primary key is composed of the Kafka event&#8217;s key.<br>
-<br>
-If the primary key is a primitive type, specify the name of the column to be used by setting the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property.
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The primary key is composed of the Kafka event&#8217;s key.</p>
+</div>
+<div class="paragraph">
+<p>If the primary key is a primitive type, specify the name of the column to be used by setting the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property.
 If the primary key is a struct type, the fields in the struct are mapped as columns of the primary key.
-You can use the <code>primary.key.fields</code> property to restrict the primary key to a subset of columns.</p></td>
+You can use the <code>primary.key.fields</code> property to restrict the primary key to a subset of columns.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record_value</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The primary key is composed of the Kafka event&#8217;s value.<br>
-<br>
-Because the value of a Kafka event is always a <code>Struct</code>, by default, all of the fields in the value become columns of the primary key.
-To use a subset of fields in the primary key, set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property to specify a comma-separated list of fields in the value from which you want to derive the primary key columns.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The primary key is composed of the Kafka event&#8217;s value.</p>
+</div>
+<div class="paragraph">
+<p>Because the value of a Kafka event is always a <code>Struct</code>, by default, all of the fields in the value become columns of the primary key.
+To use a subset of fields in the primary key, set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property to specify a comma-separated list of fields in the value from which you want to derive the primary key columns.</p>
+</div></div></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>record_header</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The primary key is composed of the Kafka event&#8217;s headers.<br>
-<br>
-Kafka event&#8217;s headers contains could contain multiple header that each one could be <code>Struct</code> or primitives data types,
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The primary key is composed of the Kafka event&#8217;s headers.</p>
+</div>
+<div class="paragraph">
+<p>Kafka event&#8217;s headers contains could contain multiple header that each one could be <code>Struct</code> or primitives data types,
 the connectors makes a  <code>Struct</code> of these headers. Hence, all fields in this <code>Struct</code> become columns of the primary key.
-To use a subset of fields in the primary key, set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property to specify a comma-separated list of fields in the value from which you want to derive the primary key columns.</p></td>
+To use a subset of fields in the primary key, set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fields</code></a> property to specify a comma-separated list of fields in the value from which you want to derive the primary key columns.</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -1778,7 +1769,7 @@ After you apply the SMT to an event that includes a field with the name <code>ID
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.6.0.Alpha1/debezium-connector-jdbc-3.6.0.Alpha1-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.6.0.Final/debezium-connector-jdbc-3.6.0.Final-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -2325,11 +2316,13 @@ You can set the <a href="#jdbc-property-primary-key-fields"><code>primary.key.fi
 <p>No default</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Either the name of the primary key column or a comma-separated list of fields to derive the primary key from.<br>
-<br>
-When <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> and the event&#8217;s key is a primitive type, it is expected that this property specifies the column name to be used for the key.<br>
-<br>
-When the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, it is expected that this property specifies a comma-separated list of field names from either the key or value.
+<p>Either the name of the primary key column or a comma-separated list of fields to derive the primary key from.</p>
+</div>
+<div class="paragraph">
+<p>When <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> and the event&#8217;s key is a primitive type, it is expected that this property specifies the column name to be used for the key.</p>
+</div>
+<div class="paragraph">
+<p>When the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, it is expected that this property specifies a comma-separated list of field names from either the key or value.
 If the <a href="#jdbc-property-primary-key-mode"><code>primary.key.mode</code></a> is set to <code>record_key</code> with a non-primitive key, or <code>record_value</code>, and this property is not specified, the connector derives the primary key from all fields of either the record key or record value, depending on the specified mode.</p>
 </div></div></td>
 </tr>
@@ -2379,13 +2372,15 @@ The connector adds missing columns to the table by comparing the incoming event&
 <p><code>${topic}</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies a string pattern that the connector uses to construct the names of destination tables.<br>
-When the property is set to its default value, <code>${topic}</code>, after the connector reads an event from Kafka, it writes the event record to a destination table with a name that matches the name of the source topic.<br>
-<br>
-You can also configure this property to extract values from specific fields in incoming event records and then use those values to dynamically generate the names of target tables.
-This ability to generate table names from values in the message source would otherwise require the use of a custom Kafka Connect single message transformation (SMT).<br>
-<br>
-To configure the property to dynamically generate the names of destination tables, set its value to a pattern such as <code>${source._field_}</code>.
+<p>Specifies a string pattern that the connector uses to construct the names of destination tables.
+When the property is set to its default value, <code>${topic}</code>, after the connector reads an event from Kafka, it writes the event record to a destination table with a name that matches the name of the source topic.</p>
+</div>
+<div class="paragraph">
+<p>You can also configure this property to extract values from specific fields in incoming event records and then use those values to dynamically generate the names of target tables.
+This ability to generate table names from values in the message source would otherwise require the use of a custom Kafka Connect single message transformation (SMT).</p>
+</div>
+<div class="paragraph">
+<p>To configure the property to dynamically generate the names of destination tables, set its value to a pattern such as <code>${source._field_}</code>.
 When you specify this type of pattern, the connector extracts values from the <code>source</code> block of the Debezium change event, and then uses those values to construct the table name.
 For example, you might set the value of the property to the pattern <code>${source.schema}_${source.table}</code>.
 Based on this pattern, if the connector reads an event in which the <code>schema</code> field in the source block contains the value, <code>user</code>, and the <code>table</code> field contains the value, <code>tab</code>, the connector writes the event record to a table with the name <code>user_tab</code>.</p>
@@ -2481,7 +2476,7 @@ You can also configure the connector’s underlying consumer’s <code><em>max.p
 <dt class="hdlist1"><code>true</code></dt>
 <dd>
 <p>The connector uses the reduction buffer to reduce change events before it writes them to the sink database.
-That is, if multiple events refer to the same primary key, the connector consolidates the SQL queries and writes only a single logical SQL change, based on the row state that is reported in the most recent offset record.<br>
+That is, if multiple events refer to the same primary key, the connector consolidates the SQL queries and writes only a single logical SQL change, based on the row state that is reported in the most recent offset record.
 Choose this option to reduce the SQL load on the target database.</p>
 </dd>
 </dl>
@@ -2499,9 +2494,10 @@ Choose this option to reduce the SQL load on the target database.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>An optional, comma-separated list of field names that match the fully-qualified names of fields to include from the change event value.
-Fully-qualified names for fields are of the form <code><em>fieldName</em></code> or <code><em>topicName</em>:_fieldName_</code>.<br>
-<br>
-If you include this property in the configuration, do not set the <code>field.exclude.list</code> property.</p>
+Fully-qualified names for fields are of the form <code><em>fieldName</em></code> or <code><em>topicName</em>:_fieldName_</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you include this property in the configuration, do not set the <code>field.exclude.list</code> property.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2513,9 +2509,10 @@ If you include this property in the configuration, do not set the <code>field.ex
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>An optional, comma-separated list of field names that match the fully-qualified names of fields to exclude from the change event value.
-Fully-qualified names for fields are of the form <code><em>fieldName</em></code> or <code><em>topicName</em>:_fieldName_</code>.<br>
-<br>
-If you include this property in the configuration, do not set the <code>field.include.list</code> property.</p>
+Fully-qualified names for fields are of the form <code><em>fieldName</em></code> or <code><em>topicName</em>:_fieldName_</code>.</p>
+</div>
+<div class="paragraph">
+<p>If you include this property in the configuration, do not set the <code>field.include.list</code> property.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2583,9 +2580,10 @@ To prevent the connector from rebalancing, set the total retry time (flush.retry
 <p><code>io.debezium.connector.jdbc.naming.DefaultColumnNamingStrategy</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the fully-qualified class name of a <code>ColumnNamingStrategy</code> implementation that the connector uses to resolve column names from incoming event field names.<br>
-<br>
-The default behavior is to use the field name as the column name without any transformation.</p>
+<p>Specifies the fully-qualified class name of a <code>ColumnNamingStrategy</code> implementation that the connector uses to resolve column names from incoming event field names.</p>
+</div>
+<div class="paragraph">
+<p>The default behavior is to use the field name as the column name without any transformation.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -2596,9 +2594,10 @@ The default behavior is to use the field name as the column name without any tra
 <p><code>io.debezium.connector.jdbc.nnaming.DefaultCollectionNamingStrategy</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the fully-qualified class name of a <code>CollectionNamingStrategy</code> implementation that the connector uses to resolve table names from incoming event topic names.<br>
-<br>
-The default behavior is to:<br></p>
+<p>Specifies the fully-qualified class name of a <code>CollectionNamingStrategy</code> implementation that the connector uses to resolve table names from incoming event topic names.</p>
+</div>
+<div class="paragraph">
+<p>The default behavior is to:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2678,7 +2677,7 @@ Quoting behavior is dialect-specific, and varies among different types of databa
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e38d98d180e722ef9e19fe6409850e8323c44968">e38d98d1</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f2f75b8e3b8a3c2a631abc8fdd3c82633e494acf">f2f75b8e</a></span>)
             
         </div>
     </footer>

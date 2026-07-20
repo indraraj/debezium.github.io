@@ -38,7 +38,7 @@
     </div>
   </nav>
 </header><div class="body">
-<div class="nav-container" data-component="reference" data-version="3.6">
+<div class="nav-container" data-component="reference" data-version="stable">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -135,6 +141,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/informix.html">Informix</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/cockroachdb.html">CockroachDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/yashandb.html">YashanDB</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -209,6 +221,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
@@ -331,11 +346,11 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
-        </li>
         <li class="version is-current">
           <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.4/index.html">3.4</a>
@@ -356,27 +371,6 @@
           <a href="/documentation/reference/2.7/index.html">2.7</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.5/index.html">2.5</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.4/index.html">2.4</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.3/index.html">2.3</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.2/index.html">2.2</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.1/index.html">2.1</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
-        </li>
-        <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
         </li>
       </ul>
@@ -389,7 +383,7 @@
 <main role="main" class="main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../stable/index.html" class="home-link"></a>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -402,23 +396,16 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.6</button>
         <div class="version-menu">
-                        <a class="version" href="/documentation//reference/operations/debezium-server.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/operations/debezium-server.html" data-hash="true">3.5</a>
-                        <a class="version is-current" href="/reference/3.6/operations/debezium-server.html" data-hash="true">3.6</a>
-                        <a class="version" href="/documentation//reference/3.4/operations/debezium-server.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.3/operations/debezium-server.html" data-hash="true">3.3</a>
-                        <a class="version" href="/documentation//reference/3.2/operations/debezium-server.html" data-hash="true">3.2</a>
-                        <a class="version" href="/documentation//reference/3.1/operations/debezium-server.html" data-hash="true">3.1</a>
-                        <a class="version" href="/documentation//reference/3.0/operations/debezium-server.html" data-hash="true">3.0</a>
-                        <a class="version" href="/documentation//reference/2.7/operations/debezium-server.html" data-hash="true">2.7</a>
-                        <a class="version" href="/documentation//reference/2.6/operations/debezium-server.html" data-hash="true">2.6</a>
-                        <a class="version" href="/documentation//reference/2.5/operations/debezium-server.html" data-hash="true">2.5</a>
-                        <a class="version" href="/documentation//reference/2.4/operations/debezium-server.html" data-hash="true">2.4</a>
-                        <a class="version" href="/documentation//reference/2.3/operations/debezium-server.html" data-hash="true">2.3</a>
-                        <a class="version" href="/documentation//reference/2.2/operations/debezium-server.html" data-hash="true">2.2</a>
-                        <a class="version" href="/documentation//reference/2.1/operations/debezium-server.html" data-hash="true">2.1</a>
-                        <a class="version" href="/documentation//reference/2.0/operations/debezium-server.html" data-hash="true">2.0</a>
-                        <a class="version" href="/documentation//reference/1.9/operations/debezium-server.html" data-hash="true">1.9</a>
+                        <a class="version" href="/documentation/reference/operations/debezium-server.html" data-hash="true">nightly</a>
+                        <a class="version is-current" href="/documentation/reference/stable/operations/debezium-server.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.5/operations/debezium-server.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation/reference/3.4/operations/debezium-server.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation/reference/3.3/operations/debezium-server.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation/reference/3.2/operations/debezium-server.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation/reference/3.1/operations/debezium-server.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation/reference/3.0/operations/debezium-server.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation/reference/2.7/operations/debezium-server.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation/reference/1.9/operations/debezium-server.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
@@ -446,12 +433,7 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
-    <br/>
-            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
-            
-</div>            <h1 class="page">Debezium Server</h1>
+    <!-- This partial is a placeholder -->            <h1 class="page">Debezium Server</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div id="toc" class="toc">
@@ -482,6 +464,7 @@
 <li><a href="#_redis_configuration_examples">Redis Configuration Examples</a></li>
 <li><a href="#_nats_streaming">NATS Streaming</a></li>
 <li><a href="#_nats_jetstream">NATS JetStream</a></li>
+<li><a href="#_apache_fluss">Apache Fluss</a></li>
 <li><a href="#_apache_kafka">Apache Kafka</a></li>
 <li><a href="#_pravega">Pravega</a></li>
 <li><a href="#_infinispan">Infinispan</a></li>
@@ -491,6 +474,7 @@
 <li><a href="#_milvus">Milvus</a></li>
 <li><a href="#_qdrant_sink">Qdrant Sink</a></li>
 <li><a href="#_instructlab">InstructLab</a></li>
+<li><a href="#_jdbc">JDBC</a></li>
 <li><a href="#_apache_iceberg">Apache Iceberg</a></li>
 </ul>
 </li>
@@ -541,7 +525,7 @@ For streaming change events to Apache Kafka, it is recommended to deploy the Deb
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/3.6.0.Alpha1/debezium-server-dist-3.6.0.Alpha1.tar.gz">Debezium Server distribution</a></p>
+<p><a href="https://repo1.maven.org/maven2/io/debezium/debezium-server-dist/3.6.0.Final/debezium-server-dist-3.6.0.Final.tar.gz">Debezium Server distribution</a></p>
 </li>
 </ul>
 </div>
@@ -555,7 +539,7 @@ For streaming change events to Apache Kafka, it is recommended to deploy the Deb
 |-- config
 |-- CONTRIBUTING.md
 |-- COPYRIGHT.txt
-|-- debezium-server-3.6.0.Alpha1-runner.jar
+|-- debezium-server-3.6.0.Final-runner.jar
 |-- lib
 |-- LICENSE-3rd-PARTIES.txt
 |-- LICENSE.txt
@@ -3595,11 +3579,27 @@ By default the same name is used.</p>
 <p>*.*.*</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>A comma separated list of subjects, messaging channel names. Can contain wildcards like test.inventory.*<br>
-<strong>Important:</strong> To capture both schema change events and data change events, you must specify both the topic prefix and a wildcard pattern. For example, if your <code>debezium.source.topic.prefix</code> is <code>myapp</code>, configure subjects as <code>myapp,myapp.&gt;</code> or <code>myapp,myapp.<strong>.</strong></code>.<br>
-- Schema change events (DDL) are published to the exact topic prefix (e.g., <code>myapp</code>) and this is rejected by any subject that has a subtopic wildcard<br>
-- Data change events are published to table-specific subjects (e.g., <code>myapp.database.table</code>)<br>
-- Use <code>myapp.&gt;</code> to match any number of subject levels, or <code>myapp.<strong>.</strong></code> to match exactly two levels after the prefix</p>
+<p>A comma separated list of JetStream subjects, or messaging channel names.
+You can specify entries that contain wildcards, such as <code>test.inventory.*</code></p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To capture both schema change events and data change events, you must specify both the topic prefix and a wildcard pattern.
+For example, if your <code>debezium.source.topic.prefix</code> is <code>myapp</code>, configure subjects as <code>myapp,myapp.&gt;</code> or <code>myapp,myapp.<strong>.</strong></code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Data change events are published to table-specific subjects (for example, <code>myapp.database.table</code>)
+The value <code>myapp.&gt;</code> matches any number of subject levels; similarly <code>myapp.<strong>.</strong></code> matches exactly two levels after the prefix.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3649,8 +3649,8 @@ Debezium returns the signed nonce to the server, along with the public key for t
 <p>No default value</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the username of the authorized NAT user.<br>
-When this property is present in the configuration, password authentication with NATS is enabled.<br>
+<p>Specifies the username of the authorized NAT user.
+When this property is present in the configuration, password authentication with NATS is enabled.
 To use password authentication with NATS, specify a <a href="#nats-jetstream-auth-password"><code>debezium.sink.nats-jetstream.auth.password</code></a>.
 Do not enable password authentication if <a href="#nats-jetstream-auth-jwt">JWT authentication</a> is enabled.</p>
 </div></div></td>
@@ -3740,6 +3740,185 @@ By default the same name is used.</p>
 </div>
 </div>
 <div class="sect3">
+<h4 id="_apache_fluss"><a class="anchor" href="#_apache_fluss"></a>Apache Fluss</h4>
+<div class="paragraph">
+<p><a href="https://fluss.apache.org/">Apache Fluss</a> is a streaming storage built for real-time analytics, providing unified streaming and batch processing capabilities with high performance, low latency, and strong consistency guarantees.
+Debezium Server can publish change events to Apache Fluss, supporting both primary key tables for upsert/delete operations and log tables for append-only streaming.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Apache Fluss requires connectors to be configured with schemas enabled. Schemaless change events are not supported.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 10%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-type"></a><a href="#fluss-type"><code>debezium.sink.type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Must be set to <code>fluss</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-bootstrap-servers"></a><a href="#fluss-bootstrap-servers"><code>debezium.sink.fluss.bootstrap.servers</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Comma-separated list of Fluss coordinator server addresses in <code>host:port</code> format.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-default-database"></a><a href="#fluss-default-database"><code>debezium.sink.fluss.default.database</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Default Fluss database used when resolving table paths from event destinations.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-primary-key-mode"></a><a href="#fluss-primary-key-mode"><code>debezium.sink.fluss.primary.key.mode</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>auto</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Determines the write mode selection based on primary key presence. Valid values:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>auto</code></dt>
+<dd>
+<p>Automatically selects between append and upsert mode based on whether the table has a primary key.</p>
+</dd>
+<dt class="hdlist1"><code>upsert</code></dt>
+<dd>
+<p>Requires tables to have a primary key and performs insert/update/delete operations.</p>
+</dd>
+<dt class="hdlist1"><code>append</code></dt>
+<dd>
+<p>Writes all records in append-only mode, regardless of primary key existence.</p>
+</dd>
+</dl>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-table-auto-create"></a><a href="#fluss-table-auto-create"><code>debezium.sink.fluss.table.auto.create</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>When <code>true</code>, automatically creates Fluss tables if they do not exist, deriving the schema from the Debezium event schema.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-retries-max"></a><a href="#fluss-retries-max"><code>debezium.sink.fluss.retries.max</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>5</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Maximum number of retry attempts on transient write failures.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-retries-interval-ms"></a><a href="#fluss-retries-interval-ms"><code>debezium.sink.fluss.retries.interval.ms</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>1000</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The initial retry interval in milliseconds.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-retries-max-interval-ms"></a><a href="#fluss-retries-max-interval-ms"><code>debezium.sink.fluss.retries.max.interval.ms</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>60000</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum retry interval in milliseconds.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-retries-backoff-multiplier"></a><a href="#fluss-retries-backoff-multiplier"><code>debezium.sink.fluss.retries.backoff.multiplier</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>2.0</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Multiplier applied to retry intervals during exponential backoff.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect4">
+<h5 id="_injection_points_9"><a class="anchor" href="#_injection_points_9"></a>Injection points</h5>
+<div class="paragraph">
+<p>The Fluss sink behavior can be modified by a custom logic providing alternative implementations for specific functionalities.
+When the alternative implementations are not available then the default ones are used.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 10%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Interface</th>
+<th class="tableblock halign-left valign-top">CDI classifier</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="fluss-ext-stream-name-mapper"></a><a href="#fluss-ext-stream-name-mapper"><code>io.debezium.server.StreamNameMapper</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Custom implementation maps the planned destination (topic) name into a physical Fluss table name.
+By default the same name is used.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
 <h4 id="_apache_kafka"><a class="anchor" href="#_apache_kafka"></a>Apache Kafka</h4>
 <div class="paragraph">
 <p><a href="https://kafka.apache.org/">Apache Kafka</a> is a popular open-source platform for distributed event streaming. Debezium Server supports publishing captured change events to a configured Kafka message broker.</p>
@@ -3794,7 +3973,7 @@ Set the value to <code>0</code> to disable the timeout.</p>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_9"><a class="anchor" href="#_injection_points_9"></a>Injection points</h5>
+<h5 id="_injection_points_10"><a class="anchor" href="#_injection_points_10"></a>Injection points</h5>
 <div class="paragraph">
 <p>The Kafka sink behaviour can be modified by a custom logic providing alternative implementations for specific functionalities.
 When the alternative implementations are not available then the default ones are used.</p>
@@ -3891,7 +4070,7 @@ When the alternative implementations are not available then the default ones are
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_10"><a class="anchor" href="#_injection_points_10"></a>Injection points</h5>
+<h5 id="_injection_points_11"><a class="anchor" href="#_injection_points_11"></a>Injection points</h5>
 <div class="paragraph">
 <p>Pravega sink behavior can be modified by custom logic providing alternative implementations for specific functionalities.
 When the alternative implementations are not available then the default ones are used.</p>
@@ -4006,7 +4185,7 @@ Due to very fast data access, Infinispan can be used, besides others, as a data 
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_11"><a class="anchor" href="#_injection_points_11"></a>Injection points</h5>
+<h5 id="_injection_points_12"><a class="anchor" href="#_injection_points_12"></a>Injection points</h5>
 <div class="paragraph">
 <p>The Infinispan sink behaviour can be modified by a custom logic providing alternative implementations for specific functionalities.
 When the alternative implementations are not available then the default ones are used.</p>
@@ -4143,7 +4322,7 @@ proper value based on the actual application to avoid long thread blocking time.
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_12"><a class="anchor" href="#_injection_points_12"></a>Injection points</h5>
+<h5 id="_injection_points_13"><a class="anchor" href="#_injection_points_13"></a>Injection points</h5>
 <div class="paragraph">
 <p>The RocketMQ sink behaviour can be modified by a custom logic providing alternative implementations for specific
 functionalities.
@@ -4376,7 +4555,7 @@ So this string will be used as value for records without a payload.</p>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_13"><a class="anchor" href="#_injection_points_13"></a>Injection points</h5>
+<h5 id="_injection_points_14"><a class="anchor" href="#_injection_points_14"></a>Injection points</h5>
 <div class="paragraph">
 <p>RabbitMQ sink behavior can be modified by custom logic providing alternative implementations for specific functionalities.
 When the alternative implementations are not available then the default ones are used.</p>
@@ -4559,7 +4738,7 @@ Must be set to <code>milvus</code>.</p>
 </tbody>
 </table>
 <div class="sect4">
-<h5 id="_injection_points_14"><a class="anchor" href="#_injection_points_14"></a>Injection points</h5>
+<h5 id="_injection_points_15"><a class="anchor" href="#_injection_points_15"></a>Injection points</h5>
 <div class="paragraph">
 <p>You can modify the behavior of the Milvus sink connector by applying custom logic that provides alternative implementations for specific functions.
 If the alternative implementations are not available, the connector uses the default implementations.</p>
@@ -4698,7 +4877,7 @@ You must explicitly set the value to <code>qdrant</code>.</p>
 <p>No default value.</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>(Optional) Comma-separated list of <code>collection-name:field-name</code> pairs that explicitly define the vector fields to use for each collection.<br>
+<p>(Optional) Comma-separated list of <code>collection-name:field-name</code> pairs that explicitly define the vector fields to use for each collection.
 This field is mandatory for source tables and collections that contain multiple vector fields.</p>
 </div></div></td>
 </tr>
@@ -4902,6 +5081,94 @@ For example, if you specify the mapping <code>header:h1</code>, when Debezium de
 Use this option when you want to map the value of a specific static constant to an attribute in the <code>qna.yml</code> file.</p>
 </dd>
 </dl>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_jdbc"><a class="anchor" href="#_jdbc"></a>JDBC</h4>
+<div class="paragraph">
+<p>The JDBC sink writes change events directly to a relational database using JDBC.
+It leverages the <a href="../connectors/jdbc.html" class="xref page">Debezium JDBC connector</a> under the hood, supporting a wide variety of database dialects, including Db2, MySQL, Oracle, PostgreSQL, and SQL Server.</p>
+</div>
+<div class="paragraph">
+<p>The sink supports idempotent writes by using upsert semantics, basic schema evolution to automatically create or alter destination tables, and delete propagation.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 10%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Default</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-type"></a><a href="#jdbc-type"><code>debezium.sink.type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Must be set to <code>jdbc</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="jdbc-props"></a><a href="#jdbc-props"><code>debezium.sink.jdbc.*</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>All JDBC connector configuration properties can be set using the <code>debezium.sink.jdbc.</code> prefix.
+For the full list of available properties, including connection, runtime, and dialect-specific options, see the <a href="../connectors/jdbc.html#jdbc-connector-properties" class="xref page">Debezium JDBC connector configuration properties</a>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The JDBC sink requires the appropriate JDBC driver for the target database to be available on the classpath.
+The Debezium Server distribution does not include any JDBC drivers for target databases, so you must add the driver for your destination database manually to the <code>lib/</code> directory.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although the JDBC sink reuses the Debezium JDBC sink connector, Debezium Server does not currently provide the same delivery guarantees that are available when running the connector in other runtimes such as Kafka Connect.
+In particular, features that depend on the runtime for offset management, exactly-once semantics, or automatic error handling and retries may behave differently or may not be available.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="title">Example JDBC sink configuration</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">debezium.sink.type=jdbc
+debezium.sink.jdbc.connection.url=jdbc:mysql://localhost:3306/target_db
+debezium.sink.jdbc.connection.username=root
+debezium.sink.jdbc.connection.password=password
+debezium.sink.jdbc.insert.mode=upsert
+debezium.sink.jdbc.primary.key.mode=record_key
+debezium.sink.jdbc.schema.evolution=basic
+debezium.sink.jdbc.delete.enabled=true</code></pre>
 </div>
 </div>
 </div>
@@ -5394,7 +5661,7 @@ RANGE_TOMBSTONE "r" -&gt; TRUNCATE "t"</code></pre>
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e38d98d180e722ef9e19fe6409850e8323c44968">e38d98d1</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f2f75b8e3b8a3c2a631abc8fdd3c82633e494acf">f2f75b8e</a></span>)
             
         </div>
     </footer>

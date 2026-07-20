@@ -141,6 +141,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/informix.html">Informix</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/cockroachdb.html">CockroachDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/yashandb.html">YashanDB</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -215,6 +221,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
@@ -338,10 +347,10 @@
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/3.6/index.html">3.6</a>
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.4/index.html">3.4</a>
@@ -360,27 +369,6 @@
         </li>
         <li class="version">
           <a href="/documentation/reference/2.7/index.html">2.7</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.5/index.html">2.5</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.4/index.html">2.4</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.3/index.html">2.3</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.2/index.html">2.2</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.1/index.html">2.1</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
@@ -408,22 +396,15 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">nightly</button>
         <div class="version-menu">
-                        <a class="version is-current" href="/reference/post-processors/reselect-columns.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/post-processors/reselect-columns.html" data-hash="true">3.5</a>
-                        <a class="version" href="/documentation//reference/3.6/post-processors/reselect-columns.html" data-hash="true">3.6</a>
-                        <a class="version" href="/documentation//reference/3.4/post-processors/reselect-columns.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.3/post-processors/reselect-columns.html" data-hash="true">3.3</a>
-                        <a class="version" href="/documentation//reference/3.2/post-processors/reselect-columns.html" data-hash="true">3.2</a>
-                        <a class="version" href="/documentation//reference/3.1/post-processors/reselect-columns.html" data-hash="true">3.1</a>
-                        <a class="version" href="/documentation//reference/3.0/post-processors/reselect-columns.html" data-hash="true">3.0</a>
-                        <a class="version" href="/documentation//reference/2.7/post-processors/reselect-columns.html" data-hash="true">2.7</a>
-                        <a class="version" href="/documentation//reference/2.6/post-processors/reselect-columns.html" data-hash="true">2.6</a>
-                        <a class="version" href="/documentation//reference/2.5/post-processors/reselect-columns.html" data-hash="true">2.5</a>
-                    <a class="version is-missing" href="#">2.4</a>
-                    <a class="version is-missing" href="#">2.3</a>
-                    <a class="version is-missing" href="#">2.2</a>
-                    <a class="version is-missing" href="#">2.1</a>
-                    <a class="version is-missing" href="#">2.0</a>
+                        <a class="version is-current" href="/documentation/reference/post-processors/reselect-columns.html" data-hash="true">nightly</a>
+                        <a class="version" href="/documentation/reference/stable/post-processors/reselect-columns.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.5/post-processors/reselect-columns.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation/reference/3.4/post-processors/reselect-columns.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation/reference/3.3/post-processors/reselect-columns.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation/reference/3.2/post-processors/reselect-columns.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation/reference/3.1/post-processors/reselect-columns.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation/reference/3.0/post-processors/reselect-columns.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation/reference/2.7/post-processors/reselect-columns.html" data-hash="true">2.7</a>
                     <a class="version is-missing" href="#">1.9</a>
         </div>
         |
@@ -511,7 +492,7 @@ When it detects an event with the specified columns, the post processor re-queri
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-You can use the <code>ReselectColumnsPostProcessor</code> post processor only with Debezium source connectors.<br>
+You can use the <code>ReselectColumnsPostProcessor</code> post processor only with Debezium source connectors.
 The post processor is not designed to work with the Debezium JDBC sink connector.
 </td>
 </tr>
@@ -636,7 +617,7 @@ To enable the connector to use the <code>ReselectColumnsPostProcessor</code>, ad
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Comma-separated list of column names to reselect from the source database.
-Use the following format to specify column names:<br></p>
+Use the following format to specify column names:</p>
 </div>
 <div class="paragraph">
 <p><code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em></code></p>
@@ -654,7 +635,7 @@ Use the following format to specify column names:<br></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>Comma-separated list of column names in the source database to exclude from reselection.
-Use the following format to specify column names:<br></p>
+Use the following format to specify column names:</p>
 </div>
 <div class="paragraph">
 <p><code><em>&lt;schema&gt;</em>.<em>&lt;table&gt;</em>:<em>&lt;column&gt;</em></code></p>
@@ -693,9 +674,10 @@ Use the following format to specify column names:<br></p>
 <p><code>false</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies whether the post processor reselects based on the event&#8217;s key field names or uses the relational table&#8217;s primary key column names.<br>
-<br>
-By default, the reselection query is based on the relational table&#8217;s primary key columns or unique key index.
+<p>Specifies whether the post processor reselects based on the event&#8217;s key field names or uses the relational table&#8217;s primary key column names.</p>
+</div>
+<div class="paragraph">
+<p>By default, the reselection query is based on the relational table&#8217;s primary key columns or unique key index.
 For tables that do not have a primary key, set this property to <code>true</code>, and configure the <code>message.key.columns</code> property in the connector configuration to specify a custom key for the connector to use when it creates events.
 The post processor then uses the specified key field names as the primary key in the SQL reselection query.</p>
 </div></div></td>
@@ -708,11 +690,88 @@ The post processor then uses the specified key field names as the primary key in
 <p><code>WARN</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies how the reselect post processor reacts to certain conditions.<br>
+<p>Specifies how the reselect post processor reacts to certain conditions.</p>
+</div>
+<div class="paragraph">
+<p>By default, the post-processor logs a warning message when the row cannot be found or if there is a database selection error.</p>
+</div>
+<div class="paragraph">
+<p>When set to <code>FAIL</code>, the connector will stop processing changes if the row no longer exists at the time of reselection or if there is a database failure when reselecting the row.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-cache-enabled"></a><a href="#reselect-columns-post-processor-property-reselect-cache-enabled"><code>post.processors.reselect.cache.enabled</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>false</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Enables an optional, per-column cache of reselected values.<br>
 <br>
-By default, the post-processor logs a warning message when the row cannot be found or if there is a database selection error.<br>
+By default the post processor queries the database for every event that requires reselection.
+When set to <code>true</code>, reselected column values are cached per row and column, keyed by the event&#8217;s message key, and subsequent events that require the same column are served from the cache instead of querying the database.
+The cache is refreshed on modification: any event that carries a real (non-placeholder) value for a column updates that column&#8217;s cache entry with the current value, so a later event that does not modify the column can be served from the cache, and a cached value is never served after the column has changed.
+Because the row identity is the message key, a change to the key&#8217;s schema (for example, a DDL change or a primary-key reordering) yields a different key and a natural cache miss rather than a stale hit.
+This is most useful for large, rarely-changing columns (such as TOAST or LOB values) on frequently-updated rows.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-cache-type"></a><a href="#reselect-columns-post-processor-property-reselect-cache-type"><code>post.processors.reselect.cache.type</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.processors.reselect.cache.MemoryReselectColumnCache</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The fully-qualified name of the <code>io.debezium.processors.reselect.cache.ReselectColumnCache</code> implementation used to store reselected values.<br>
 <br>
-When set to <code>FAIL</code>, the connector will stop processing changes if the row no longer exists at the time of reselection or if there is a database failure when reselecting the row.</p>
+Defaults to an in-memory implementation.
+Provide a custom class to plug in an alternative cache backend.
+Applies only when <code>reselect.cache.enabled</code> is <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-cache-max-size"></a><a href="#reselect-columns-post-processor-property-reselect-cache-max-size"><code>post.processors.reselect.cache.max.size</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>10000</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of cached rows retained in the reselection cache.<br>
+<br>
+When the limit is reached, the least-recently-used entries are evicted.
+Applies only to the default in-memory cache, when <code>reselect.cache.enabled</code> is <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-cache-ttl-ms"></a><a href="#reselect-columns-post-processor-property-reselect-cache-ttl-ms"><code>post.processors.reselect.cache.ttl.ms</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>600000</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The time-to-live, in milliseconds, of a cached reselection value.<br>
+<br>
+Because the cache is refreshed on modification, this value only bounds how long entries for rows that are no longer being updated are retained in memory; it is not the mechanism that guarantees freshness.
+Applies only to the default in-memory cache, when <code>reselect.cache.enabled</code> is <code>true</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="reselect-columns-post-processor-property-reselect-cache-max-columns-per-row"></a><a href="#reselect-columns-post-processor-property-reselect-cache-max-columns-per-row"><code>post.processors.reselect.cache.max.columns.per.row</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>200</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum number of columns cached per row in the reselection cache.<br>
+<br>
+When the limit is reached, the least-recently-used column entries for that row are evicted.
+This bound guards against wide tables (for example, tables with 500–1000 columns) growing the per-row inner map without limit.
+Applies only to the default in-memory cache, when <code>reselect.cache.enabled</code> is <code>true</code>.</p>
 </div></div></td>
 </tr>
 </tbody>
@@ -727,7 +786,7 @@ When set to <code>FAIL</code>, the connector will stop processing changes if the
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/64abfe5a65d1725ff1ac97f8f49ab0f2dff49b8b">64abfe5a</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
             
         </div>
     </footer>

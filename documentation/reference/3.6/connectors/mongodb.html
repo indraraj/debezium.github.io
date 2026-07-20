@@ -38,7 +38,7 @@
     </div>
   </nav>
 </header><div class="body">
-<div class="nav-container" data-component="reference" data-version="3.6">
+<div class="nav-container" data-component="reference" data-version="stable">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -52,7 +52,13 @@
     <span class="nav-text">Getting Started</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tutorial.html">Tutorial</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../tutorials.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../kc-tutorial.html">Kafka Connect</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
@@ -135,6 +141,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="informix.html">Informix</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="cockroachdb.html">CockroachDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="yashandb.html">YashanDB</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -209,6 +221,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/swap-geometry-coordinates.html">Swap Geometry Coordinates</a>
@@ -331,11 +346,11 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version">
-          <a href="/documentation/reference/3.5/index.html">3.5</a>
-        </li>
         <li class="version is-current">
           <a href="/documentation/reference/3.6/index.html">3.6</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.4/index.html">3.4</a>
@@ -356,27 +371,6 @@
           <a href="/documentation/reference/2.7/index.html">2.7</a>
         </li>
         <li class="version">
-          <a href="/documentation/reference/2.6/index.html">2.6</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.5/index.html">2.5</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.4/index.html">2.4</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.3/index.html">2.3</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.2/index.html">2.2</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.1/index.html">2.1</a>
-        </li>
-        <li class="version">
-          <a href="/documentation/reference/2.0/index.html">2.0</a>
-        </li>
-        <li class="version">
           <a href="/documentation/reference/1.9/index.html">1.9</a>
         </li>
       </ul>
@@ -389,7 +383,7 @@
 <main role="main" class="main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../stable/index.html" class="home-link"></a>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -402,23 +396,16 @@
     <div class="page-versions">
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.6</button>
         <div class="version-menu">
-                        <a class="version" href="/documentation//reference/connectors/mongodb.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation//reference/stable/connectors/mongodb.html" data-hash="true">3.5</a>
-                        <a class="version is-current" href="/reference/3.6/connectors/mongodb.html" data-hash="true">3.6</a>
-                        <a class="version" href="/documentation//reference/3.4/connectors/mongodb.html" data-hash="true">3.4</a>
-                        <a class="version" href="/documentation//reference/3.3/connectors/mongodb.html" data-hash="true">3.3</a>
-                        <a class="version" href="/documentation//reference/3.2/connectors/mongodb.html" data-hash="true">3.2</a>
-                        <a class="version" href="/documentation//reference/3.1/connectors/mongodb.html" data-hash="true">3.1</a>
-                        <a class="version" href="/documentation//reference/3.0/connectors/mongodb.html" data-hash="true">3.0</a>
-                        <a class="version" href="/documentation//reference/2.7/connectors/mongodb.html" data-hash="true">2.7</a>
-                        <a class="version" href="/documentation//reference/2.6/connectors/mongodb.html" data-hash="true">2.6</a>
-                        <a class="version" href="/documentation//reference/2.5/connectors/mongodb.html" data-hash="true">2.5</a>
-                        <a class="version" href="/documentation//reference/2.4/connectors/mongodb.html" data-hash="true">2.4</a>
-                        <a class="version" href="/documentation//reference/2.3/connectors/mongodb.html" data-hash="true">2.3</a>
-                        <a class="version" href="/documentation//reference/2.2/connectors/mongodb.html" data-hash="true">2.2</a>
-                        <a class="version" href="/documentation//reference/2.1/connectors/mongodb.html" data-hash="true">2.1</a>
-                        <a class="version" href="/documentation//reference/2.0/connectors/mongodb.html" data-hash="true">2.0</a>
-                        <a class="version" href="/documentation//reference/1.9/connectors/mongodb.html" data-hash="true">1.9</a>
+                        <a class="version" href="/documentation/reference/connectors/mongodb.html" data-hash="true">nightly</a>
+                        <a class="version is-current" href="/documentation/reference/stable/connectors/mongodb.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.5/connectors/mongodb.html" data-hash="true">3.5</a>
+                        <a class="version" href="/documentation/reference/3.4/connectors/mongodb.html" data-hash="true">3.4</a>
+                        <a class="version" href="/documentation/reference/3.3/connectors/mongodb.html" data-hash="true">3.3</a>
+                        <a class="version" href="/documentation/reference/3.2/connectors/mongodb.html" data-hash="true">3.2</a>
+                        <a class="version" href="/documentation/reference/3.1/connectors/mongodb.html" data-hash="true">3.1</a>
+                        <a class="version" href="/documentation/reference/3.0/connectors/mongodb.html" data-hash="true">3.0</a>
+                        <a class="version" href="/documentation/reference/2.7/connectors/mongodb.html" data-hash="true">2.7</a>
+                        <a class="version" href="/documentation/reference/1.9/connectors/mongodb.html" data-hash="true">1.9</a>
         </div>
         |
     </div>
@@ -446,12 +433,7 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
-    <br/>
-            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
-            
-</div>            <h1 class="page">Debezium connector for MongoDB</h1>
+    <!-- This partial is a placeholder -->            <h1 class="page">Debezium connector for MongoDB</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div id="toc" class="toc">
@@ -567,8 +549,9 @@ In this case, after a restart the connector detects the missing oplog operations
 </div>
 <div class="paragraph">
 <p>The MongoDB connector is also quite tolerant of changes in membership and leadership of the replica sets, of additions or removals of shards within a sharded cluster, and network problems that might cause communication failures.
-The connector always uses the replica set&#8217;s primary node to stream changes, so when the replica set undergoes an election and a different node becomes primary, the connector will immediately stop streaming changes, connect to the new primary, and start streaming changes using the new primary node.
-Similarly, if connector is unable to communicate with the replica set primary, it attempts to reconnect (using exponential backoff so as to not overwhelm the network or replica set).
+By default, the connector streams changes from the replica set&#8217;s primary node, but you can configure it to stream from a secondary by setting the <a href="#read-preference">read preference</a> in the connection string.
+If the replica set member that the connector reads from becomes unavailable&#8201;&#8212;&#8201;for example, because the replica set elects a new primary&#8201;&#8212;&#8201;the connector stops streaming and automatically reconnects to another suitable member based on the configured read preference.
+Similarly, if the connector is unable to communicate with the replica set, it attempts to reconnect by using exponential backoff so as to not overwhelm the network or replica set.
 After connection is reestablished, the connector continues to stream changes from the last event that it captured.
 In this way the connector dynamically adjusts to changes in replica set membership, and automatically handles communication disruptions.</p>
 </div>
@@ -602,7 +585,18 @@ In this way the connector dynamically adjusts to changes in replica set membersh
 <div class="sect2">
 <h3 id="read-preference"><a class="anchor" href="#read-preference"></a>Read Preference</h3>
 <div class="paragraph">
-<p>You specify read preferences for a MongoDB connection by setting the <code>readPreference</code> parameter in the <a href="#mongodb-property-mongodb-connection-string"><code>mongodb.connection.string</code></a>.</p>
+<p>The connector uses MongoDB change streams to capture changes.
+Because the change streams API can read data from secondary nodes, you can configure the connector to capture changes from any member of the replica set.
+You specify the replica member that the connector reads from by configuring the MongoDB <a href="https://www.mongodb.com/docs/manual/core/read-preference/"><code>readPreference</code></a> parameter in the <a href="#mongodb-property-mongodb-connection-string"><code>mongodb.connection.string</code></a>.
+If you do not specify a read preference, the driver default of <code>primary</code> applies, and the connector streams changes from the primary node.</p>
+</div>
+<div class="paragraph">
+<p>To reduce the load on the primary, it&#8217;s possible to configure the connector to read from a secondary node, by setting <code>readPreference=secondaryPreferred</code>.
+Under normal operating conditions, configuring the connector to read from a secondary node does not significantly increase data-capture latency.
+However, events captured from a secondary can arrive later than they would from the primary due to resource contention or network latency.
+Additional latency can also occur because change streams emit events only after changes are majority committed.
+A change is majority committed when a majority of voting replica set members confirm that they have written the change to their journals.
+As a result, a secondary node can emit an event only after it receives confirmation that the change has been majority committed.</p>
 </div>
 </div>
 </div>
@@ -994,7 +988,7 @@ Set the type of the <code>execute-snapshot</code> signal to <code>incremental</c
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the type of snapshot that you want to run.<br>
+<p>Specifies the type of snapshot that you want to run.
 Currently, you can request <code>incremental</code> or <code>blocking</code> snapshots.</p>
 </div></div></td>
 </tr>
@@ -1002,7 +996,7 @@ Currently, you can request <code>incremental</code> or <code>blocking</code> sna
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>An array that contains regular expressions matching the fully-qualified names of the collections to include in the snapshot.<br>
+<p>An array that contains regular expressions matching the fully-qualified names of the collections to include in the snapshot.
 For the MongoDB connector, use the following format to specify the fully qualified name of a collection: <code>database.collection</code>.</p>
 </div></div></td>
 </tr>
@@ -1175,8 +1169,8 @@ When performing incremental snapshots, it&#8217;s best to set the primary key to
 Currently, the only valid options for snapshots operations are <code>incremental</code> and <code>blocking</code>.</p>
 </div>
 <div class="paragraph">
-<p>To specify the collections to include in the snapshot, provide a <code>data-collections</code> array that lists the collections or an array of regular expressions used to match collections, for example,<br>
-<code>{"data-collections": ["public.Collection1", "public.Collection2"]}</code><br></p>
+<p>To specify the collections to include in the snapshot, provide a <code>data-collections</code> array that lists the collections or an array of regular expressions used to match collections, for example,
+<code>{"data-collections": ["public.Collection1", "public.Collection2"]}</code></p>
 </div>
 <div class="paragraph">
 <p>The <code>data-collections</code> array for an incremental snapshot signal has no default value.
@@ -1201,7 +1195,7 @@ For example, to include a data collection that exists in the <code><strong>publi
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1364,7 +1358,7 @@ The value for snapshot events is <code>r</code>, signifying a <code>READ</code> 
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The type of the snapshot to be executed.
-Currently Debezium supports the <code>incremental</code> and <code>blocking</code> types.<br>
+Currently Debezium supports the <code>incremental</code> and <code>blocking</code> types.
 See the next section for more details.</p>
 </div></div></td>
 </tr>
@@ -1478,7 +1472,7 @@ After Debezium detects the change in the signaling collection, it reads the sign
 <div class="title">Prerequisites</div>
 <ul>
 <li>
-<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.<br></p>
+<p><a href="../configuration/signalling.html#debezium-signaling-enabling-source-signaling-channel" class="xref page">Signaling is enabled</a>.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1588,14 +1582,16 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The type of the snapshot to be executed.
-Currently Debezium supports only the <code>incremental</code> type. <br>
+Currently Debezium supports only the <code>incremental</code> type.
 See the next section for more details.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><em>N/A</em></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional array of comma-separated regular expressions that match the fully-qualified names of the tables an array of collection names or regular expressions to match collection names to remove from the snapshot.<br>
-Specify collection names by using the format <code>database.collection</code>.</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>An optional array of comma-separated regular expressions that match the fully-qualified names of the tables an array of collection names or regular expressions to match collection names to remove from the snapshot.
+Specify collection names by using the format <code>database.collection</code>.</p>
+</div></div></td>
 </tr>
 </tbody>
 </table>
@@ -1813,12 +1809,12 @@ After the snapshot completes, the streaming is resumed.</p>
 <p>data-collections: to specify which collections must be snapshot.</p>
 </li>
 <li>
-<p>data-collections: Specifies the collections that you want the snapshot to include.<br>
+<p>data-collections: Specifies the collections that you want the snapshot to include.
 This property accepts a comma-separated list of regular expressions that match fully-qualified collection names.
 The behavior of the property is similar to the behavior of the <code>table.include.list</code> property, which specifies the tables to capture in a blocking snapshot.</p>
 </li>
 <li>
-<p>additional-conditions: You can specify different filters for different collection.<br></p>
+<p>additional-conditions: You can specify different filters for different collection.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1850,7 +1846,10 @@ As a result of this delay, after the snapshot completes, the connector might emi
 <h3 id="mongodb-streaming-changes"><a class="anchor" href="#mongodb-streaming-changes"></a>Streaming changes</h3>
 <div id="mongodb-tailing-the-oplog" class="paragraph">
 <p>After the connector task for a replica set records an offset, it uses the offset to determine the position in the oplog where it should start streaming changes.
-The task then (depending on the configuration) either connects to the replica set&#8217;s primary node or connects to a replica-set-wide change stream and starts streaming changes from that position.
+The task then opens a MongoDB change stream and starts streaming changes from the offset position.
+Depending on the value of the <a href="#mongodb-property-capture-scope"><code>capture.scope</code></a> setting, the task streams changes from the deployment, a specific database, or a collection.
+The change stream is served by the replica set member that matches the configured read preference (the primary, by default).
+For more information, see <a href="#read-preference">read-preference</a>.
 It processes all of create, insert, and delete operations, and converts them into Debezium <a href="#mongodb-events">change events</a>.
 Each change event includes the position in the oplog where the operation was found, and the connector periodically records this as its most recent offset.
 The interval at which the offset is recorded is governed by <a href="https://kafka.apache.org/documentation/#offset.flush.interval.ms"><code>offset.flush.interval.ms</code></a>, which is a Kafka Connect worker configuration property.</p>
@@ -1876,8 +1875,11 @@ To avoid unexpected results, consumers must be able to handle duplicate messages
 </table>
 </div>
 <div class="paragraph">
-<p>As mentioned earlier, the connector tasks always use the replica set&#8217;s primary node to stream changes from the oplog, ensuring that the connector sees the most up-to-date operations as possible and can capture the changes with lower latency than if secondaries were to be used instead.
-When the replica set elects a new primary, the connector immediately stops streaming changes, connects to the new primary, and starts streaming changes from the new primary node at the same position.
+<p>As described in <a href="#read-preference">read preferences</a>, the connector streams changes from the replica set member that is specified by the <code>readPreference</code> parameter in the MongoDB connection string.
+By default, the connector captures from the primary node, which result in capture operations with the lowest latency.
+Optionally, you can configure the connector to read from a secondary, but capturing from a secondary can introduce additional latency due to replication lag.
+For more information, see <a href="#read-preference">Read preferences</a>.
+If the replica set member that the connector reads from becomes unavailable, the connector stops streaming changes, reconnects to another suitable member, and resumes streaming from the same position.
 Likewise, if the connector experiences any problems communicating with the replica set members, it tries to reconnect, by using exponential backoff so as to not overwhelm the replica set, and once connected it continues streaming changes from where it last left off.
 In this way, the connector is able to dynamically adjust to changes in replica set membership and automatically handle communication failures.</p>
 </div>
@@ -2481,7 +2483,7 @@ The value of this field is the document&#8217;s identifier represented as a stri
     "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
       "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}", <i class="conum" data-value="6"></i><b>(6)</b>
       "source": { <i class="conum" data-value="7"></i><b>(7)</b>
-        "version": "3.6.0.Alpha1",
+        "version": "3.6.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2695,7 +2697,7 @@ There is a new structured field <code>updateDescription</code> with a few additi
         "truncatedArrays": null
       },
       "source": { <i class="conum" data-value="6"></i><b>(6)</b>
-        "version": "3.6.0.Alpha1",
+        "version": "3.6.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2837,7 +2839,7 @@ It is thus possible if multiple updates are closely following one after the othe
       "ts_ns": 1465495462115748263, <i class="conum" data-value="2"></i><b>(2)</b>
       "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",<i class="conum" data-value="3"></i><b>(3)</b>
       "source": { <i class="conum" data-value="4"></i><b>(4)</b>
-        "version": "3.6.0.Alpha1",
+        "version": "3.6.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -3038,7 +3040,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <ol class="arabic">
 <li>
 <p>Download the
-<a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/3.6.0.Alpha1/debezium-connector-mongodb-3.6.0.Alpha1-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
+<a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/3.6.0.Final/debezium-connector-mongodb-3.6.0.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
@@ -3074,7 +3076,7 @@ To mitigate risk in production deployments, deploy only containers that are acti
 <p>You can also <a href="../operations/openshift.html" class="xref page">run Debezium on Kubernetes and OpenShift</a>.</p>
 </div>
 <div class="paragraph">
-<p>The Debezium <a href="../tutorial.html" class="xref page">tutorial</a> walks you through using these images, and this is a great way to learn about Debezium.</p>
+<p>The Debezium <a href="../kc-tutorial.html" class="xref page">tutorial</a> walks you through using these images, and this is a great way to learn about Debezium.</p>
 </div>
 <div class="sect2">
 <h3 id="mongodb-example-configuration"><a class="anchor" href="#mongodb-example-configuration"></a>MongoDB connector configuration example</h3>
@@ -4194,10 +4196,6 @@ After the snapshot completes, the connector begins to stream event records for s
 After the snapshot completes, the connector stops.
 It does not transition to streaming event records for subsequent database changes.</p>
 </dd>
-<dt class="hdlist1"><code>never</code></dt>
-<dd>
-<p>Deprecated, see <code>no_data</code>.</p>
-</dd>
 <dt class="hdlist1"><code>no_data</code></dt>
 <dd>
 <p>The connector runs a snapshot that captures the structure of all relevant tables,
@@ -5017,8 +5015,7 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <div class="title">Example 3. How custom tags modify the connector MBean name</div>
 <div class="content">
 <div class="paragraph">
-<p>By default, the MongoDB connector uses the following MBean name for streaming metrics:
-<br></p>
+<p>By default, the MongoDB connector uses the following MBean name for streaming metrics:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5521,6 +5518,78 @@ The values will incorporate any differences between the clocks on the machines w
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourceminvalue_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourceminvalue_mongodb"><code>MilliSecondsBehindSourceMinValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The minimum lag in milliseconds behind the source that is observed during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcemaxvalue_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourcemaxvalue_mongodb"><code>MilliSecondsBehindSourceMaxValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The maximum lag in milliseconds behind the source that is observed during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourceaveragevalue_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourceaveragevalue_mongodb"><code>MilliSecondsBehindSourceAverageValue</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The average lag in milliseconds behind the source calculated across all observations during the connector&#8217;s runtime.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep50_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep50_mongodb"><code>MilliSecondsBehindSourceP50</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 50th percentile (median) of the lag in milliseconds behind the source.
+This metric provides a more robust measure of typical lag than the average, as it is less affected by outlier values.
+Available when <a href="#mongodb-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep95_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep95_mongodb"><code>MilliSecondsBehindSourceP95</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 95th percentile of the lag in milliseconds behind the source.
+This metric indicates that 95% of lag measurements are below this value, useful for identifying tail latencies and setting SLA thresholds.
+Available when <a href="#mongodb-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-strm-metric-millisecondsbehindsourcep99_mongodb"></a><a href="#connectors-strm-metric-millisecondsbehindsourcep99_mongodb"><code>MilliSecondsBehindSourceP99</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>double</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The 99th percentile of the lag in milliseconds behind the source.
+This metric indicates that 99% of lag measurements are below this value, useful for understanding worst-case performance scenarios.
+Available when <a href="#mongodb-property-statistics-metrics-enabled"><code>statistics.metrics.enabled</code></a> is set to <code>true</code> (default).</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><a id="connectors-strm-metric-numberofcommittedtransactions_mongodb"></a><a href="#connectors-strm-metric-numberofcommittedtransactions_mongodb"><code>NumberOfCommittedTransactions</code></a></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
@@ -5649,7 +5718,8 @@ You can configure the maximum number of reconnection attempts.</p>
 <div class="sect2">
 <h3 id="mongodb-becomes-unavailable-while-debezium-is-running"><a class="anchor" href="#mongodb-becomes-unavailable-while-debezium-is-running"></a>MongoDB becomes unavailable</h3>
 <div class="paragraph">
-<p>Once the connector is running, if the primary node of any of the MongoDB replica sets become unavailable or unreachable, the connector will repeatedly attempt to reconnect to the primary node, using exponential backoff to prevent saturating the network or servers. If the primary remains unavailable after the configurable number of connection attempts, the connector will fail.</p>
+<p>If the connector is running and the replica set member that it reads from becomes unavailable, it keeps trying to reconnect to another suitable member, using exponential backoff to avoid overloading the network or servers.
+If the connector is unable to connect to a replica set member after the configured number of connection attempts, the connector fails.</p>
 </div>
 <div class="paragraph">
 <p>The attempts to reconnect are controlled by three properties:</p>
@@ -5978,7 +6048,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/e38d98d180e722ef9e19fe6409850e8323c44968">e38d98d1</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f2f75b8e3b8a3c2a631abc8fdd3c82633e494acf">f2f75b8e</a></span>)
             
         </div>
     </footer>
