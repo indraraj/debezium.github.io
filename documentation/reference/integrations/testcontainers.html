@@ -147,6 +147,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../connectors/yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../connectors/milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/integrations/testcontainers.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/integrations/testcontainers.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/integrations/testcontainers.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/integrations/testcontainers.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/integrations/testcontainers.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/integrations/testcontainers.html" data-hash="true">3.3</a>
@@ -507,7 +520,7 @@ allowing you to focus on the essential logic of your tests.</p>
 <pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
   &lt;groupId&gt;io.debezium&lt;/groupId&gt;
   &lt;artifactId&gt;debezium-testing-testcontainers&lt;/artifactId&gt;
-  &lt;version&gt;3.6.0.Final&lt;/version&gt;
+  &lt;version&gt;3.7.0.Beta1&lt;/version&gt;
   &lt;scope&gt;test&lt;/scope&gt;
 &lt;/dependency&gt;
 &lt;dependency&gt;
@@ -557,7 +570,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
                 .withNetworkAliases("postgres"); <i class="conum" data-value="3"></i><b>(3)</b>
 
     public static DebeziumContainer debeziumContainer =
-            new DebeziumContainer("quay.io/debezium/connect:3.6.0.Final")
+            new DebeziumContainer("quay.io/debezium/connect:3.7.0.Beta1")
                 .withNetwork(network)
                 .withKafka(kafkaContainer)
                 .dependsOn(kafkaContainer); <i class="conum" data-value="4"></i><b>(4)</b>
@@ -587,7 +600,7 @@ The existing Testcontainers support for <a href="https://www.testcontainers.org/
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>Set up a container for Kafka Connect with Debezium 3.6.0.Final</td>
+<td>Set up a container for Kafka Connect with Debezium 3.7.0.Beta1</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -723,7 +736,7 @@ private List&lt;ConsumerRecord&lt;String, String&gt;&gt; drain(
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>

@@ -147,6 +147,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/connectors/oracle.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/connectors/oracle.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/oracle.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/oracle.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/oracle.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/oracle.html" data-hash="true">3.3</a>
@@ -1944,9 +1957,13 @@ You can stop a snapshot that is already running by sending a signal to the signa
 The stop-snapshot signal specifies the <code>type</code> of the snapshot operation as <code>incremental</code>, and optionally specifies the tables that you want to omit from the currently running snapshot.
 After Debezium detects the change in the signaling table, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
 </div>
-<div class="paragraph">
+<div class="ulist">
 <div class="title">Additional resources</div>
-<p>You can also stop an incremental snapshot by sending a JSON message to the <a href="#oracle-stopping-an-incremental-snapshot-kafka">Kafka signaling topic</a>.</p>
+<ul>
+<li>
+<p><a href="#oracle-stopping-an-incremental-snapshot-kafka">Stopping an incremental snapshot by sending a JSON message to the Kafka signaling topic</a></p>
+</li>
+</ul>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1983,77 +2000,53 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
-values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
-    'stop-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
-    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
-    "type":"incremental"}'); <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data)
+values ('ad-hoc-1',
+    'stop-snapshot',
+    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"],
+    "type":"incremental"}');</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.
-The following table describes the parameters in the example:</p>
+<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database.schema.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.
-Use this string to identify logging messages to entries in the signaling table.
+<div class="paragraph">
+<p>The following list describes the fields in the preceding signal example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>database.schema.debezium_signal</code></dt>
+<dd>
+<p>Specifies the fully-qualified name of the signaling table on the source database.</p>
+</dd>
+<dt class="hdlist1"><code>ad-hoc-1</code></dt>
+<dd>
+<p>The value of the signal&#8217;s <code>id</code> parameter.
+This arbitrary string provides a label that helps to distinguish signal requests from each other and to associate logging messages with entries in the signaling table.
 Debezium does not use this string.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stop-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>stop-snapshot</code></dt>
+<dd>
 <p>The <code>type</code> parameter, which identifies the operation that the signal is intended to trigger.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>data-collections</code></dt>
+<dd>
 <p>An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.
 The array lists regular expressions which match tables by their fully-qualified names in the format <code>database.schema.table</code></p>
-</div>
 <div class="paragraph">
 <p>If you omit this component from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</div>
+</dd>
+<dt class="hdlist1"><code>incremental</code></dt>
+<dd>
 <p>A required component of the <code>data</code> field of a signal that specifies the type of snapshot operation that is to be stopped.
 Currently, the only valid option is <code>incremental</code>.
 If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</div>
 </li>
 </ol>
 </div>
@@ -2073,7 +2066,7 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <p>The signal type is <code>stop-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Execute snapshot data fields</caption>
+<caption class="title">Table 4. Execute snapshot data fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -2749,7 +2742,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "oracle",
       "name": "server1",
       "ts_ms": 1588252618953,
@@ -2772,22 +2765,22 @@ The message contains a logical representation of the table schema.</p>
       "start_scn": "1513734",
       "start_ts_ms": 1588252618953
     },
-    "ts_ms": 1588252618953, <i class="conum" data-value="1"></i><b>(1)</b>
-    "ts_us": 1588252618953987, <i class="conum" data-value="1"></i><b>(1)</b>
-    "ts_ns": 1588252618953987512, <i class="conum" data-value="1"></i><b>(1)</b>
-    "databaseName": "ORCLPDB1", <i class="conum" data-value="2"></i><b>(2)</b>
-    "schemaName": "DEBEZIUM", //
-    "ddl": "CREATE TABLE \"DEBEZIUM\".\"CUSTOMERS\" \n   (    \"ID\" NUMBER(9,0) NOT NULL ENABLE, \n    \"FIRST_NAME\" VARCHAR2(255), \n    \"LAST_NAME" VARCHAR2(255), \n    \"EMAIL\" VARCHAR2(255), \n     PRIMARY KEY (\"ID\") ENABLE, \n     SUPPLEMENTAL LOG DATA (ALL) COLUMNS\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ", <i class="conum" data-value="3"></i><b>(3)</b>
-    "tableChanges": [ <i class="conum" data-value="4"></i><b>(4)</b>
+    "ts_ms": 1588252618953,
+    "ts_us": 1588252618953987,
+    "ts_ns": 1588252618953987512,
+    "databaseName": "ORCLPDB1",
+    "schemaName": "DEBEZIUM",
+    "ddl": "CREATE TABLE \"DEBEZIUM\".\"CUSTOMERS\" \n   (    \"ID\" NUMBER(9,0) NOT NULL ENABLE, \n    \"FIRST_NAME\" VARCHAR2(255), \n    \"LAST_NAME" VARCHAR2(255), \n    \"EMAIL\" VARCHAR2(255), \n     PRIMARY KEY (\"ID\") ENABLE, \n     SUPPLEMENTAL LOG DATA (ALL) COLUMNS\n   ) SEGMENT CREATION IMMEDIATE \n  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 \n NOCOMPRESS LOGGING\n  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645\n  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1\n  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)\n  TABLESPACE \"USERS\" ",
+    "tableChanges": [
       {
-        "type": "CREATE", <i class="conum" data-value="5"></i><b>(5)</b>
-        "id": "\"ORCLPDB1\".\"DEBEZIUM\".\"CUSTOMERS\"", <i class="conum" data-value="6"></i><b>(6)</b>
-        "table": { <i class="conum" data-value="7"></i><b>(7)</b>
+        "type": "CREATE",
+        "id": "\"ORCLPDB1\".\"DEBEZIUM\".\"CUSTOMERS\"",
+        "table": {
           "defaultCharsetName": null,
-          "primaryKeyColumnNames": [ <i class="conum" data-value="8"></i><b>(8)</b>
+          "primaryKeyColumnNames": [
             "ID"
           ],
-          "columns": [ <i class="conum" data-value="9"></i><b>(9)</b>
+          "columns": [
             {
               "name": "ID",
               "jdbcType": 2,
@@ -2845,7 +2838,7 @@ The message contains a logical representation of the table schema.</p>
               "generated": false
             }
           ],
-          "attributes": [ <i class="conum" data-value="10"></i><b>(10)</b>
+          "attributes": [
             {
               "customAttribute": "attributeValue"
             }
@@ -2857,52 +2850,36 @@ The message contains a logical representation of the table schema.</p>
 }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Descriptions of fields in messages emitted to the schema change topic</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 40%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Optional field that displays the time at which the connector processed the event.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
-<p class="tableblock">In the source object, ts_ms indicates the time that the change was made in the database. By comparing the value for payload.source.ts_ms with the value for payload.ts_ms, you can determine the lag between the source database update and Debezium.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>databaseName</code>
-<code>schemaName</code></p>
-</div></div></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Identifies the database and the schema that contains the change.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ddl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">This field contains the DDL that is responsible for the schema change.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tableChanges</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An array of one or more items that contain the schema changes generated by a DDL command.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>type</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Describes the kind of change. The <code>type</code> can be set to one of the following values:</p>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding schema change topic message example:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></dt>
+<dd>
+<p>Optional fields that display the time at which the connector processed the event in millisecond, microsecond, and nanosecond formats.
+The time is based on the system clock that runs the JVM that runs the Kafka Connect task.</p>
+<div class="paragraph">
+<p>In the source object, <code>ts_ms</code> indicates the time that the change was made in the database.
+By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>databaseName</code>, <code>schemaName</code></dt>
+<dd>
+<p>These fields identify the database and the schema that contains the change.</p>
+</dd>
+<dt class="hdlist1"><code>ddl</code></dt>
+<dd>
+<p>This field contains the DDL that is responsible for the schema change.</p>
+</dd>
+<dt class="hdlist1"><code>tableChanges</code></dt>
+<dd>
+<p>An array of one or more items that contain the schema changes generated by a DDL command.</p>
+</dd>
+<dt class="hdlist1"><code>type</code></dt>
+<dd>
+<p>Describes the kind of change.
+The <code>type</code> can be set to one of the following values:</p>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><code>CREATE</code></dt>
@@ -2918,36 +2895,31 @@ The time is based on the system clock in the JVM running the Kafka Connect task.
 <p>Table deleted.</p>
 </dd>
 </dl>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Full identifier of the table that was created, altered, or dropped.
-In the case of a table rename, this identifier is a concatenation of <code><em>&lt;old&gt;</em>,<em>&lt;new&gt;</em></code> table names.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>table</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Represents table metadata after the applied change.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>primaryKeyColumnNames</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of columns that compose the table&#8217;s primary key.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>columns</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata for each column in the changed table.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>attributes</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Custom attribute metadata for each table change.</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+</dd>
+<dt class="hdlist1"><code>id</code></dt>
+<dd>
+<p>Full identifier of the table that was created, altered, or dropped.
+In the case of a table rename, this identifier is a concatenation of <code><em>&lt;old&gt;</em>,<em>&lt;new&gt;</em></code> table names.</p>
+</dd>
+<dt class="hdlist1"><code>table</code></dt>
+<dd>
+<p>Represents table metadata after the applied change.</p>
+</dd>
+<dt class="hdlist1"><code>primaryKeyColumnNames</code></dt>
+<dd>
+<p>List of columns that compose the table&#8217;s primary key.</p>
+</dd>
+<dt class="hdlist1"><code>columns</code></dt>
+<dd>
+<p>Metadata for each column in the changed table.</p>
+</dd>
+<dt class="hdlist1"><code>attributes</code></dt>
+<dd>
+<p>Custom attribute metadata for each table change.</p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>In messages that the connector sends to the schema change topic, the message key is the name of the database that contains the schema change.
 In the following example, the <code>payload</code> field contains the <code>databaseName</code> key:</p>
@@ -3126,6 +3098,9 @@ However, before you choose a log mining strategy, it&#8217;s important to consid
 </div>
 <div class="sect3">
 <h4 id="_writing_the_data_dictionary_to_redo_logs"><a class="anchor" href="#_writing_the_data_dictionary_to_redo_logs"></a>Writing the data dictionary to redo logs</h4>
+<div class="paragraph">
+<p>The <code>redo_log_catalog</code> mining strategy provides reliable schema change tracking at the cost of higher redo log volume and archive log consumption.</p>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -3365,16 +3340,17 @@ Using a <code>PRIMARY</code> downstream database is known as an archive-log-mode
 </div>
 </div>
 <div class="sect3">
-<h4 id="_important_considerations"><a class="anchor" href="#_important_considerations"></a>Important considerations</h4>
-<div class="ulist">
-<ul>
-<li>
-<p>All transaction logs must be registered with the Oracle downstream database. When Oracle RFS replicates changes, this should happen automatically when using a real-time downstream mining configuration. Debezium does not perform any log registration.</p>
-</li>
-<li>
-<p>When a log fails to register and a gap in log sequences occurs, the Debezium connector will pause the capture. A database administrator will be required to review the registered logs and register any missing logs to close the gap. In an ideal deployment, this should only be necessary during the initial set up and synchronization with the primary.</p>
-</li>
-</ul>
+<h4 id="_important_considerations_when_the_connector_uses_a_downstream_mining_database"><a class="anchor" href="#_important_considerations_when_the_connector_uses_a_downstream_mining_database"></a>Important considerations when the connector uses a downstream mining database</h4>
+<div class="paragraph">
+<p>To use the connector with a downstream mining database, you must first register transaction logs with that database.</p>
+</div>
+<div class="paragraph">
+<p>When Oracle Remove File Server (RFS) replicates changes, the replication should happen automatically when using a real-time downstream mining configuration.
+Debezium does not perform any log registration.</p>
+</div>
+<div class="paragraph">
+<p>If a log fails to register and a gap in log sequences occurs, the Debezium connector pauses capture. A database administrator must review the registered logs and register any missing logs to close the gap.
+Typically, this should be necessary only during the initial set up and synchronization with the primary.</p>
 </div>
 </div>
 </div>
@@ -3445,9 +3421,10 @@ The connector drops change events that are discarded by a rollback.</p>
 <p>You can configure the buffering mechanism that the connector uses by setting the property <a href="#oracle-property-log-mining-buffer-type"><code>log.mining.buffer.type</code></a>.</p>
 </div>
 <div class="sect3">
-<h4 id="_heap"><a class="anchor" href="#_heap"></a>Heap</h4>
+<h4 id="_heap_buffering"><a class="anchor" href="#_heap_buffering"></a>Heap buffering</h4>
 <div class="paragraph">
-<p>The default buffer type is configured using <code>memory</code>.
+<p>The heap buffer stores in-progress transaction data in the JVM process memory, making it suitable for environments where transactions are short-lived and transaction volume is moderate.
+The default buffer type is configured using <code>memory</code>.
 Under the default <code>memory</code> setting, the connector uses the heap memory of the JVM process to allocate and manage buffered event records.
 If you use the <code>memory</code> buffer setting, be sure that the amount of memory that you allocate to the Java process can accommodate long-running and large transactions in your environment.</p>
 </div>
@@ -3766,12 +3743,59 @@ the JSON representation for every change event that occurs in the <code>customer
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>schema</code> portion of the key contains a Kafka Connect schema that describes the content of the key portion.
-In the preceding example, the <code>payload</code> value is not optional, the structure is defined by a schema named <code>server1.DEBEZIUM.CUSTOMERS.Key</code>, and there is one required field named <code>id</code> of type <code>int32</code>.
-The value of the key&#8217;s <code>payload</code> field indicates that it is indeed a structure (which in JSON is just an object) with a single <code>id</code> field, whose value is <code>1004</code>.</p>
+<p>The preceding change event key describes a row in the <code>inventory.customers</code> table that the connector named <code>server1</code>) that has primary key <code>id</code> with a value of <code>1004</code>.</p>
 </div>
 <div class="paragraph">
-<p>Therefore, you can interpret this key as describing the row in the <code>inventory.customers</code> table (output from the connector named <code>server1</code>) whose <code>id</code> primary key column had a value of <code>1004</code>.</p>
+<p>Therefore, you can interpret this key as describing the row in the <code>inventory.customers</code> table (output from the connector named <code>server1</code>) whose <code>id</code> primary key column had a value of <code>1004</code>.
+The following list describes the fields in the preceding change event key example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>schema</code></dt>
+<dd>
+<p>The schema portion of the key specifies a Kafka Connect schema that describes what is in the key&#8217;s <code>payload</code> portion.</p>
+</dd>
+<dt class="hdlist1"><code>schema.fields</code></dt>
+<dd>
+<p>Specifies each field that is expected in the <code>payload</code>, including each field&#8217;s name, index, and schema.</p>
+</dd>
+<dt class="hdlist1"><code>schema.fields.type</code></dt>
+<dd>
+<p>Specifies that the data type of the <code>ID`field is `int32</code>.</p>
+</dd>
+<dt class="hdlist1"><code>schema.fields.optional</code></dt>
+<dd>
+<p>Indicates whether the event key must contain a value in its <code>payload</code> field.
+In this example, a value in the key&#8217;s payload is required.
+A value in the key&#8217;s payload field is optional when a table does not have a primary key.</p>
+</dd>
+<dt class="hdlist1"><code>schema.name</code></dt>
+<dd>
+<p>Name of the schema that defines the structure of the key&#8217;s payload.
+This schema describes the structure of the primary key for the table that was changed.
+Key schema names have the format <em>connector-name</em>.<em>database-name</em>.<em>table-name</em>.<code>Key</code>.
+In this example:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>server1</code> is the name of the connector that generated this event.</p>
+</li>
+<li>
+<p><code>INVENTORY</code> is the database that contains the table that was changed.</p>
+</li>
+<li>
+<p><code>CUSTOMERS</code> is the table that was updated.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1"><code>payload</code></dt>
+<dd>
+<p>Contains the key for the row for which this change event was generated.
+In this example, the key, contains a single <code>id</code> field whose value is <code>1</code>.
+The value of the <code>payload</code> field is a structure (that is, a JSON object), that contains a single <code>ID</code> field with the value <code>1004</code>.</p>
+</dd>
+</dl>
 </div>
 </div>
 <div class="sect2">
@@ -4148,7 +4172,7 @@ This field is only present when using the LogMiner connection adapter.</p>
             "EMAIL": "annek@noanswer.org"
         },
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "name": "server1",
             "ts_ms": 1520085154000,
             "ts_us": 1520085154000000,
@@ -4249,7 +4273,7 @@ You can use the <a href="../configuration/avro.html#avro-serialization" class="x
             "EMAIL": "anne@example.com"
         },
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "name": "server1",
             "ts_ms": 1520085811000,
             "ts_us": 1520085811000000,
@@ -4352,7 +4376,7 @@ The <code>schema</code> portion of the <em>delete</em> event is identical to the
         },
         "after": null,
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "name": "server1",
             "ts_ms": 1520085153000,
             "ts_us": 1520085153000000,
@@ -4428,8 +4452,8 @@ The message key is <code>null</code> in this case, the message value looks like 
     "payload": {
         "before": null,
         "after": null,
-        "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.6.0.Final",
+        "source": {
+            "version": "3.7.0.Beta1",
             "connector": "oracle",
             "name": "oracle_server",
             "ts_ms": 1638974535000,
@@ -4452,36 +4476,24 @@ The message key is <code>null</code> in this case, the message value looks like 
             "start_scn": "13234396",
             "start_ts_ms": 1638974527000
         },
-        "op": "t", <i class="conum" data-value="2"></i><b>(2)</b>
-        "ts_ms": 1638974558961, <i class="conum" data-value="3"></i><b>(3)</b>
-        "ts_us": 1638974558961987, <i class="conum" data-value="3"></i><b>(3)</b>
-        "ts_ns": 1638974558961987251, <i class="conum" data-value="3"></i><b>(3)</b>
+        "op": "t",
+        "ts_ms": 1638974558961,
+        "ts_us": 1638974558961987,
+        "ts_ns": 1638974558961987251,
         "transaction": null
     }
 }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Descriptions of <em>truncate</em> event value fields</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory field that describes the source metadata for the event. In a <em>truncate</em> event value, the <code>source</code> field structure is the same as for <em>create</em>, <em>update</em>, and <em>delete</em> events for the same table, provides this metadata:</p>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding <em>truncate</em> event value example:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>source</code></dt>
+<dd>
+<p>Mandatory field that describes the source metadata for the event.
+In a <em>truncate</em> event value, the <code>source</code> field structure is the same as for <em>create</em>, <em>update</em>, and <em>delete</em> events for the same table, and provides this metadata:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -4512,28 +4524,24 @@ The message key is <code>null</code> in this case, the message value looks like 
 <p>Username who performed the change</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>op</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory string that describes the type of operation. The <code>op</code> field value is <code>t</code>, signifying that this table was truncated.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
 </div>
+</dd>
+<dt class="hdlist1"><code>op</code></dt>
+<dd>
+<p>Mandatory string that describes the type of operation.
+The <code>op</code> field value is <code>t</code>, signifying that this table was truncated.</p>
+</dd>
+<dt class="hdlist1"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></dt>
+<dd>
+<p>Optional field that displays the time at which the connector processed the event in millisecond, microsecond, and nanosecond formats.
+The time is based on the system clock in the JVM running the Kafka Connect task.</p>
 <div class="paragraph">
-<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database. By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database.
+By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
+</div>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>If a single <code>TRUNCATE</code> operation affects multiple tables, the connector emits one <em>truncate</em> change event record for each truncated table.</p>
 </div>
@@ -4648,7 +4656,7 @@ The connector continues to process other columns and tables that are configured 
 <p>The following table describes how the connector maps basic character types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Mappings for Oracle basic character types</caption>
+<caption class="title">Table 5. Mappings for Oracle basic character types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4726,7 +4734,7 @@ The connector continues to process other columns and tables that are configured 
 <p>The following table describes how the connector maps binary and character large object (LOB) data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Mappings for Oracle binary and character LOB types</caption>
+<caption class="title">Table 6. Mappings for Oracle binary and character LOB types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -4895,7 +4903,7 @@ For more information, see the <em>Semantic type and Notes</em> column in the fol
 </table>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Mappings for Oracle numeric data types</caption>
+<caption class="title">Table 7. Mappings for Oracle numeric data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -5328,8 +5336,8 @@ boolean.selector=.*MYTABLE.FLAG,.*.IS_ARCHIVED</code></pre>
 <td class="content">
 <div class="paragraph">
 <p>Because nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, the representable range of <code>io.debezium.time.NanoTimestamp</code> is approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
-Values outside this range — for example a <code>9999-12-31</code> end-of-time sentinel stored in a <code>TIMESTAMP(7 - 9)</code> column — cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
-The exception is routed through the standard <code>event.processing.failure.handling.mode</code> configuration, so operators can choose <code>fail</code> (the default), <code>warn</code>, or <code>skip</code> per their requirements.</p>
+Values outside this range, for example a <code>9999-12-31</code> end-of-time sentinel stored in a <code>TIMESTAMP(7 - 9)</code> column, cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
+The exception is handled according to the <code>event.converting.failure.handling.mode</code> configuration: with <code>warn</code> (the default) or <code>skip</code>, the affected column value is emitted as <code>null</code> and the failure is logged; with <code>fail</code>, the connector stops.</p>
 </div>
 <div class="paragraph">
 <p>If a column may legitimately contain values outside the representable range, declare it with <code>TIMESTAMP(0 - 6)</code> so that Debezium emits <code>Timestamp</code> (millisecond) or <code>MicroTimestamp</code> (microsecond) instead, or set <code>time.precision.mode=isostring</code> to capture the value as an ISO 8601 string.</p>
@@ -5631,6 +5639,290 @@ Contains calendar and clock component fields, <code>offsetSeconds</code>, option
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>When the <code>time.precision.mode</code> configuration property is set to <code>microseconds</code>, the connector maps temporal values to microsecond-precision integers.
+Oracle <code>DATE</code> and <code>TIMESTAMP</code> values (including <code>DATE</code>, which always contains a time component in Oracle) are represented as the number of microseconds since the UNIX epoch.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Oracle data type</th>
+<th class="tableblock halign-left valign-top">Literal type (schema type)</th>
+<th class="tableblock halign-left valign-top">Semantic type (schema name) and Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of microseconds since the UNIX epoch, and does not include timezone information.
+Note that Oracle <code>DATE</code> always includes a time component.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INTERVAL DAY[(M)] TO SECOND</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>FLOAT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroDuration</code></p>
+</div>
+<div class="paragraph">
+<p>The number of microseconds for a time interval using the <code>365.25 / 12.0</code> formula for days per month average.</p>
+</div>
+<div class="paragraph">
+<p><code>io.debezium.time.Interval</code> (when <code>interval.handling.mode</code> is set to <code>string</code>)</p>
+</div>
+<div class="paragraph">
+<p>The string representation of the interval value that follows the pattern <code>P&lt;years&gt;Y&lt;months&gt;M&lt;days&gt;DT&lt;hours&gt;H&lt;minutes&gt;M&lt;seconds&gt;S</code>, for example,  <code>P1Y2M3DT4H5M6.78S</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INTERVAL YEAR[(M)] TO MONTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>FLOAT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroDuration</code></p>
+</div>
+<div class="paragraph">
+<p>The number of microseconds for a time interval using the <code>365.25 / 12.0</code> formula for days per month average.</p>
+</div>
+<div class="paragraph">
+<p><code>io.debezium.time.Interval</code> (when <code>interval.handling.mode</code> is set to <code>string</code>)</p>
+</div>
+<div class="paragraph">
+<p>The string representation of the interval value that follows the pattern <code>P&lt;years&gt;Y&lt;months&gt;M&lt;days&gt;DT&lt;hours&gt;H&lt;minutes&gt;M&lt;seconds&gt;S</code>, for example,  <code>P1Y2M3DT4H5M6.78S</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP(0 - 9)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of microseconds since the UNIX epoch, and does not include timezone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP WITH TIME ZONE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>A string representation of a timestamp with timezone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP WITH LOCAL TIME ZONE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>A string representation of a timestamp in UTC.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When the <code>time.precision.mode</code> configuration property is set to <code>nanoseconds</code>, the connector maps temporal values to nanosecond-precision integers.
+Oracle <code>DATE</code> and <code>TIMESTAMP</code> values are represented as the number of nanoseconds since the UNIX epoch.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Because nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, the representable range of <code>io.debezium.time.NanoTimestamp</code> is approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
+Values outside this range, for example a <code>9999-12-31</code> end-of-time sentinel stored in a <code>TIMESTAMP(7 - 9)</code> column, cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
+The exception is handled according to the <code>event.converting.failure.handling.mode</code> configuration: with <code>warn</code> (the default) or <code>skip</code>, the affected column value is emitted as <code>null</code> and the failure is logged; with <code>fail</code>, the connector stops.</p>
+</div>
+<div class="paragraph">
+<p>If a column may legitimately contain values outside the representable range, set <code>time.precision.mode=microseconds</code> or <code>time.precision.mode=isostring</code> to capture the value with lower precision or as an ISO 8601 string.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Oracle data type</th>
+<th class="tableblock halign-left valign-top">Literal type (schema type)</th>
+<th class="tableblock halign-left valign-top">Semantic type (schema name) and Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of nanoseconds since the UNIX epoch, and does not include timezone information.
+Note that Oracle <code>DATE</code> always includes a time component.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INTERVAL DAY[(M)] TO SECOND</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>FLOAT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroDuration</code></p>
+</div>
+<div class="paragraph">
+<p>The number of microseconds for a time interval using the <code>365.25 / 12.0</code> formula for days per month average.</p>
+</div>
+<div class="paragraph">
+<p><code>io.debezium.time.Interval</code> (when <code>interval.handling.mode</code> is set to <code>string</code>)</p>
+</div>
+<div class="paragraph">
+<p>The string representation of the interval value that follows the pattern <code>P&lt;years&gt;Y&lt;months&gt;M&lt;days&gt;DT&lt;hours&gt;H&lt;minutes&gt;M&lt;seconds&gt;S</code>, for example,  <code>P1Y2M3DT4H5M6.78S</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INTERVAL YEAR[(M)] TO MONTH</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>FLOAT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroDuration</code></p>
+</div>
+<div class="paragraph">
+<p>The number of microseconds for a time interval using the <code>365.25 / 12.0</code> formula for days per month average.</p>
+</div>
+<div class="paragraph">
+<p><code>io.debezium.time.Interval</code> (when <code>interval.handling.mode</code> is set to <code>string</code>)</p>
+</div>
+<div class="paragraph">
+<p>The string representation of the interval value that follows the pattern <code>P&lt;years&gt;Y&lt;months&gt;M&lt;days&gt;DT&lt;hours&gt;H&lt;minutes&gt;M&lt;seconds&gt;S</code>, for example,  <code>P1Y2M3DT4H5M6.78S</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP(0 - 9)</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of nanoseconds since the UNIX epoch, and does not include timezone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP WITH TIME ZONE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>A string representation of a timestamp with timezone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP WITH LOCAL TIME ZONE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>A string representation of a timestamp in UTC.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="oracle-temporal-types-bc-era"><a class="anchor" href="#oracle-temporal-types-bc-era"></a>BC era and pre-Gregorian dates</h4>
+<div class="paragraph">
+<p>The connector emits temporal values that precede the common era (BC) or the Gregorian calendar cut-over in 1582 by using the proleptic Gregorian calendar of ISO 8601, matching the <code>java.time</code> semantics used across Debezium.
+Temporal values in the common era (AD) from the year 1582 onward are unaffected by this mapping and are emitted exactly as described in the preceding sections.</p>
+</div>
+<div class="paragraph">
+<p>Because ISO 8601 includes a year zero and the Oracle calendar does not, BC years are offset by one in emitted values: Oracle year <code>-N</code> (N BC) corresponds to ISO year <code>-(N-1)</code>.
+For example, the Oracle date <code>-2018-03-27</code> (2018 BC) is emitted with the ISO year <code>-2017</code>.</p>
+</div>
+<div class="paragraph">
+<p>For epoch-based semantic types such as <code>io.debezium.time.Timestamp</code> and <code>io.debezium.time.MicroTimestamp</code>, BC values are emitted as negative values relative to the UNIX epoch.
+For string-based semantic types such as <code>io.debezium.time.ZonedTimestamp</code> and <code>io.debezium.time.IsoTimestamp</code>, BC values are emitted as ISO 8601 strings with a signed year, for example, <code>-2017-03-27T01:34:56.007890-11:00</code>.
+Consumers must be prepared to handle the leading sign in the year component.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>BC values stored in <code>TIMESTAMP(7 - 9)</code> columns exceed the representable range of <code>io.debezium.time.NanoTimestamp</code>, as described in the preceding note about the nanosecond range.
+If a column may contain BC values at nanosecond precision, use <code>time.precision.mode</code> set to <code>isostring</code> or <code>structured</code> to represent the values without loss.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="oracle-rowid-types"><a class="anchor" href="#oracle-rowid-types"></a>ROWID types</h3>
@@ -5638,7 +5930,7 @@ Contains calendar and clock component fields, <code>offsetSeconds</code>, option
 <p>The following table describes how the connector maps ROWID (row address) data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Mappings for Oracle ROWID data types</caption>
+<caption class="title">Table 8. Mappings for Oracle ROWID data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -5727,7 +6019,7 @@ This limitation applies to all Oracle 21.x and 23.x drivers tested through versi
 <p>The following table describes how the connector maps JSON data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Mappings for Oracle JSON data types</caption>
+<caption class="title">Table 9. Mappings for Oracle JSON data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -5757,6 +6049,9 @@ This limitation applies to all Oracle 21.x and 23.x drivers tested through versi
 </div>
 <div class="sect2">
 <h3 id="oracle-xml-types"><a class="anchor" href="#oracle-xml-types"></a>XML types</h3>
+<div class="paragraph">
+<p>The Debezium Oracle connector supports the <code>XMLTYPE</code> data type and maps it as a string value.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -5777,7 +6072,7 @@ Please let us know if you encounter any problems while using these data types.</
 <p>The following table describes how the connector maps XMLTYPE data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Mappings for Oracle XMLTYPE data types</caption>
+<caption class="title">Table 10. Mappings for Oracle XMLTYPE data types</caption>
 <colgroup>
 <col style="width: 22.2222%;">
 <col style="width: 16.6666%;">
@@ -5944,7 +6239,7 @@ raw-to-string.charset=UTF-8</code></pre>
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. RawToStringConverter configuration properties</caption>
+<caption class="title">Table 11. RawToStringConverter configuration properties</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 20%;">
@@ -6090,6 +6385,9 @@ The Debezium Oracle connector is compatible with both types of installation.</p>
 </div>
 <div class="sect2">
 <h3 id="_preparing_the_database"><a class="anchor" href="#_preparing_the_database"></a>Preparing the database</h3>
+<div class="paragraph">
+<p>Before you deploy the Debezium Oracle connector, you must configure the Oracle database to run in archive log mode and enable supplemental logging.</p>
+</div>
 <div class="listingblock">
 <div class="title">Configuration needed for Oracle LogMiner</div>
 <div class="content">
@@ -6357,7 +6655,7 @@ sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Descriptions of permissions / grants</caption>
+<caption class="title">Table 12. Descriptions of permissions / grants</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 40%;">
@@ -6564,7 +6862,8 @@ This reduces the load on the primary by offloading LogMiner operations to the st
 <p>Add the following properties to the connector configuration:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">log.mining.strategy=dictionary_from_file
+<pre class="highlightjs highlight"><code class="language-none hljs">capture.mode=physical_standby
+log.mining.strategy=dictionary_from_file
 log.mining.path.dictionary=/path/to/dictionary.ora
 log.mining.read.only=true
 secondary.hostname=standby-host</code></pre>
@@ -6726,7 +7025,7 @@ For more information, see <a href="https://issues.redhat.com/browse/DBZ-8034">DB
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-oracle/3.6.0.Final/debezium-connector-oracle-3.6.0.Final-plugin.tar.gz">Oracle connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-oracle/3.7.0.Beta1/debezium-connector-oracle-3.7.0.Beta1-plugin.tar.gz">Oracle connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -6761,78 +7060,83 @@ Optionally, you can ignore, mask, or truncate columns that contain sensitive dat
 <div class="title">Example: Debezium Oracle connector configuration</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-    "name": "inventory-connector",  <i class="conum" data-value="1"></i><b>(1)</b>
+    "name": "inventory-connector",
     "config": {
-        "connector.class" : "io.debezium.connector.oracle.OracleConnector",  <i class="conum" data-value="2"></i><b>(2)</b>
-        "database.hostname" : "&lt;ORACLE_IP_ADDRESS&gt;",  <i class="conum" data-value="3"></i><b>(3)</b>
-        "database.port" : "1521",  <i class="conum" data-value="4"></i><b>(4)</b>
-        "database.user" : "c##dbzuser",  <i class="conum" data-value="5"></i><b>(5)</b>
-        "database.password" : "dbz",   <i class="conum" data-value="6"></i><b>(6)</b>
-        "database.dbname" : "ORCLCDB",  <i class="conum" data-value="7"></i><b>(7)</b>
-        "topic.prefix" : "server1",  <i class="conum" data-value="8"></i><b>(8)</b>
-        "tasks.max" : "1",  <i class="conum" data-value="9"></i><b>(9)</b>
-        "database.pdb.name" : "ORCLPDB1",  <i class="conum" data-value="10"></i><b>(10)</b>
-        "schema.history.internal.kafka.bootstrap.servers" : "kafka:9092", <i class="conum" data-value="11"></i><b>(11)</b>
-        "schema.history.internal.kafka.topic": "schema-changes.inventory"  <i class="conum" data-value="12"></i><b>(12)</b>
+        "connector.class" : "io.debezium.connector.oracle.OracleConnector",
+        "database.hostname" : "&lt;ORACLE_IP_ADDRESS&gt;",
+        "database.port" : "1521",
+        "database.user" : "c##dbzuser",
+        "database.password" : "dbz",
+        "database.dbname" : "ORCLCDB",
+        "topic.prefix" : "server1",
+        "tasks.max" : "1",
+        "database.pdb.name" : "ORCLPDB1",
+        "schema.history.internal.kafka.bootstrap.servers" : "kafka:9092",
+        "schema.history.internal.kafka.topic": "schema-changes.inventory"
     }
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The name that is assigned to the connector when you register it with a Kafka Connect service.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The name of this Oracle connector class.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The address of the Oracle instance.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The port number of the Oracle instance.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>The name of the Oracle user, as specified in <a href="#creating-users-for-the-connector">Creating users for the connector</a>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>The password for the Oracle user, as specified in <a href="#creating-users-for-the-connector">Creating users for the connector</a>.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>The name of the database to capture changes from.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>Topic prefix that identifies and provides a namespace for the Oracle database server from which the connector captures changes.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="9"></i><b>9</b></td>
-<td>The maximum number of tasks to create for this connector.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="10"></i><b>10</b></td>
-<td>The name of the Oracle pluggable database that the connector captures changes from. Used in container database (CDB) installations only.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="11"></i><b>11</b></td>
-<td>The list of Kafka brokers that this connector uses to write and recover DDL statements to the database schema history topic.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="12"></i><b>12</b></td>
-<td>The name of the database schema history topic where the connector writes and recovers DDL statements. This topic is for internal use only and should not be used by consumers.</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding connector configuration example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>name</code></dt>
+<dd>
+<p>The name that is assigned to the connector when you register it with a Kafka Connect service.</p>
+</dd>
+<dt class="hdlist1"><code>connector.class</code></dt>
+<dd>
+<p>The name of this Oracle connector class.</p>
+</dd>
+<dt class="hdlist1"><code>database.hostname</code></dt>
+<dd>
+<p>The address of the Oracle instance.</p>
+</dd>
+<dt class="hdlist1"><code>database.port</code></dt>
+<dd>
+<p>The port number of the Oracle instance.</p>
+</dd>
+<dt class="hdlist1"><code>database.user</code></dt>
+<dd>
+<p>The name of the Oracle user, as specified in <a href="#creating-users-for-the-connector">Creating users for the connector</a>.</p>
+</dd>
+<dt class="hdlist1"><code>database.password</code></dt>
+<dd>
+<p>The password for the Oracle user, as specified in <a href="#creating-users-for-the-connector">Creating users for the connector</a>.</p>
+</dd>
+<dt class="hdlist1"><code>database.dbname</code></dt>
+<dd>
+<p>The name of the database to capture changes from.</p>
+</dd>
+<dt class="hdlist1"><code>topic.prefix</code></dt>
+<dd>
+<p>Topic prefix that identifies and provides a namespace for the Oracle database server from which the connector captures changes.</p>
+</dd>
+<dt class="hdlist1"><code>tasks.max</code></dt>
+<dd>
+<p>The maximum number of tasks to create for this connector.</p>
+</dd>
+<dt class="hdlist1"><code>database.pdb.name</code></dt>
+<dd>
+<p>The name of the Oracle pluggable database that the connector captures changes from.
+Used in container database (CDB) installations only.</p>
+</dd>
+<dt class="hdlist1"><code>schema.history.internal.kafka.bootstrap.servers</code></dt>
+<dd>
+<p>The list of Kafka brokers that this connector uses to write and recover DDL statements to the database schema history topic.</p>
+</dd>
+<dt class="hdlist1"><code>schema.history.internal.kafka.topic</code></dt>
+<dd>
+<p>The name of the database schema history topic where the connector writes and recovers DDL statements.
+This topic is for internal use only and should not be used by consumers.</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
-<p>In the previous example, the <code>database.hostname</code> and <code>database.port</code> properties are used to define the connection to the database host.
-However, in more complex Oracle deployments, or in deployments that use Transparent Network Substrate (TNS) names, you can use an alternative method in which you specify a JDBC URL.</p>
+<p>In the preceding example, the <code>database.hostname</code> and <code>database.port</code> properties define the connection to the database host.
+However, in more complex Oracle deployments, or in deployments that use Transparent Network Substrate (TNS) names, you can use an alternative method, which specifies the JDBC URL for the connection.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -7032,6 +7336,9 @@ The Debezium for Oracle connector relies on the Oracle JDBC driver&#8217;s built
 </div>
 <div class="sect3">
 <h4 id="using-mtls-secure-connections-java-key-trust-stores"><a class="anchor" href="#using-mtls-secure-connections-java-key-trust-stores"></a>Java key/trust stores</h4>
+<div class="paragraph">
+<p>You can configure the Debezium Oracle connector to use Java key and trust stores when establishing a mutually authenticated TLS connection to the database.</p>
+</div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7084,6 +7391,9 @@ Unlike the <code>database.host</code> property, the <code>database.url</code> pr
 </div>
 <div class="sect3">
 <h4 id="using-mtls-secure-connections-oracle-wallet"><a class="anchor" href="#using-mtls-secure-connections-oracle-wallet"></a>Oracle Wallet</h4>
+<div class="paragraph">
+<p>You can configure the Debezium Oracle connector to use Oracle Wallet when establishing a mutually authenticated TLS connection to the database.</p>
+</div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
 <ul>
@@ -7183,7 +7493,7 @@ Information about the properties is organized as follows:</p>
 <div class="sect2">
 <h3 id="required-debezium-oracle-connector-configuration-properties"><a class="anchor" href="#required-debezium-oracle-connector-configuration-properties"></a>Required Debezium Oracle connector configuration properties</h3>
 <div class="paragraph">
-<p>The following configuration properties are <em>required</em> unless a default value is available.</p>
+<p>The following configuration properties are required to configure the Debezium Oracle connector unless a default value is specified.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -9772,7 +10082,7 @@ Set the property to one of the following values:</p>
 <p>The following table describes the <code>schema.history.internal</code> properties for configuring the Debezium connector.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Connector database schema history configuration properties</caption>
+<caption class="title">Table 13. Connector database schema history configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -9995,7 +10305,7 @@ schema.history.internal.consumer.ssl.key.password=test1234</code></pre>
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Kafka signals configuration properties</caption>
+<caption class="title">Table 14. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -10090,7 +10400,7 @@ For example, the connector passes properties such as <code>signal.consumer.secur
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Sink notification configuration properties</caption>
+<caption class="title">Table 15. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -10174,6 +10484,9 @@ In this scenario, you must reconfigure the observability stack to use the new MB
 You configure custom metrics by adding the <code>custom.metric.tags</code> property to the connector configuration.
 The property accepts key-value pairs in which each key represents a tag for the MBean object name, and the corresponding value represents the value of that tag.
 For example: <code>k1=v1,k2=v2</code>.
+Tag keys must be valid JMX <code>ObjectName</code> property keys.
+The comma separates entries, and the equals sign separates each key from its value; therefore, neither can occur in a key.
+Keys also cannot contain JMX-reserved characters such as <code>:</code>, <code>*</code>, or <code>?</code>.
 Debezium appends the specified tags to the MBean name of the connector.</p>
 </div>
 <div class="paragraph">
@@ -10883,7 +11196,7 @@ Available when <a href="#oracle-property-statistics-metrics-enabled"><code>stati
 <p>The Debezium Oracle connector also provides the following additional streaming metrics:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Descriptions of additional streaming metrics</caption>
+<caption class="title">Table 16. Descriptions of additional streaming metrics</caption>
 <colgroup>
 <col style="width: 45%;">
 <col style="width: 25%;">
@@ -11814,7 +12127,7 @@ The message does not contain the update to the schema.
 Instead, it contains the complete new schema structure.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Action parameters</caption>
+<caption class="title">Table 17. Action parameters</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -11913,7 +12226,7 @@ Instead, it contains the complete new schema structure.</p>
 After the connector&#8217;s commit SCN advances beyond the DDL change, to prevent unparseable DDL statements from being skipped unexpectedly, return the connector configuration to its previous state.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. Example of a logging record</caption>
+<caption class="title">Table 18. Example of a logging record</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 90%;">
@@ -12020,6 +12333,10 @@ After the connector&#8217;s commit SCN advances beyond the DDL change, to preven
 <div class="sect1">
 <h2 id="oracle-openlogreplicator-support"><a class="anchor" href="#oracle-openlogreplicator-support"></a>OpenLogReplicator support</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>By default, the Debezium Oracle connector uses the native Oracle LogMiner to ingest changes.
+As an alternative to LogMiner, you can configure the connector to use OpenLogReplicator, a free, open-source, third-party application to read changes directly from the Oracle redo and archive logs with low database impact.</p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -12036,9 +12353,7 @@ Please let us know if you encounter any problems.</p>
 </table>
 </div>
 <div class="paragraph">
-<p>The Debezium Oracle connector by default ingests changes using native Oracle LogMiner.
-However, the connector can be toggled to use OpenLogReplicator, an open-source and free third-party application that reads Oracle changes directly from the redo and archive logs with low impact on the database.
-To configure the connector to use OpenLogReplicator, you must apply specific database and connector configurations that differ from those that you use with LogMiner.</p>
+<p>To configure the connector to use OpenLogReplicator, you must apply specific database and connector configurations that differ from those that you use with LogMiner.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -12047,7 +12362,8 @@ To configure the connector to use OpenLogReplicator, you must apply specific dat
 <p>Download and compile OpenLogReplicator for your database environment.</p>
 </li>
 <li>
-<p>OpenLogReplicator must be installed with direct access to the archive and redo log files. This does not necessarily require installation on the physical database server if the archive and redo logs can be accessed via some shared filesystem.</p>
+<p>OpenLogReplicator is installed with direct access to the archive and redo log files.
+This does not necessarily require installation on the physical database server if the archive and redo logs can be accessed via some shared filesystem.</p>
 </li>
 </ul>
 </div>
@@ -12314,15 +12630,15 @@ For more information about the required format of this file, see the <a href="ht
   "version": "1.6.0",
   "source": [{
     "alias": "SOURCE",
-    "name": "ORACLE", <i class="conum" data-value="1"></i><b>(1)</b>
+    "name": "ORACLE",
     "reader": {
       "type": "online",
-      "path-mapping": ["/opt/olr/recovery_area", "/opt/olr/recovery_area/ORCLCDB/archivelog"], <i class="conum" data-value="2"></i><b>(2)</b>
-      "user": "c##dbzuser", <i class="conum" data-value="3"></i><b>(3)</b>
-      "password": "dbz", <i class="conum" data-value="4"></i><b>(4)</b>
-      "server": "//&lt;ip&gt;:&lt;port&gt;/ORCLPDB1" <i class="conum" data-value="5"></i><b>(5)</b>
+      "path-mapping": ["/opt/olr/recovery_area", "/opt/olr/recovery_area/ORCLCDB/archivelog"],
+      "user": "c##dbzuser",
+      "password": "dbz",
+      "server": "//&lt;ip&gt;:&lt;port&gt;/ORCLPDB1"
     },
-    "format": { <i class="conum" data-value="6"></i><b>(6)</b>
+    "format": {
       "type": "json",
       "column": 2,
       "db": 3,
@@ -12333,55 +12649,147 @@ For more information about the required format of this file, see the <a href="ht
       "schema": 7,
       "scn-all": 1,
       "timestamp-all": 1
-    }
+    },
+    "flags": 69728
   }],
   "target": [{
     "alias": "DEBEZIUM",
     "source": "SOURCE",
     "writer": {
-      "type": "network", <i class="conum" data-value="7"></i><b>(7)</b>
-      "uri": "&lt;host&gt;:&lt;port&gt;" <i class="conum" data-value="8"></i><b>(8)</b>
+      "type": "network",
+      "uri": "&lt;host&gt;:&lt;port&gt;"
     }
   }]
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>This should match the <code>openlogreplicator.source</code> connector configuration.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>List of file path pairs <code>[before1,after1,befor2,after2,&#8230;&#8203;]</code> where if a log file path matches one of the <code>beforeX</code> prefixes, the prefix is replaced with the <code>afterX</code> path.  This is useful when OpenLogReplicator is running on a different host than the source database and the path to the redo and archive logs different between the database and the OpenLogReplicator process.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>This should match the <code>database.user</code> connector property.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>This should match the <code>database.password</code> connector property.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>This should point to the database host, port, and Oracle SID.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>This specifies the payload format ingested by Debezium Oracle connector. Use these values as specified, as these are the only format options that we require beyond the defaults.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="7"></i><b>7</b></td>
-<td>This must specify <code>network</code>, as Debezium Oracle connector communicates with OpenLogReplicator via a network connection.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="8"></i><b>8</b></td>
-<td>This specifies the bind host and port that OpenLogReplicator listens for connections on.  This should be accessible by Debezium Oracle connector.</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding OpenLogReplicator configuration example:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>name</code></dt>
+<dd>
+<p>This should match the <code>openlogreplicator.source</code> connector configuration.</p>
+</dd>
+<dt class="hdlist1"><code>reader.path-mapping</code></dt>
+<dd>
+<p>List of file path pairs <code>[before1,after1,befor2,after2,&#8230;&#8203;]</code> where if a log file path matches one of the <code>beforeX</code> prefixes, the prefix is replaced with the <code>afterX</code> path.
+This is useful when OpenLogReplicator is running on a different host than the source database and the path to the redo and archive logs differs between the database and the OpenLogReplicator process.</p>
+</dd>
+<dt class="hdlist1"><code>reader.user</code></dt>
+<dd>
+<p>This should match the <code>database.user</code> connector property.</p>
+</dd>
+<dt class="hdlist1"><code>reader.password</code></dt>
+<dd>
+<p>This should match the <code>database.password</code> connector property.</p>
+</dd>
+<dt class="hdlist1"><code>reader.server</code></dt>
+<dd>
+<p>This should point to the database host, port, and Oracle SID.</p>
+</dd>
+<dt class="hdlist1"><code>format</code></dt>
+<dd>
+<p>Specifies the payload format ingested by the Debezium Oracle connector.
+Use these values as specified, as these are the only format options that we require beyond the defaults.</p>
+</dd>
+<dt class="hdlist1"><code>flags</code></dt>
+<dd>
+<p>The sum of the OpenLogReplicator flags that control what the stream includes.
+See <a href="#oracle-openlogreplicator-flags">OpenLogReplicator flags</a>.</p>
+</dd>
+<dt class="hdlist1"><code>target.writer.type</code></dt>
+<dd>
+<p>This must specify <code>network</code>, as the Debezium Oracle connector communicates with OpenLogReplicator via a network connection.</p>
+</dd>
+<dt class="hdlist1"><code>target.writer.uri</code></dt>
+<dd>
+<p>Specifies the bind host and port that OpenLogReplicator listens for connections on.
+This should be accessible by the Debezium Oracle connector.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="oracle-openlogreplicator-flags"><a class="anchor" href="#oracle-openlogreplicator-flags"></a>OpenLogReplicator flags</h4>
+<div class="paragraph">
+<p>The <code>flags</code> property is the sum of a set of bit flags that determine what OpenLogReplicator includes in the stream.
+It applies to the source, alongside <code>format</code>, rather than within it.</p>
+</div>
+<div class="paragraph">
+<p>A column that OpenLogReplicator omits because of a missing flag is not reported as an error.
+The connector receives no value for it, and the field is <code>null</code> in the change event, so a missing flag looks like missing data rather than a configuration problem.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 19. OpenLogReplicator flags used by Debezium</caption>
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 15%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Flag</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Value</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Description</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>SHOW_DDL</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Includes DDL statements in the stream. Required for the connector to track schema changes.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>SHOW_HIDDEN_COLUMNS</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Includes columns that Oracle marks as hidden. Required to capture columns that are declared <code>INVISIBLE</code>; without it, such a column is silently absent from every change event.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>SHOW_CHECKPOINT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>4096</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Includes checkpoint markers in the stream. Required for the connector to advance its offsets while no captured table is changing.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>EXPERIMENTAL_XMLTYPE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>65536</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Includes the values of <code>XMLTYPE</code> columns. Required to capture them; without it, such a column is silently absent from every change event. This flag is experimental in OpenLogReplicator.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The value <code>69728</code> in the preceding example is the sum of all four.
+Omit <code>65536</code> if the tables you capture contain no <code>XMLTYPE</code> columns, and <code>64</code> if they contain no <code>INVISIBLE</code> columns.</p>
 </div>
 </div>
 </div>
@@ -12478,6 +12886,9 @@ Installing GoldenGate is not required.</p>
 </div>
 <div class="sect2">
 <h3 id="_preparing_the_database_3"><a class="anchor" href="#_preparing_the_database_3"></a>Preparing the Database</h3>
+<div class="paragraph">
+<p>Before you configure the Debezium Oracle connector to use XStream, you must prepare the Oracle database by enabling archive log mode and supplemental logging.</p>
+</div>
 <div class="listingblock">
 <div class="title">Configuration needed for Oracle XStream</div>
 <div class="content">
@@ -12515,6 +12926,9 @@ The following examples provide information about how to create user configuratio
 </div>
 <div class="sect3">
 <h4 id="oracle-create-users-xstream"><a class="anchor" href="#oracle-create-users-xstream"></a>Creating an XStream Administrator user</h4>
+<div class="paragraph">
+<p>The XStream administrator user requires specific tablespace and privilege grants to authorize the Debezium Oracle connector to capture change events using XStream.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
@@ -12551,6 +12965,9 @@ sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
 </div>
 <div class="sect3">
 <h4 id="_creating_the_connectors_xstream_user"><a class="anchor" href="#_creating_the_connectors_xstream_user"></a>Creating the connector&#8217;s XStream user</h4>
+<div class="paragraph">
+<p>The connector&#8217;s XStream user requires a dedicated tablespace and a set of privileges that grant access to the database views and objects needed for change data capture.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">sqlplus sys/top_secret@//localhost:1521/ORCLCDB as sysdba
@@ -12789,6 +13206,9 @@ This diverged behavior is captured in <a href="https://issues.redhat.com/browse/
 <div class="sect1">
 <h2 id="oracle-frequently-asked-questions"><a class="anchor" href="#oracle-frequently-asked-questions"></a>Frequently Asked Questions</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Find answers to common questions about Debezium Oracle connector version support, LogMiner behavior, offset management, and error recovery.</p>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><strong>Is Oracle 11g supported?</strong></dt>
@@ -13246,7 +13666,7 @@ The XStream outbound server is a container root database (<code>CDB$ROOT</code>)
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>

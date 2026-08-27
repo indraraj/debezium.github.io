@@ -350,6 +350,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +401,7 @@
         <div class="version-menu">
                         <a class="version" href="/documentation/reference/connectors/jdbc.html" data-hash="true">nightly</a>
                         <a class="version is-current" href="/documentation/reference/stable/connectors/jdbc.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/jdbc.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/jdbc.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/jdbc.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/jdbc.html" data-hash="true">3.3</a>
@@ -449,6 +453,7 @@
 <li><a href="#jdbc-primary-key-handling">Primary key handling</a></li>
 <li><a href="#jdbc-delete-mode">Delete mode</a></li>
 <li><a href="#jdbc-idempotent-writes">Idempotent writes</a></li>
+<li><a href="#sink-connector-secondary-unique-constraints">Secondary unique constraints in sink connectors</a></li>
 <li><a href="#jdbc-schema-evolution">Schema evolution</a></li>
 <li><a href="#jdbc-quoting-case-sensitivity">Quoting and case sensitivity</a></li>
 <li><a href="#jdbc-connection-idle-timeouts">Connection Idle Timeouts</a></li>
@@ -726,8 +731,8 @@ Consult your specific database vendor&#8217;s documentation for what data types 
 <div class="sect2">
 <h3 id="jdbc-delete-mode"><a class="anchor" href="#jdbc-delete-mode"></a>Delete mode</h3>
 <div class="paragraph">
-<p>The Debezium JDBC sink connector can delete rows in the destination database when a <code>DELETE</code> or <em>tombstone</em> event is consumed.
-By default, the JDBC sink connector does not enable delete mode.</p>
+<p>By default, when the connector consumes <code>DELETE</code> or tombstone events, it does not delete the corresponding row in the sink database.
+You might want the connector to remove rows when you need to maintain data parity between the source and sink databases, so that deletions in the source are also reflected in the sink.</p>
 </div>
 <div class="paragraph">
 <p>If you want to the connector to remove rows, you must explicitly set <code>delete.enabled=true</code> in the connector configuration.
@@ -738,7 +743,8 @@ The preceding configuration is necessary, because deletes are executed based on 
 <div class="sect2">
 <h3 id="jdbc-idempotent-writes"><a class="anchor" href="#jdbc-idempotent-writes"></a>Idempotent writes</h3>
 <div class="paragraph">
-<p>The Debezium JDBC sink connector can perform idempotent writes, enabling it to replay the same records repeatedly and not change the final database state.</p>
+<p>In an at-least-once delivery pipeline, the connector can receive the same event more than once after a restart or rebalance.
+Configure the connector to use <code>upsert</code> mode so that data written to the sink database is idempotent, and replaying an event always produces the same final row state.</p>
 </div>
 <div class="paragraph">
 <p>To enable the connector to perform idempotent writes, you must be explicitly set the <code>insert.mode</code> for the connector to <code>upsert</code>.
@@ -750,9 +756,84 @@ If the specified primary key value doesn&#8217;t exist, an <code>insert</code> a
 </div>
 <div class="paragraph">
 <p>Each database dialect handles idempotent writes differently, because there is no SQL standard for <em>upsert</em> operations.
-The following table shows the <code>upsert</code> DML syntax for the database dialects that Debezium supports:</p>
+The following table shows, for each database dialect that Debezium supports, the upsert DML syntax and the constraints that trigger an update action during an upsert operation.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Dialect</th>
+<th class="tableblock halign-left valign-top">Upsert Syntax</th>
+<th class="tableblock halign-left valign-top">Constraint that triggers the update action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Db2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configured primary key only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MariaDB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INSERT &#8230;&#8203; ON DUPLICATE KEY UPDATE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any unique index</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INSERT &#8230;&#8203; ON DUPLICATE KEY UPDATE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Any unique index</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Oracle</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configured primary key only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PostgreSQL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INSERT &#8230;&#8203; ON CONFLICT &#8230;&#8203; DO UPDATE SET &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configured primary key only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SQL Server</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configured primary key only</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Secondary unique constraints can create ordering dependencies.
+For more information about their use, see <a href="#sink-connector-secondary-unique-constraints">secondary unique constraints</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sink-connector-secondary-unique-constraints"><a class="anchor" href="#sink-connector-secondary-unique-constraints"></a>Secondary unique constraints in sink connectors</h3>
+<div class="paragraph">
+<p>Secondary unique constraints can create ordering dependencies between records that have different primary keys.
+Kafka guarantees record order only within a partition, and the connector batches and reduces events based only on the configured primary key.
+For these reasons, you should avoid defining secondary unique constraints or secondary unique indexes on destination tables.
+If a uniqueness rule is required, enforce the rule in the source database, and omit the constraint from the destination table.</p>
+</div>
+<div class="paragraph">
+<p>If dependent records are routed to different partitions, the sink connector might apply records out of source order, which can lead to inconsistent results.
+The following table shows how different database dialects handle conflicts involving secondary unique constraints:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Dialect-specific behavior when secondary unique constraint conflicts occur</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -760,37 +841,56 @@ The following table shows the <code>upsert</code> DML syntax for the database di
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Dialect</th>
-<th class="tableblock halign-left valign-top">Upsert Syntax</th>
+<th class="tableblock halign-left valign-top">Behavior</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Db2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dialects that use <code>INSERT &#8230;&#8203; ON DUPLICATE KEY UPDATE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Consider conflicts on any unique index, not only the configured primary key.
+A conflict involving a secondary unique constraint can therefore update an existing row whose primary key differs from the incoming record, causing silent data inconsistency.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">MySQL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INSERT &#8230;&#8203; ON DUPLICATE KEY UPDATE &#8230;&#8203;</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Oracle</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">PostgreSQL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INSERT &#8230;&#8203; ON CONFLICT &#8230;&#8203; DO UPDATE SET &#8230;&#8203;</code></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SQL Server</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>MERGE &#8230;&#8203;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dialects that use <code>INSERT &#8230;&#8203; ON CONFLICT</code> or <code>MERGE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Consider conflicts only on the configured primary key.
+A conflict involving a secondary unique constraint causes the write operation to fail with a constraint violation error rather than updating a different row.</p></td>
 </tr>
 </tbody>
 </table>
+<div class="paragraph">
+<p>To prevent data inconsistencies when a destination table includes a secondary unique constraint, the data pipeline must meet all of the following requirements:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Dependent events routed through the same partition</dt>
+<dd>
+<p>Route all dependent events through the same Kafka partition, and preserve the source event order.
+For a table with dependencies between arbitrary rows, use a single partition for its Kafka topic.
+Setting <code>tasks.max=1</code> is not sufficient to restore ordering between records that are already in different partitions.</p>
+</dd>
+<dt class="hdlist1">Reduction buffering disabled</dt>
+<dd>
+<p>Retain the default value (<code>false</code>) of the <a href="#jdbc-property-use-reduction-buffer"><code>use.reduction.buffer</code></a> property.
+Reduction by primary key can remove intermediate row states that are required to satisfy secondary unique constraints.</p>
+</dd>
+<dt class="hdlist1">Batch size set to <code>1</code></dt>
+<dd>
+<p>Set the value of the <a href="#jdbc-property-batch-size"><code>batch.size</code></a> property to <code>1</code> if any batches might contain multiple events for a primary key that is not defined in the destination table.</p>
+<div class="paragraph">
+<p>Some dialects and driver configurations process a batch in a single pass, rather than validating each row against the effects of the preceding rows in the same batch.
+For example, <code>MERGE</code>-based dialects can attempt two <code>INSERT</code> operations for the same primary key instead of an <code>INSERT</code> followed by an <code>UPDATE</code>.
+Similarly, when <a href="#jdbc-property-dialect-postgres-unnest-insert-enabled"><code>dialect.postgres.unnest.insert.enabled</code></a> is set to <code>true</code>, PostgreSQL combines a batch into a single multi-row statement.
+In each of these cases, the batch fails.</p>
+</div>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect2">
 <h3 id="jdbc-schema-evolution"><a class="anchor" href="#jdbc-schema-evolution"></a>Schema evolution</h3>
 <div class="paragraph">
-<p>You can use the following schema evolution modes with the Debezium JDBC sink connector:</p>
+<p>The <code>schema.evolution</code> property controls whether the connector automatically creates or alters destination tables when event schemas change.
+The following table describes the available modes, from no evolution (<code>none</code>) through startup validation (<code>validate-only</code>) to automatic table creation and column addition (<code>basic</code>).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -889,6 +989,10 @@ Enabling quoting results in the same behavior when the connector creates column 
 </div>
 <div class="sect2">
 <h3 id="jdbc-connection-idle-timeouts"><a class="anchor" href="#jdbc-connection-idle-timeouts"></a>Connection Idle Timeouts</h3>
+<div class="paragraph">
+<p>Connections held idle in the pool can time out if they remain inactive beyond the database&#8217;s configured threshold, causing subsequent write operations to fail.
+Set the <code>hibernate.agroal.idleValidation</code> property to enable periodic validation of pooled connections and prevent idle timeout errors.</p>
+</div>
 <div class="paragraph">
 <p>The JDBC sink connector for Debezium leverages a connection pool to enhance performance.
 Connection pools are engineered to establish an initial set of connections, maintain a specified number of connections, and efficiently allocate connections to the application as required.
@@ -1053,8 +1157,11 @@ The actual final column type varies with for each database type.</p>
 </div>
 <div class="sect2">
 <h3 id="jdbc-kafka-connect-primitive-mappings"><a class="anchor" href="#jdbc-kafka-connect-primitive-mappings"></a>Kafka Connect primitive data type mappings</h3>
+<div class="paragraph">
+<p>The following table maps each Kafka Connect primitive type to its corresponding JDBC SQL type, which the Debezium JDBC sink connector uses when creating or altering columns in the destination database.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Mappings between Kafka Connect primitive data types and column data types</caption>
+<caption class="title">Table 2. Mappings between Kafka Connect primitive data types and column data types</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1124,8 +1231,11 @@ As a workaround, if you need a BOOLEAN data type for an Oracle 23 sink, add the 
 </div>
 <div class="sect2">
 <h3 id="jdbc-kafka-connect-logical-mappings"><a class="anchor" href="#jdbc-kafka-connect-logical-mappings"></a>Kafka Connect logical data type mappings</h3>
+<div class="paragraph">
+<p>The following table maps each Kafka Connect logical type to its corresponding JDBC SQL type, which the Debezium JDBC sink connector uses when writing structured data such as dates, times, and decimals to the destination database.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 2. Mappings between Kafka Connect logical data types and column data types</caption>
+<caption class="title">Table 3. Mappings between Kafka Connect logical data types and column data types</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1158,8 +1268,11 @@ As a workaround, if you need a BOOLEAN data type for an Oracle 23 sink, add the 
 </div>
 <div class="sect2">
 <h3 id="jdbc-debezium-logical-mappings"><a class="anchor" href="#jdbc-debezium-logical-mappings"></a>Debezium logical data type mappings</h3>
+<div class="paragraph">
+<p>The following table maps Debezium logical types to their corresponding JDBC SQL types, which the connector uses when writing Debezium change event fields — such as timestamps, durations, and variable-scale decimals — to the destination database.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 3. Mappings between Debezium logical types and column data types</caption>
+<caption class="title">Table 4. Mappings between Debezium logical types and column data types</caption>
 <colgroup>
 <col style="width: 50%;">
 <col style="width: 50%;">
@@ -1230,8 +1343,11 @@ As a workaround, if you need a BOOLEAN data type for an Oracle 23 sink, add the 
 </div>
 <div class="sect2">
 <h3 id="jdbc-debezium-logical-mappings-dialect-specific"><a class="anchor" href="#jdbc-debezium-logical-mappings-dialect-specific"></a>Debezium dialect-specific data type mappings</h3>
+<div class="paragraph">
+<p>The following table maps Debezium logical types to dialect-specific column types for each supported database, which you can use to understand how the connector resolves fields such as JSON, geospatial data, and bit strings when targeting a specific database dialect.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Mappings between Debezium dialect-specific logical types and column data types</caption>
+<caption class="title">Table 5. Mappings between Debezium dialect-specific logical types and column data types</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -1418,7 +1534,7 @@ Sink databases must meet the following requirements to support direct mapping of
 <p>Earlier versions of MariaDB or MySQL, and PostgreSQL without pgvector, do not support special vector types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Mappings between Debezium Vector Types and Column Data Types</caption>
+<caption class="title">Table 6. Mappings between Debezium Vector Types and Column Data Types</caption>
 <colgroup>
 <col style="width: 16.6666%;">
 <col style="width: 16.6666%;">
@@ -1749,7 +1865,7 @@ After you apply the SMT to an event that includes a field with the name <code>ID
 <h2 id="jdbc-deployment"><a class="anchor" href="#jdbc-deployment"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>To deploy a Debezium JDBC connector, you install the Debezium JDBC connector archive, configure the connector, and start the connector by adding its configuration to Kafka Connect.</p>
+<p>To deploy the Debezium JDBC sink connector, install the connector archive in your Kafka Connect environment, configure the connector properties, and register the connector with Kafka Connect.</p>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1769,7 +1885,7 @@ After you apply the SMT to an event that includes a field with the name <code>ID
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.6.0.Final/debezium-connector-jdbc-3.6.0.Final-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
+<p>Download the Debezium <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-jdbc/3.6.1.Final/debezium-connector-jdbc-3.6.1.Final-plugin.tar.gz">JDBC connector plug-in archive</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -1810,91 +1926,81 @@ The following example shows a JSON request for registering an instance of the De
 <div class="title">Example: Debezium JDBC connector configuration</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-    "name": "jdbc-connector",  <i class="conum" data-value="1"></i><b>(1)</b>
+    "name": "jdbc-connector",
     "config": {
-        "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",  <i class="conum" data-value="2"></i><b>(2)</b>
-        "tasks.max": "1",  <i class="conum" data-value="3"></i><b>(3)</b>
-        "connection.url": "jdbc:postgresql://localhost/db",  <i class="conum" data-value="4"></i><b>(4)</b>
-        "connection.username": "pguser",  <i class="conum" data-value="5"></i><b>(5)</b>
-        "connection.password": "pgpassword",  <i class="conum" data-value="6"></i><b>(6)</b>
-        "insert.mode": "upsert",  <i class="conum" data-value="7"></i><b>(7)</b>
-        "delete.enabled": "true",  <i class="conum" data-value="8"></i><b>(8)</b>
-        "primary.key.mode": "record_key",  <i class="conum" data-value="9"></i><b>(9)</b>
-        "schema.evolution": "basic",  <i class="conum" data-value="10"></i><b>(10)</b>
-        "use.time.zone": "UTC",  <i class="conum" data-value="11"></i><b>(11)</b>
-        "topics": "orders" <i class="conum" data-value="12"></i><b>(12)</b>
+        "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "connection.url": "jdbc:postgresql://localhost/db",
+        "connection.username": "pguser",
+        "connection.password": "pgpassword",
+        "insert.mode": "upsert",
+        "delete.enabled": "true",
+        "primary.key.mode": "record_key",
+        "schema.evolution": "basic",
+        "use.time.zone": "UTC",
+        "topics": "orders"
     }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Descriptions of JDBC connector configuration settings</p>
+<p>The following list describes select fields in the preceding connector configuration example:</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 12.5%;">
-<col style="width: 87.5%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name that is assigned to the connector when you register it with Kafka Connect service.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the JDBC sink connector class.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of tasks to create for this connector.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The JDBC URL that the connector uses to connect to the sink database that it writes to.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the database user that is used for authentication.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The password of the database user used for authentication.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The <a href="#jdbc-property-insert-mode">insert.mode</a> that the connector uses.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the deletion of records in the database.
-For more information, see the <a href="#jdbc-property-delete-enabled">delete.enabled</a> configuration property.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the method used to resolve primary key columns.
-For more information, see the <a href="#jdbc-property-primary-key-mode">primary.key.mode</a> configuration property.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enables the connector to evolve the destination database&#8217;s schema.
-For more information, see the <a href="#jdbc-property-schema-evolution">schema.evolution</a> configuration property.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the timezone used when writing temporal field types.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">List of topics to consume, separated by commas.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>name</code></dt>
+<dd>
+<p>The name that is assigned to the connector when you register it with Kafka Connect service.</p>
+</dd>
+<dt class="hdlist1"><code>connector.class</code></dt>
+<dd>
+<p>The name of the JDBC sink connector class.</p>
+</dd>
+<dt class="hdlist1"><code>tasks.max</code></dt>
+<dd>
+<p>The maximum number of tasks to create for this connector.</p>
+</dd>
+<dt class="hdlist1"><code>connection.url</code></dt>
+<dd>
+<p>The JDBC URL that the connector uses to connect to the sink database that it writes to.</p>
+</dd>
+<dt class="hdlist1"><code>connection.username</code></dt>
+<dd>
+<p>The name of the database user that is used for authentication.</p>
+</dd>
+<dt class="hdlist1"><code>connection.password</code></dt>
+<dd>
+<p>The password of the database user used for authentication.</p>
+</dd>
+<dt class="hdlist1"><code>insert.mode</code></dt>
+<dd>
+<p>The <a href="#jdbc-property-insert-mode">insert.mode</a> that the connector uses.</p>
+</dd>
+<dt class="hdlist1"><code>delete.enabled</code></dt>
+<dd>
+<p>Enables the deletion of records in the database.
+For more information, see the <a href="#jdbc-property-delete-enabled">delete.enabled</a> configuration property.</p>
+</dd>
+<dt class="hdlist1"><code>primary.key.mode</code></dt>
+<dd>
+<p>Specifies the method used to resolve primary key columns.
+For more information, see the <a href="#jdbc-property-primary-key-mode">primary.key.mode</a> configuration property.</p>
+</dd>
+<dt class="hdlist1"><code>schema.evolution</code></dt>
+<dd>
+<p>Enables the connector to evolve the destination database&#8217;s schema.
+For more information, see the <a href="#jdbc-property-schema-evolution">schema.evolution</a> configuration property.</p>
+</dd>
+<dt class="hdlist1"><code>use.time.zone</code></dt>
+<dd>
+<p>Specifies the timezone used when writing temporal field types.</p>
+</dd>
+<dt class="hdlist1"><code>topics</code></dt>
+<dd>
+<p>List of topics to consume, separated by commas.</p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>For a complete list of configuration properties that you can set for the Debezium JDBC connector, see <a href="#jdbc-connector-properties">JDBC connector properties</a>.</p>
 </div>
@@ -1947,6 +2053,9 @@ Information about the properties is organized as follows:</p>
 </div>
 <div class="sect2">
 <h3 id="jdbc-connector-properties-kafka-consumer"><a class="anchor" href="#jdbc-connector-properties-kafka-consumer"></a>JDBC connector Kafka consumer properties</h3>
+<div class="paragraph">
+<p>The following table describes the Kafka consumer properties that control how the Debezium JDBC sink connector identifies itself to Kafka Connect and specifies the topics it consumes.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -2027,6 +2136,9 @@ Do not use this property in combination with the <a href="#jdbc-property-connect
 </div>
 <div class="sect2">
 <h3 id="jdbc-connector-properties-connection"><a class="anchor" href="#jdbc-connector-properties-connection"></a>JDBC connector connection properties</h3>
+<div class="paragraph">
+<p>The following table describes the properties that control how the Debezium JDBC sink connector connects to and authenticates with the destination database, including connection pool settings.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -2155,6 +2267,9 @@ However, in master-replica environments with asynchronous replication, it may le
 </div>
 <div class="sect2">
 <h3 id="jdbc-connector-properties-runtime"><a class="anchor" href="#jdbc-connector-properties-runtime"></a>JDBC connector runtime properties</h3>
+<div class="paragraph">
+<p>The following table describes the runtime properties that control how the Debezium JDBC sink connector processes events and writes data to the destination database, including insert mode, primary key resolution, schema evolution, and batching behavior.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -2477,7 +2592,9 @@ You can also configure the connector’s underlying consumer’s <code><em>max.p
 <dd>
 <p>The connector uses the reduction buffer to reduce change events before it writes them to the sink database.
 That is, if multiple events refer to the same primary key, the connector consolidates the SQL queries and writes only a single logical SQL change, based on the row state that is reported in the most recent offset record.
-Choose this option to reduce the SQL load on the target database.</p>
+Choose this option to reduce the SQL load on the target database.
+Do not enable the reduction buffer if destination constraints create dependencies between records with different primary keys.
+Reduction by primary key can remove intermediate row states that are required to satisfy secondary unique constraints.</p>
 </dd>
 </dl>
 </div>
@@ -2558,6 +2675,9 @@ To prevent the connector from rebalancing, set the total retry time (flush.retry
 </div>
 <div class="sect2">
 <h3 id="jdbc-connector-properties-extendable"><a class="anchor" href="#jdbc-connector-properties-extendable"></a>JDBC connector extendable properties</h3>
+<div class="paragraph">
+<p>The following table describes the properties that allow you to customize the naming strategies the Debezium JDBC sink connector uses to resolve destination table names and column names from incoming event data.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -2630,6 +2750,9 @@ For example, to assist Hibernate in resolving the type and version of the target
 <div class="sect1">
 <h2 id="jdbc-faq"><a class="anchor" href="#jdbc-faq"></a>Frequently asked questions</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The following questions and answers address common decisions and scenarios when you configure and operate the Debezium JDBC sink connector, including event transformation requirements, schema evolution limitations, data type mapping, and table naming options.</p>
+</div>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><strong>Is the</strong> <code>ExtractNewRecordState</code> <strong>single message transformation required?</strong></dt>
@@ -2677,7 +2800,7 @@ Quoting behavior is dialect-specific, and varies among different types of databa
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/f2f75b8e3b8a3c2a631abc8fdd3c82633e494acf">f2f75b8e</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/5cf0ca004bcb237d313a5fac7e524a6608935d21">5cf0ca00</a></span>)
             
         </div>
     </footer>

@@ -147,6 +147,12 @@
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/connectors/yashandb.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/connectors/yashandb.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/yashandb.html" data-hash="true">3.7</a>
                     <a class="version is-missing" href="#">3.5</a>
                     <a class="version is-missing" href="#">3.4</a>
                     <a class="version is-missing" href="#">3.3</a>
@@ -510,6 +523,7 @@
 <li><a href="#yashandb-schema-history-metrics">Schema History Metrics</a></li>
 </ul>
 </li>
+<li><a href="#yashandb-legacy-version-support">Legacy version support</a></li>
 <li><a href="#yashandb-faq">Frequently Asked Questions</a></li>
 </ul>
 </div>
@@ -1036,7 +1050,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "yashandb",
       "name": "server1",
       "ts_ms": 1780017300692,
@@ -1662,7 +1676,7 @@ For snapshots, the timestamp indicates when the snapshot occurred.</p>
             "NAME": "Test Record"
         },
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "yashandb",
             "name": "server1",
             "ts_ms": 1780017300692,
@@ -1893,7 +1907,7 @@ The source metadata provides the following information:</p>
             "NAME": "Updated Record"
         },
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "yashandb",
             "name": "server1",
             "ts_ms": 1780017300692,
@@ -1966,7 +1980,7 @@ The <code>schema</code> portion of the <em>delete</em> event is identical to the
         },
         "after": null,
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "yashandb",
             "name": "server1",
             "ts_ms": 1780017300692,
@@ -2042,7 +2056,7 @@ The message key is <code>null</code> in this case, the message value looks like 
         "before": null,
         "after": null,
         "source": { <i class="conum" data-value="1"></i><b>(1)</b>
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "yashandb",
             "name": "my_topic",
             "ts_ms": 1780017300692,
@@ -4391,6 +4405,9 @@ In this scenario, you must reconfigure the observability stack to use the new MB
 You configure custom metrics by adding the <code>custom.metric.tags</code> property to the connector configuration.
 The property accepts key-value pairs in which each key represents a tag for the MBean object name, and the corresponding value represents the value of that tag.
 For example: <code>k1=v1,k2=v2</code>.
+Tag keys must be valid JMX <code>ObjectName</code> property keys.
+The comma separates entries, and the equals sign separates each key from its value; therefore, neither can occur in a key.
+Keys also cannot contain JMX-reserved characters such as <code>:</code>, <code>*</code>, or <code>?</code>.
 Debezium appends the specified tags to the MBean name of the connector.</p>
 </div>
 <div class="paragraph">
@@ -5331,6 +5348,32 @@ The <strong>MBean</strong> is <code>debezium.yashandb:type=connector-metrics,con
 </div>
 </div>
 <div class="sect1">
+<h2 id="yashandb-legacy-version-support"><a class="anchor" href="#yashandb-legacy-version-support"></a>Legacy version support</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The YashanDB connector for Debezium 2.4.2 and earlier versions is maintained by the YashanDB organization and is not an officially supported version within the Debezium community.
+This legacy version is provided for users who still rely on older Debezium releases.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Users of the legacy YashanDB connector are encouraged to upgrade to the latest Debezium community release as soon as possible to benefit from official support, bug fixes, and new features.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For more information about the legacy YashanDB connector, see the <a href="https://github.com/yashan-technologies/debezium-connector-yashandb/tree/2.4.2" target="_blank" rel="noopener">YashanDB connector legacy repository</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="yashandb-faq"><a class="anchor" href="#yashandb-faq"></a>Frequently Asked Questions</h2>
 <div class="sectionbody">
 <div id="yashandb-faq-ystream-server-not-found" class="dlist">
@@ -5469,7 +5512,7 @@ To avoid this issue, execute DDL statements directly rather than through stored 
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>

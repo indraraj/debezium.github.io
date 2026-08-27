@@ -147,6 +147,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/connectors/mariadb.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/connectors/mariadb.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/mariadb.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/mariadb.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/mariadb.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/mariadb.html" data-hash="true">3.3</a>
@@ -491,6 +504,7 @@
 <ul class="sectlevel2">
 <li><a href="#mariadb-creating-user">Creating a user</a></li>
 <li><a href="#enable-mariadb-binlog">Enabling the binlog</a></li>
+<li><a href="#enable-innodb-binlog">Enabling the InnoDB-based binary log</a></li>
 <li><a href="#enable-mariadb-gtids">Enabling GTIDs</a></li>
 <li><a href="#mariadb-session-timeouts">Configuring session timeouts</a></li>
 <li><a href="#enable-query-log-events">Enabling query log events</a></li>
@@ -782,7 +796,7 @@ The message contains a logical representation of the table schema.</p>
   "schema": { },
   "payload": {
       "source": {
-        "version": "3.6.0.Final",
+        "version": "3.7.0.Beta1",
         "connector": "mariadb",
         "name": "mariadb",
         "ts_ms": 1651535750218,
@@ -2436,9 +2450,13 @@ You can stop a snapshot that is already running by sending a signal to the signa
 The stop-snapshot signal specifies the <code>type</code> of the snapshot operation as <code>incremental</code>, and optionally specifies the tables that you want to omit from the currently running snapshot.
 After Debezium detects the change in the signaling table, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
 </div>
-<div class="paragraph">
+<div class="ulist">
 <div class="title">Additional resources</div>
-<p>You can also stop an incremental snapshot by sending a JSON message to the <a href="#mariadb-stopping-an-incremental-snapshot-kafka">Kafka signaling topic</a>.</p>
+<ul>
+<li>
+<p><a href="#mariadb-stopping-an-incremental-snapshot-kafka">Stopping an incremental snapshot by sending a JSON message to the Kafka signaling topic</a></p>
+</li>
+</ul>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -2475,77 +2493,53 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
-values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
-    'stop-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
-    '{"data-collections": ["db1.table1", "db1.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
-    "type":"incremental"}'); <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.debezium_signal (id, type, data)
+values ('ad-hoc-1',
+    'stop-snapshot',
+    '{"data-collections": ["db1.table1", "db1.table2"],
+    "type":"incremental"}');</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.
-The following table describes the parameters in the example:</p>
+<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.
-Use this string to identify logging messages to entries in the signaling table.
+<div class="paragraph">
+<p>The following list describes the fields in the preceding signal example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>database.debezium_signal</code></dt>
+<dd>
+<p>Specifies the fully-qualified name of the signaling table on the source database.</p>
+</dd>
+<dt class="hdlist1"><code>ad-hoc-1</code></dt>
+<dd>
+<p>The value of the signal&#8217;s <code>id</code> parameter.
+This arbitrary string provides a label that helps to distinguish signal requests from each other and to associate logging messages with entries in the signaling table.
 Debezium does not use this string.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stop-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>stop-snapshot</code></dt>
+<dd>
 <p>The <code>type</code> parameter, which identifies the operation that the signal is intended to trigger.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>data-collections</code></dt>
+<dd>
 <p>An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.
 The array lists regular expressions which match tables by their fully-qualified names in the format <code>database.table</code></p>
-</div>
 <div class="paragraph">
 <p>If you omit this component from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</div>
+</dd>
+<dt class="hdlist1"><code>incremental</code></dt>
+<dd>
 <p>A required component of the <code>data</code> field of a signal that specifies the type of snapshot operation that is to be stopped.
 Currently, the only valid option is <code>incremental</code>.
 If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</div>
 </li>
 </ol>
 </div>
@@ -2565,7 +2559,7 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <p>The signal type is <code>stop-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Execute snapshot data fields</caption>
+<caption class="title">Table 4. Execute snapshot data fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -3271,6 +3265,10 @@ In the preceding example, the <code>payload</code> contains a single field, <cod
 <div class="sect2">
 <h3 id="mariadb-change-event-values"><a class="anchor" href="#mariadb-change-event-values"></a>Change event values</h3>
 <div class="paragraph">
+<p>A change event value contains the full row state before and after an operation,
+along with source metadata and operation type, structured as a Kafka Connect <code>Envelope</code>.</p>
+</div>
+<div class="paragraph">
 <p>The value in a change event is a bit more complicated than the key. Like the key, the value has a <code>schema</code> section and a <code>payload</code> section. The <code>schema</code> section contains the schema that describes the <code>Envelope</code> structure of the <code>payload</code> section, including its nested fields. Change events for operations that create, update or delete data all have a value payload with an envelope structure.</p>
 </div>
 <div class="paragraph">
@@ -3314,6 +3312,10 @@ In the preceding example, the <code>payload</code> contains a single field, <cod
 </div>
 <div class="sect2">
 <h3 id="mariadb-create-events"><a class="anchor" href="#mariadb-create-events"></a><em>create</em> events</h3>
+<div class="paragraph">
+<p>A <em>create</em> event contains the full row data for an <code>INSERT</code> operation,
+capturing the state of the new row in the <code>after</code> field of the event value payload.</p>
+</div>
 <div class="paragraph">
 <p>The following example shows the value portion of a change event that the connector generates for an operation that creates data in the <code>customers</code> table:</p>
 </div>
@@ -3505,7 +3507,7 @@ In the preceding example, the <code>payload</code> contains a single field, <cod
       "email": "annek@noanswer.org"
     },
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "mariadb",
       "name": "mariadb-server-1",
       "ts_ms": 0,
@@ -3730,7 +3732,7 @@ The source metadata provides the following information:</p>
       "email": "annek@noanswer.org"
     },
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "name": "mariadb-server-1",
       "connector": "mariadb",
       "ts_ms": 1465581029100,
@@ -3920,7 +3922,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
     },
     "after": null,
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "mariadb",
       "name": "mariadb-server-1",
       "ts_ms": 1465581902300,
@@ -4074,7 +4076,7 @@ The message value resembles the following example:</p>
     "schema": { ... },
     "payload": {
         "source": {
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "name": "mariadb-server-1",
             "connector": "mariadb",
             "name": "mariadb-server-1",
@@ -4239,7 +4241,7 @@ The MariaDB connector uses the column&#8217;s character set when reading the bin
 <p>The following table shows how the connector maps basic MariaDB data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Descriptions of basic type mappings</caption>
+<caption class="title">Table 5. Descriptions of basic type mappings</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4293,6 +4295,17 @@ The MariaDB connector uses the column&#8217;s character set when reading the bin
 <tr>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>TINYINT[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT8</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><em>n/a</em></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TINYINT[(M)] UNSIGNED</code></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p><code>INT16</code></p>
@@ -4670,7 +4683,7 @@ For example, if the database’s time zone (either globally or configured for th
 <dd>
 <p>The MariaDB connector determines the literal type and semantic type based on the column&#8217;s data type definition so that events represent exactly the values in the database. All time fields are in microseconds. Only positive <code>TIME</code> field values in the range of <code>00:00:00.000000</code> to <code>23:59:59.999999</code> can be captured correctly.</p>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Mappings when <code>time.precision.mode=adaptive_time_microseconds</code></caption>
+<caption class="title">Table 6. Mappings when <code>time.precision.mode=adaptive_time_microseconds</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4744,7 +4757,7 @@ Values in only the range of <code>00:00:00.000</code> to <code>23:59:59.999</cod
 Set <code>time.precision.mode=connect</code> only if you can ensure that the <code>TIME</code> values in your tables never exceed the supported ranges.
 The <code>connect</code> setting is expected to be removed in a future version of Debezium.</p>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Mappings when <code>time.precision.mode=connect</code></caption>
+<caption class="title">Table 7. Mappings when <code>time.precision.mode=connect</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4802,7 +4815,7 @@ Represents the number of milliseconds since the epoch, and does not include time
 <p>The MariaDB connector represents date, time, and datetime values as ISO-8601 formatted strings at the UTC time zone.
 Because the values are represented as strings, this mode preserves the fractional-second precision that the <code>connect</code> mode can lose.</p>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Mappings when <code>time.precision.mode=isostring</code></caption>
+<caption class="title">Table 8. Mappings when <code>time.precision.mode=isostring</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4861,7 +4874,92 @@ Because the values are represented as strings, this mode preserves the fractiona
 </tbody>
 </table>
 </dd>
-</dl>
+<dt class="hdlist1">time.precision.mode=microseconds</dt>
+<dd>
+<p>The MariaDB connector maps all temporal values to microsecond-precision integers.
+All <code>DATE</code> values are represented as the number of days since the epoch, and all <code>TIME</code> and <code>DATETIME</code> values are represented as the number of microseconds since the epoch or since midnight.</p>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Mappings when <code>time.precision.mode=microseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">MariaDB type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code>
+Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTime</code>
+Represents the time value in microseconds since midnight and does not include time zone information.
+MariaDB allows the fractional seconds precision <code>fsp</code> to be in the range of <code>0-6</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTimestamp</code>
+Represents the number of microseconds since the epoch and does not include time zone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code>
+Represents the timestamp with time zone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">time.precision.mode=nanoseconds</dt>
+<dd>
+<p>The MariaDB connector maps all temporal values to nanosecond-precision integers.
+All <code>DATE</code> values are represented as the number of days since the epoch, and all <code>TIME</code> and <code>DATETIME</code> values are represented as the number of nanoseconds since the epoch or since midnight.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+MariaDB <code>DATETIME</code> and <code>TIME</code> columns are limited to microsecond precision (<code>DATETIME(0-6)</code>, <code>TIME(0-6)</code>), so <code>nanoseconds</code> does not provide additional precision beyond what <code>microseconds</code> already offers.
+</td>
+</tr>
+</table>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -4871,19 +4969,82 @@ Because the values are represented as strings, this mode preserves the fractiona
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The <code>time.precision.mode</code> connector property also accepts the values <code>microseconds</code> and <code>nanoseconds</code>, although these modes are not currently illustrated in the mapping tables above.
-MariaDB <code>DATETIME</code> and <code>TIME</code> columns are limited to microsecond precision (<code>DATETIME(0 - 6)</code>, <code>TIME(0 - 6)</code>), so <code>nanoseconds</code> does not provide additional precision beyond what <code>microseconds</code> already offers.
-If you set <code>time.precision.mode=nanoseconds</code>, be aware that nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, restricting the representable range to approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
-Values outside this range — for example a <code>9999-12-31</code> end-of-time sentinel — cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
-The exception is routed through the standard <code>event.processing.failure.handling.mode</code> configuration, so operators can choose <code>fail</code> (the default), <code>warn</code>, or <code>skip</code>.
+<p>Nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, restricting the representable range to approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
+Values outside this range, for example a <code>9999-12-31</code> end-of-time sentinel, cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
+The exception is handled according to the <code>event.converting.failure.handling.mode</code> configuration: with <code>warn</code> (the default) or <code>skip</code>, the affected column value is emitted as <code>null</code> and the failure is logged; with <code>fail</code>, the connector stops.
 Use <code>time.precision.mode=microseconds</code> (or <code>isostring</code>) to avoid the limitation.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
-<div class="dlist">
-<dl>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Mappings when <code>time.precision.mode=nanoseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">MariaDB type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code>
+Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTime</code>
+Represents the time value in nanoseconds since midnight and does not include time zone information.
+MariaDB allows the fractional seconds precision <code>fsp</code> to be in the range of <code>0-6</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTimestamp</code>
+Represents the number of nanoseconds since the epoch and does not include time zone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP[(fsp)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code>
+Represents the timestamp with time zone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
 <dt class="hdlist1">time.precision.mode=structured</dt>
 <dd>
 <p>The MariaDB connector represents temporal values as Kafka Connect structs with separate calendar and clock components.
@@ -4891,7 +5052,7 @@ This mode can preserve zero and invalid temporal components without converting t
 Structured temporal values that have fractional seconds include an optional <code>precision</code> field that records the source column&#8217;s fractional second precision.
 The Debezium JDBC sink connector can consume these structured temporal schemas directly and maps them according to the target database dialect.</p>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Mappings when <code>time.precision.mode=structured</code></caption>
+<caption class="title">Table 11. Mappings when <code>time.precision.mode=structured</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4969,7 +5130,7 @@ Contains calendar and clock component fields, <code>offsetSeconds</code>, option
 <dt class="hdlist1">decimal.handling.mode=precise</dt>
 <dd>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Mappings when <code>decimal.handling.mode=precise</code></caption>
+<caption class="title">Table 12. Mappings when <code>decimal.handling.mode=precise</code></caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 15%;">
@@ -5013,7 +5174,7 @@ The <code>scale</code> schema parameter contains an integer that represents how 
 <dt class="hdlist1">decimal.handling.mode=double</dt>
 <dd>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Mappings when <code>decimal.handling.mode=double</code></caption>
+<caption class="title">Table 13. Mappings when <code>decimal.handling.mode=double</code></caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 30%;">
@@ -5055,7 +5216,7 @@ The <code>scale</code> schema parameter contains an integer that represents how 
 <dt class="hdlist1">decimal.handling.mode=string</dt>
 <dd>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Mappings when <code>decimal.handling.mode=string</code></caption>
+<caption class="title">Table 14. Mappings when <code>decimal.handling.mode=string</code></caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 30%;">
@@ -5144,7 +5305,7 @@ boolean.selector=db1.table1.*, db1.table2.column1</code></pre>
 <p>Currently, the Debezium MariaDB connector supports the following spatial data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Description of spatial type mappings</caption>
+<caption class="title">Table 15. Description of spatial type mappings</caption>
 <colgroup>
 <col style="width: 35%;">
 <col style="width: 15%;">
@@ -5209,7 +5370,7 @@ Contains a structure with two fields:</p>
 <p>Currently, the Debezium MariaDB connector supports the following vector data types.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 15. Description of vector type mappings</caption>
+<caption class="title">Table 16. Description of vector type mappings</caption>
 <colgroup>
 <col style="width: 35%;">
 <col style="width: 15%;">
@@ -5481,8 +5642,12 @@ If using a hosted option such as Amazon RDS or Amazon Aurora that does not allow
 </div>
 <div class="sect3">
 <h4 id="permissions-explained-mariadb-connector"><a class="anchor" href="#permissions-explained-mariadb-connector"></a>Descriptions of user permissions</h4>
+<div class="paragraph">
+<p>The following table describes the MariaDB permissions that you must grant to the Debezium connector user account,
+with an explanation of why each permission is required.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 16. Descriptions of user permissions</caption>
+<caption class="title">Table 17. Descriptions of user permissions</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 70%;">
@@ -5610,10 +5775,85 @@ If the database instance is not configured to perform automated backups, the bin
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="enable-innodb-binlog"><a class="anchor" href="#enable-innodb-binlog"></a>Enabling the InnoDB-based binary log</h3>
+<div class="paragraph">
+<p>In MariaDB versions 12.3 and later, you can configure the database to store the binary log in InnoDB-managed, page-structured files (<code>.ibb</code>), instead of traditional flat files.
+If you configure the database to store the binary log in InnoDB files, it does not enforce the two-phase commit (2PC) protocol between the binary log and InnoDB, resulting in improved commit latency and simplified crash recovery.</p>
+</div>
+<div class="paragraph">
+<p>When the database uses InnoDB to store the binary log, the following considerations apply:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>This feature is mutually exclusive with the traditional file-based binlog.
+The server uses the InnoDB-based format to store all entries.</p>
+</li>
+<li>
+<p>Galera Cluster is not supported.</p>
+</li>
+<li>
+<p>Semi-synchronous replication is not supported.</p>
+</li>
+<li>
+<p>The <code>sync_binlog</code> option is no longer required and is effectively ignored.</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Prerequisites</div>
+<ul>
+<li>
+<p>MariaDB version 12.3 or later.</p>
+</li>
+<li>
+<p>GTID-based replication is enabled.</p>
+</li>
+</ul>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Add the following options to your MariaDB configuration file:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">log_bin
+binlog_storage_engine=innodb
+binlog_format=ROW
+binlog_row_image=FULL</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>log_bin</code> property must be present in the configuration, but it cannot contain a value.
+The <code>binlog_storage_engine=innodb</code> setting enables the database to use InnoDB to store the binary log.</p>
+</div>
+</li>
+<li>
+<p>Verify the binlog format by connecting to the server and running the following SQL command:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">SHOW BINARY LOGS;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Files are named with an <code>.ibb</code> extension (for example, <code>binlog-000000.ibb</code>).</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>For more information about the InnoDB-based binary log, see the <a href="https://mariadb.com/docs/server/server-management/server-monitoring-logs/binary-log/innodb-based-binary-log/">MariaDB documentation</a>.</p>
+</div>
 <div class="sect3">
 <h4 id="binlog-configuration-properties-mariadb-connector"><a class="anchor" href="#binlog-configuration-properties-mariadb-connector"></a>Descriptions of MariaDB binlog configuration properties</h4>
+<div class="paragraph">
+<p>The following table describes the MariaDB server configuration properties that you must set to enable and configure the binary log for use with the Debezium connector.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 17. Descriptions of MariaDB binlog configuration properties</caption>
+<caption class="title">Table 18. Descriptions of MariaDB binlog configuration properties</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 80%;">
@@ -5631,7 +5871,17 @@ If the database instance is not configured to perform automated backups, the bin
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>log_bin</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The value of <code>log_bin</code> is the base name of the sequence of binlog files.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The value of <code>log_bin</code> is the base name of the sequence of binlog files.
+If the MariaDB server uses <a href="https://mariadb.com/docs/server/server-management/server-monitoring-logs/binary-log/innodb-based-binary-log/">InnoDB to store the binary log</a>, add an empty <code>log_bin</code> property to the MariaDB configuration.
+That is, list the property in the configuration, but do not specify a value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>binlog_storage_engine</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the storage engine that manages the binary log.
+Set the value to <code>innodb</code> to enable the <a href="https://mariadb.com/docs/server/server-management/server-monitoring-logs/binary-log/innodb-based-binary-log/">InnoDB-based binary log</a>
+feature in MariaDB 12.3 and later.
+When set to <code>innodb</code>, the <code>log_bin</code> option must be specified with no value, and replication must use GTID-based positioning.
+If you do not set this property, the database uses the default value, <code>file</code>, and stores log data in standard flat file format.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>binlog_format</code></p></td>
@@ -5729,7 +5979,7 @@ You can prevent this behavior by configuring <code>interactive_timeout</code> an
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 18. Descriptions of MariaDB session timeout options</caption>
+<caption class="title">Table 19. Descriptions of MariaDB session timeout options</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 70%;">
@@ -5886,7 +6136,7 @@ To enable the connector to consume <strong>UPDATE</strong> events, this variable
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the Debezium <a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mariadb/3.7.0-SNAPSHOT/debezium-connector-mariadb-3.7.0-20260720.060026-63-plugin.tar.gz">MariaDB connector plug-in</a>.</p>
+<p>Download the Debezium <a href="https://central.sonatype.com/repository/maven-snapshots/io/debezium/debezium-connector-mariadb/3.7.0-SNAPSHOT/debezium-connector-mariadb-3.7.0-20260827.012259-142-plugin.tar.gz">MariaDB connector plug-in</a>.</p>
 </li>
 <li>
 <p>Extract the files into your Kafka Connect environment.</p>
@@ -6003,7 +6253,8 @@ The specified account must have sufficient privileges, as described in the table
 <dt class="hdlist1"><code>schema.history.internal.kafka.topic</code></dt>
 <dd>
 <p>Specifies the name of the database schema history topic.
-This topic is for internal use only and should not be used by consumers.</p>
+This topic is for internal use only and should not be used by consumers.
+To learn more about the topic configuration requirements, see xref:install.html#configuring-debezium</p>
 </dd>
 <dt class="hdlist1"><code>include.schema.changes</code></dt>
 <dd>
@@ -7681,7 +7932,7 @@ Specify a password only if the <a href="#mariadb-property-database-ssl-keystore"
 <dl>
 <dt class="hdlist1">Default value</dt>
 <dd>
-<p><code>preferred</code></p>
+<p><code>disable</code></p>
 </dd>
 <dt class="hdlist1">Description</dt>
 <dd>
@@ -7691,28 +7942,21 @@ Specify a password only if the <a href="#mariadb-property-database-ssl-keystore"
 </div>
 <div class="dlist">
 <dl>
-<dt class="hdlist1"><code>disabled</code></dt>
+<dt class="hdlist1"><code>disable</code></dt>
 <dd>
-<p>Specifies the use of an unencrypted connection.</p>
+<p>Do not use SSL/TLS.</p>
 </dd>
-<dt class="hdlist1"><code>preferred</code></dt>
+<dt class="hdlist1"><code>trust</code></dt>
 <dd>
-<p>The connector establishes an encrypted connection if the server supports secure connections.
-If the server does not support secure connections, the connector falls back to using an unencrypted connection.</p>
+<p>Only use SSL/TLS for encryption. Do not perform certificate or hostname verification.</p>
 </dd>
-<dt class="hdlist1"><code>required</code></dt>
+<dt class="hdlist1"><code>verify-ca</code></dt>
 <dd>
-<p>The connector establishes an encrypted connection.
-If it is unable to establish an encrypted connection, the connector fails.</p>
+<p>Use SSL/TLS for encryption and perform certificates verification, but do not perform hostname verification.</p>
 </dd>
-<dt class="hdlist1"><code>verify_ca</code></dt>
+<dt class="hdlist1"><code>verify-full</code></dt>
 <dd>
-<p>The connector behaves as when you set the <code>required</code> option, but it also verifies the server TLS certificate against the configured Certificate Authority (CA) certificates.
-If the server TLS certificate does not match any valid CA certificates, the connector fails.</p>
-</dd>
-<dt class="hdlist1"><code>verify_identity</code></dt>
-<dd>
-<p>The connector behaves as when you set the <code>verify_ca</code> option, but it also verifies that the server certificate matches the host of the remote connection.</p>
+<p>Use SSL/TLS for encryption, certificate verification, and hostname verification. This is the standard TLS behavior.</p>
 </dd>
 </dl>
 </div>
@@ -9386,7 +9630,7 @@ Set the property to one of the following values:</p>
 <p>The following table describes the <code>schema.history.internal</code> properties for configuring the Debezium connector.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 19. Connector database schema history configuration properties</caption>
+<caption class="title">Table 20. Connector database schema history configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -9609,7 +9853,7 @@ schema.history.internal.consumer.ssl.key.password=test1234</code></pre>
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 20. Kafka signals configuration properties</caption>
+<caption class="title">Table 21. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -9704,7 +9948,7 @@ For example, the connector passes properties such as <code>signal.consumer.secur
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 21. Sink notification configuration properties</caption>
+<caption class="title">Table 22. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -9788,6 +10032,9 @@ In this scenario, you must reconfigure the observability stack to use the new MB
 You configure custom metrics by adding the <code>custom.metric.tags</code> property to the connector configuration.
 The property accepts key-value pairs in which each key represents a tag for the MBean object name, and the corresponding value represents the value of that tag.
 For example: <code>k1=v1,k2=v2</code>.
+Tag keys must be valid JMX <code>ObjectName</code> property keys.
+The comma separates entries, and the equals sign separates each key from its value; therefore, neither can occur in a key.
+Keys also cannot contain JMX-reserved characters such as <code>:</code>, <code>*</code>, or <code>?</code>.
 Debezium appends the specified tags to the MBean name of the connector.</p>
 </div>
 <div class="paragraph">
@@ -10515,7 +10762,7 @@ Available when <a href="#mariadb-property-statistics-metrics-enabled"><code>stat
 <p>The Debezium MariaDB connector also provides the following additional streaming metrics:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 22. Descriptions of additional MariaDB streaming metrics</caption>
+<caption class="title">Table 23. Descriptions of additional MariaDB streaming metrics</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 20%;">
@@ -10889,7 +11136,7 @@ If the snapshot is disabled, the connector fails with an error.</p>
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>

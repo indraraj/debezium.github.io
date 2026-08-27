@@ -147,6 +147,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/connectors/vitess.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/connectors/vitess.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/vitess.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/vitess.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/vitess.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/vitess.html" data-hash="true">3.3</a>
@@ -1416,7 +1429,7 @@ It is possible to override the table&#8217;s primary key by setting the <a href=
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="8"></i><b>(8)</b>
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1588,7 +1601,7 @@ In the <code>source</code> object, <code>ts_ms</code> indicates the time that th
             "email": "annek@noanswer.org"
         },
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -1733,7 +1746,7 @@ as a primary key change. For a primary key change, in place of an <code>UPDATE</
         },
         "after": null, <i class="conum" data-value="2"></i><b>(2)</b>
         "source": { <i class="conum" data-value="3"></i><b>(3)</b>
-            "version": "3.6.0.Final",
+            "version": "3.7.0.Beta1",
             "connector": "vitess",
             "name": "my_sharded_connector",
             "ts_ms": 1559033904000,
@@ -2422,9 +2435,21 @@ MySQL converts <code>TIMESTAMP</code> values to UTC when they are written.</p>
 </dd>
 <dt class="hdlist1">time.precision.mode=isostring</dt>
 <dd>
-<p>The Vitess connector uses string representations for all temporal types.</p>
+<p>The Vitess connector represents date, time, and datetime values as plain strings.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Unlike other connectors, the Vitess connector passes the raw source string through unchanged, without converting to UTC or normalizing to ISO 8601 format. For example, a <code>DATETIME</code> value is emitted as <code>2019-07-09 02:28:57</code> (space-separated, no <code>T</code>, no <code>Z</code>). There is no semantic schema name assigned.
+</td>
+</tr>
+</table>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Mappings when <code>time.precision.mode=connect</code></caption>
+<caption class="title">Table 9. Mappings when <code>time.precision.mode=isostring</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -2474,6 +2499,248 @@ MySQL converts <code>TIMESTAMP</code> values to UTC when they are written.</p>
 </tbody>
 </table>
 </dd>
+<dt class="hdlist1">time.precision.mode=microseconds</dt>
+<dd>
+<p>The Vitess connector maps all temporal values to microsecond-precision integers.
+All <code>DATE</code> values are represented as the number of days since the epoch, and all <code>TIME</code> and <code>DATETIME</code> values are represented as the number of microseconds since the epoch or since midnight.</p>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Mappings when <code>time.precision.mode=microseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vitess data type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code><br>
+Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTime</code><br>
+Represents the time value in microseconds since midnight and does not include time zone information.
+MySQL allows <code>M</code> to be in the range of <code>0-6</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTimestamp</code><br>
+Represents the number of microseconds since the epoch and does not include time zone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code><br>
+Represents the timestamp with time zone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">time.precision.mode=nanoseconds</dt>
+<dd>
+<p>The Vitess connector maps all temporal values to nanosecond-precision integers.
+All <code>DATE</code> values are represented as the number of days since the epoch, and all <code>TIME</code> and <code>DATETIME</code> values are represented as the number of nanoseconds since the epoch or since midnight.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Vitess <code>DATETIME</code> and <code>TIME</code> columns are limited to microsecond precision (<code>DATETIME(0-6)</code>, <code>TIME(0-6)</code>), so <code>nanoseconds</code> does not provide additional precision beyond what <code>microseconds</code> already offers.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, restricting the representable range to approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
+Values outside this range, for example a <code>9999-12-31</code> end-of-time sentinel, cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
+The exception is handled according to the <code>event.converting.failure.handling.mode</code> configuration: with <code>warn</code> (the default) or <code>skip</code>, the affected column value is emitted as <code>null</code> and the failure is logged; with <code>fail</code>, the connector stops.
+Use <code>time.precision.mode=microseconds</code> (or <code>isostring</code>) to avoid the limitation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Mappings when <code>time.precision.mode=nanoseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vitess data type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code><br>
+Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTime</code><br>
+Represents the time value in nanoseconds since midnight and does not include time zone information.
+MySQL allows <code>M</code> to be in the range of <code>0-6</code>.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTimestamp</code><br>
+Represents the number of nanoseconds since the epoch and does not include time zone information.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRING</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.ZonedTimestamp</code><br>
+Represents the timestamp with time zone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt class="hdlist1">time.precision.mode=structured</dt>
+<dd>
+<p>The Vitess connector represents temporal values as Kafka Connect structs with separate calendar and clock components.
+This mode can preserve zero and invalid temporal components without converting them to epoch-based numeric values.
+Structured temporal values that have fractional seconds include an optional <code>precision</code> field that records the source column&#8217;s fractional second precision.</p>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Mappings when <code>time.precision.mode=structured</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Vitess data type</th>
+<th class="tableblock halign-left valign-top">Literal type</th>
+<th class="tableblock halign-left valign-top">Semantic type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRUCT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.StructuredDate</code><br>
+Contains <code>year</code>, <code>month</code>, and <code>day</code> fields.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRUCT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.StructuredTime</code><br>
+Contains <code>hour</code>, <code>minute</code>, <code>second</code>, <code>nanos</code>, and optional <code>precision</code> fields.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRUCT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.StructuredTimestamp</code><br>
+Contains <code>year</code>, <code>month</code>, <code>day</code>, <code>hour</code>, <code>minute</code>, <code>second</code>, <code>nanos</code>, and optional <code>precision</code> fields.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>TIMESTAMP[(M)]</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>STRUCT</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.StructuredZonedTimestamp</code><br>
+Contains calendar and clock component fields, <code>offsetSeconds</code>, optional <code>zoneId</code>, and optional <code>precision</code>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</dd>
 </dl>
 </div>
 </div>
@@ -2508,7 +2775,7 @@ MySQL converts <code>TIMESTAMP</code> values to UTC when they are written.</p>
 <h2 id="vitess-deploying-a-connector"><a class="anchor" href="#vitess-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>With <a href="http://kafka.apache.org/">Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/3.6.0.Final/debezium-connector-vitess-3.6.0.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>.
+<p>With <a href="http://kafka.apache.org/">Kafka</a> and <a href="https://kafka.apache.org/documentation.html#connect">Kafka Connect</a> installed, the remaining tasks to deploy a Debezium Vitess connector are to download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-vitess/3.7.0.Beta1/debezium-connector-vitess-3.7.0.Beta1-plugin.tar.gz">connector&#8217;s plug-in archive</a>, extract the JAR files into your Kafka Connect environment, and add the directory with the JAR files to <a href="https://kafka.apache.org/documentation/#connectconfigs">Kafka Connect&#8217;s <code>plugin.path</code></a>.
 You then need to restart your Kafka Connect process to pick up the new JAR files.</p>
 </div>
 <div class="paragraph">
@@ -2772,6 +3039,9 @@ In this scenario, you must reconfigure the observability stack to use the new MB
 You configure custom metrics by adding the <code>custom.metric.tags</code> property to the connector configuration.
 The property accepts key-value pairs in which each key represents a tag for the MBean object name, and the corresponding value represents the value of that tag.
 For example: <code>k1=v1,k2=v2</code>.
+Tag keys must be valid JMX <code>ObjectName</code> property keys.
+The comma separates entries, and the equals sign separates each key from its value; therefore, neither can occur in a key.
+Keys also cannot contain JMX-reserved characters such as <code>:</code>, <code>*</code>, or <code>?</code>.
 Debezium appends the specified tags to the MBean name of the connector.</p>
 </div>
 <div class="paragraph">
@@ -2965,7 +3235,7 @@ The values will incorporate any differences between the clocks on the machines w
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Required connector configuration properties</caption>
+<caption class="title">Table 13. Required connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -3466,7 +3736,7 @@ represents values as precise (Java&#8217;s 'BigDecimal') values. This is precise
 <p>The following <em>advanced</em> configuration properties have defaults that work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Advanced connector configuration properties</caption>
+<caption class="title">Table 14. Advanced connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 28%;">
@@ -4120,7 +4390,7 @@ E.g. <code>"3"</code> will be emitted as the value instead of <code>"L"</code> i
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>

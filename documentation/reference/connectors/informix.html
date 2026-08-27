@@ -147,6 +147,12 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="yashandb.html">YashanDB</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ingres.html">Ingres</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -239,6 +245,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../post-processors/reselect-columns.html">Reselect Columns</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../post-processors/s3-large-message.html">S3 Large Message</a>
   </li>
 </ul>
   </li>
@@ -350,6 +359,9 @@
           <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
+          <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
         </li>
         <li class="version">
@@ -398,6 +410,7 @@
         <div class="version-menu">
                         <a class="version is-current" href="/documentation/reference/connectors/informix.html" data-hash="true">nightly</a>
                         <a class="version" href="/documentation/reference/stable/connectors/informix.html" data-hash="true">3.6</a>
+                        <a class="version" href="/documentation/reference/3.7/connectors/informix.html" data-hash="true">3.7</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/informix.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/informix.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/informix.html" data-hash="true">3.3</a>
@@ -1867,9 +1880,13 @@ You can stop a snapshot that is already running by sending a signal to the signa
 The stop-snapshot signal specifies the <code>type</code> of the snapshot operation as <code>incremental</code>, and optionally specifies the tables that you want to omit from the currently running snapshot.
 After Debezium detects the change in the signaling table, it reads the signal, and stops the incremental snapshot operation if it&#8217;s in progress.</p>
 </div>
-<div class="paragraph">
+<div class="ulist">
 <div class="title">Additional resources</div>
-<p>You can also stop an incremental snapshot by sending a JSON message to the <a href="#informix-stopping-an-incremental-snapshot-kafka">Kafka signaling topic</a>.</p>
+<ul>
+<li>
+<p><a href="#informix-stopping-an-incremental-snapshot-kafka">Stopping an incremental snapshot by sending a JSON message to the Kafka signaling topic</a></p>
+</li>
+</ul>
 </div>
 <div class="ulist">
 <div class="title">Prerequisites</div>
@@ -1906,77 +1923,53 @@ After Debezium detects the change in the signaling table, it reads the signal, a
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data) <i class="conum" data-value="1"></i><b>(1)</b>
-values ('ad-hoc-1',   <i class="conum" data-value="2"></i><b>(2)</b>
-    'stop-snapshot',  <i class="conum" data-value="3"></i><b>(3)</b>
-    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"], <i class="conum" data-value="4"></i><b>(4)</b>
-    "type":"incremental"}'); <i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">INSERT INTO db1.myschema.debezium_signal (id, type, data)
+values ('ad-hoc-1',
+    'stop-snapshot',
+    '{"data-collections": ["db1.schema1.table1", "db1.schema1.table2"],
+    "type":"incremental"}');</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.
-The following table describes the parameters in the example:</p>
+<p>The values of the <code>id</code>, <code>type</code>, and <code>data</code> parameters in the signal command correspond to the <a href="../configuration/signalling.html#debezium-signaling-description-of-required-structure-of-a-signaling-data-collection" class="xref page">fields of the signaling table</a>.</p>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 4. Descriptions of fields in a SQL command for sending a stop incremental snapshot signal to the signaling table</caption>
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 22.2222%;">
-<col style="width: 66.6667%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Value</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>database.schema.debezium_signal</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the fully-qualified name of the signaling table on the source database.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ad-hoc-1</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The <code>id</code> parameter specifies an arbitrary string that is assigned as the <code>id</code> identifier for the signal request.
-Use this string to identify logging messages to entries in the signaling table.
+<div class="paragraph">
+<p>The following list describes the fields in the preceding signal example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>database.schema.debezium_signal</code></dt>
+<dd>
+<p>Specifies the fully-qualified name of the signaling table on the source database.</p>
+</dd>
+<dt class="hdlist1"><code>ad-hoc-1</code></dt>
+<dd>
+<p>The value of the signal&#8217;s <code>id</code> parameter.
+This arbitrary string provides a label that helps to distinguish signal requests from each other and to associate logging messages with entries in the signaling table.
 Debezium does not use this string.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stop-snapshot</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>stop-snapshot</code></dt>
+<dd>
 <p>The <code>type</code> parameter, which identifies the operation that the signal is intended to trigger.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data-collections</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</dd>
+<dt class="hdlist1"><code>data-collections</code></dt>
+<dd>
 <p>An optional component of the <code>data</code> field of a signal that specifies an array of table names or regular expressions to match table names to remove from the snapshot.
 The array lists regular expressions which match tables by their fully-qualified names in the format <code>database.schema.table</code></p>
-</div>
 <div class="paragraph">
 <p>If you omit this component from the <code>data</code> field, the signal stops the entire incremental snapshot that is in progress.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>incremental</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+</div>
+</dd>
+<dt class="hdlist1"><code>incremental</code></dt>
+<dd>
 <p>A required component of the <code>data</code> field of a signal that specifies the type of snapshot operation that is to be stopped.
 Currently, the only valid option is <code>incremental</code>.
 If you do not specify a <code>type</code> value, the signal fails to stop the incremental snapshot.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</div>
 </li>
 </ol>
 </div>
@@ -1996,7 +1989,7 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <p>The signal type is <code>stop-snapshot</code>, and the <code>data</code> field must have the following fields:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Execute snapshot data fields</caption>
+<caption class="title">Table 4. Execute snapshot data fields</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 20%;">
@@ -2598,7 +2591,7 @@ The message contains a logical representation of the table schema.</p>
   },
   "payload": {
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "informix",
       "name": "informix",
       "ts_ms": 1588252618953,
@@ -3223,6 +3216,9 @@ The payload of each event value varies according to the event type:</p>
 <div class="sect2">
 <h3 id="informix-create-events"><a class="anchor" href="#informix-create-events"></a><em>create</em> events</h3>
 <div class="paragraph">
+<p>A create event represents a row-level INSERT operation, capturing the full state of the newly inserted row in the 1after` field of the event payload.</p>
+</div>
+<div class="paragraph">
 <p>The following example shows the value portion of a change event that the connector generates for an operation that creates data in the <code>customers</code> table:</p>
 </div>
 <div class="listingblock">
@@ -3399,7 +3395,7 @@ The payload of each event value varies according to the event type:</p>
       "email": "john.doe@example.org"
     },
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559729468470,
@@ -3533,6 +3529,9 @@ The time is based on the system clock in the JVM that runs the Kafka Connect tas
 <div class="sect2">
 <h3 id="informix-update-events"><a class="anchor" href="#informix-update-events"></a><em>update</em> events</h3>
 <div class="paragraph">
+<p>An update event represents a row-level UPDATE operation, capturing both the row state before the change in the <code>before</code> field and the new row state after the change in the <code>after</code> field.</p>
+</div>
+<div class="paragraph">
 <p>The value of a change event for an update in the sample <code>customers</code> table has the same schema as a <em>create</em> event for that table.
 Similarly, the payload of the value of an <em>update</em> event has a structure that is mirrors the structure of the value payload in a <em>create</em> event.
 However, the <code>value</code> payloads of_update_ events and <em>create</em> events do not include the same values.
@@ -3556,7 +3555,7 @@ The following example shows the change event value for an event record that the 
       "email": "noreply@example.org"
     },
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559729995937,
@@ -3678,6 +3677,9 @@ After a key change, Debezium emits the following events:</p>
 <div class="sect2">
 <h3 id="informix-delete-events"><a class="anchor" href="#informix-delete-events"></a><em>delete</em> events</h3>
 <div class="paragraph">
+<p>A delete event represents a row-level DELETE operation, capturing the final state of the deleted row in the <code>before</code> field so that consumers can identify and process the removal.</p>
+</div>
+<div class="paragraph">
 <p>The <code>value</code> in a <em>delete</em> change event for a table has a <code>schema</code> portion that is similar to the <code>schema</code> element in <em>create</em> and <em>update</em> events for the same table.
 After a user performs a <em>delete</em> operation in the sample <code>customers</code> table, Debezium emits an event message such as the one in the following example:</p>
 </div>
@@ -3695,7 +3697,7 @@ After a user performs a <em>delete</em> operation in the sample <code>customers<
     },
     "after": null,
     "source": {
-      "version": "3.6.0.Final",
+      "version": "3.7.0.Beta1",
       "connector": "informix",
       "name": "myconnector",
       "ts_ms": 1559730445243,
@@ -3854,7 +3856,7 @@ The connector provides default mappings for the following Informix data types:</
 </ul>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Mappings for Informix basic data types</caption>
+<caption class="title">Table 5. Mappings for Informix basic data types</caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4120,6 +4122,12 @@ The following sections describe these mappings:</p>
 <li>
 <p><a href="#informix-time-precision-mode-isostring"><code>time.precision.mode=isostring</code></a></p>
 </li>
+<li>
+<p><a href="#informix-time-precision-mode-microseconds"><code>time.precision.mode=microseconds</code></a></p>
+</li>
+<li>
+<p><a href="#informix-time-precision-mode-nanoseconds"><code>time.precision.mode=nanoseconds</code></a></p>
+</li>
 </ul>
 </div>
 <div id="informix-time-precision-mode-adaptive" class="paragraph">
@@ -4127,7 +4135,7 @@ The following sections describe these mappings:</p>
 <p>To ensure that events <em>exactly</em> represent the values in the database, when the <code>time.precision.mode</code> configuration property is set to the default value, <code>adaptive</code>, the connector determines the literal and semantic types based on the column&#8217;s data type definition.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 7. Mappings when <code>time.precision.mode</code> is <code>adaptive</code></caption>
+<caption class="title">Table 6. Mappings when <code>time.precision.mode</code> is <code>adaptive</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4178,7 +4186,7 @@ This setting can be useful for consumers that can handle only the built-in Kafka
 However, because Informix supports tens of microsecond precision, if a connector is configured to use <code>connect</code> time precision, and the database column has a <em>fractional second precision</em> value that is greater than 3,  the connector generates events that result in a loss of precision.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Mappings when <code>time.precision.mode</code> is <code>connect</code></caption>
+<caption class="title">Table 7. Mappings when <code>time.precision.mode</code> is <code>connect</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4228,7 +4236,7 @@ However, because Informix supports tens of microsecond precision, if a connector
 When you apply this setting, the connector uses the semantic types <code>io.debezium.time.IsoDate</code> and <code>io.debezium.time.IsoTimestamp</code> to map date and timestamp values.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Mappings when <code>time.precision.mode</code> is <code>isostring</code></caption>
+<caption class="title">Table 8. Mappings when <code>time.precision.mode</code> is <code>isostring</code></caption>
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 20%;">
@@ -4272,6 +4280,121 @@ When you apply this setting, the connector uses the semantic types <code>io.debe
 </tr>
 </tbody>
 </table>
+<div id="informix-time-precision-mode-microseconds" class="paragraph">
+<div class="title"><code>time.precision.mode=microseconds</code></div>
+<p>Set the <code>time.precision.mode</code> property to <code>microseconds</code> to configure the connector to map all temporal values to microsecond-precision integers.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Mappings when <code>time.precision.mode</code> is <code>microseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Informix data type</th>
+<th class="tableblock halign-left valign-top">Literal type (schema type)</th>
+<th class="tableblock halign-left valign-top">Semantic type (schema name) and Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.MicroTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of microseconds since the epoch, and does not include timezone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div id="informix-time-precision-mode-nanoseconds" class="paragraph">
+<div class="title"><code>time.precision.mode=nanoseconds</code></div>
+<p>Set the <code>time.precision.mode</code> property to <code>nanoseconds</code> to configure the connector to map all temporal values to nanosecond-precision integers.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Nanoseconds since the Unix epoch are stored in a signed <code>INT64</code>, restricting the representable range to approximately <strong><code>1677-09-21T00:12:43Z</code> to <code>2262-04-11T23:47:16Z</code></strong>.
+Values outside this range cannot be represented and cause the connector to throw an <code>IllegalArgumentException</code> from the value converter.
+The exception is handled according to the <code>event.converting.failure.handling.mode</code> configuration: with <code>warn</code> (the default) or <code>skip</code>, the affected column value is emitted as <code>null</code> and the failure is logged; with <code>fail</code>, the connector stops.
+Use <code>time.precision.mode=microseconds</code> (or <code>isostring</code>) to avoid the limitation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Mappings when <code>time.precision.mode</code> is <code>nanoseconds</code></caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 55%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Informix data type</th>
+<th class="tableblock halign-left valign-top">Literal type (schema type)</th>
+<th class="tableblock halign-left valign-top">Semantic type (schema name) and Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATE</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT32</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.Date</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of days since the epoch.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>DATETIME</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>INT64</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>io.debezium.time.NanoTimestamp</code></p>
+</div>
+<div class="paragraph">
+<p>Represents the number of nanoseconds since the epoch, and does not include timezone information.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <div class="title">INTERVAL</div>
 <p>The <code>INTERVAL</code> type is not supported by the Informix Change Stream client.</p>
@@ -4290,6 +4413,9 @@ For example, the <code>DATETIME</code> value "2018-06-20 15:13:16.94514" is repr
 </div>
 <div class="sect2">
 <h3 id="informix-decimal-types"><a class="anchor" href="#informix-decimal-types"></a>Decimal types</h3>
+<div class="paragraph">
+<p>The following table describes how the connector maps Informix decimal data types to Kafka Connect literal types and semantic types in change event fields.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 27%;">
@@ -4398,13 +4524,13 @@ The <code>connect.decimal.precision</code> schema parameter contains an integer 
 <div class="title">Procedure</div>
 <ol class="arabic">
 <li>
-<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-informix/3.6.0.Final/debezium-connector-informix-3.6.0.Final-plugin.tar.gz">Debezium Informix connector plug-in archive</a> from Maven Central.</p>
+<p>Download the <a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-informix/3.7.0.Beta1/debezium-connector-informix-3.7.0.Beta1-plugin.tar.gz">Debezium Informix connector plug-in archive</a> from Maven Central.</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
 </li>
 <li>
-<p>Download the <a href="https://repo1.maven.org/maven2/com/ibm/informix/jdbc/15.0.1.1/jdbc-15.0.1.1.jar">JDBC driver for Informix</a> and <a href="https://repo1.maven.org/maven2/com/ibm/informix/ifx-changestream-client/1.1.3/ifx-changestream-client-1.1.3.jar">Informix Change Stream client</a> from Maven Central, and copy the downloaded JAR files to the directory that contains the Debezium Informix connector JAR file (that is, <code>debezium-connector-informix-3.6.0.Final.jar</code>).</p>
+<p>Download the <a href="https://repo1.maven.org/maven2/com/ibm/informix/jdbc/15.0.1.1/jdbc-15.0.1.1.jar">JDBC driver for Informix</a> and <a href="https://repo1.maven.org/maven2/com/ibm/informix/ifx-changestream-client/1.1.3/ifx-changestream-client-1.1.3.jar">Informix Change Stream client</a> from Maven Central, and copy the downloaded JAR files to the directory that contains the Debezium Informix connector JAR file (that is, <code>debezium-connector-informix-3.7.0.Beta1.jar</code>).</p>
 </li>
 </ol>
 </div>
@@ -4647,7 +4773,7 @@ Information about the properties is organized as follows:</p>
 <p>The following configuration properties are <em>required</em> unless a default value is available.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Required connector configuration properties</caption>
+<caption class="title">Table 11. Required connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -5199,7 +5325,7 @@ Specify one of the following values:</p>
 <p>The following <em>advanced</em> configuration properties have defaults that work in most situations and therefore rarely need to be specified in the connector&#8217;s configuration.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Advanced connector configuration properties</caption>
+<caption class="title">Table 12. Advanced connector configuration properties</caption>
 <colgroup>
 <col style="width: 30%;">
 <col style="width: 25%;">
@@ -6462,7 +6588,7 @@ Set the value to <code>0</code> (zero) to remove the timeout limit.</p>
 <p>The following table describes the <code>schema.history.internal</code> properties for configuring the Debezium connector.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Connector database schema history configuration properties</caption>
+<caption class="title">Table 13. Connector database schema history configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6685,7 +6811,7 @@ schema.history.internal.consumer.ssl.key.password=test1234</code></pre>
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Kafka signals configuration properties</caption>
+<caption class="title">Table 14. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6780,7 +6906,7 @@ For example, the connector passes properties such as <code>signal.consumer.secur
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 14. Sink notification configuration properties</caption>
+<caption class="title">Table 15. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -6864,6 +6990,9 @@ In this scenario, you must reconfigure the observability stack to use the new MB
 You configure custom metrics by adding the <code>custom.metric.tags</code> property to the connector configuration.
 The property accepts key-value pairs in which each key represents a tag for the MBean object name, and the corresponding value represents the value of that tag.
 For example: <code>k1=v1,k2=v2</code>.
+Tag keys must be valid JMX <code>ObjectName</code> property keys.
+The comma separates entries, and the equals sign separates each key from its value; therefore, neither can occur in a key.
+Keys also cannot contain JMX-reserved characters such as <code>:</code>, <code>*</code>, or <code>?</code>.
 Debezium appends the specified tags to the MBean name of the connector.</p>
 </div>
 <div class="paragraph">
@@ -7833,7 +7962,7 @@ You must stop the Debezium Informix connector before you perform a schema update
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/c5d5b0f63087a7cdbbdcf38fea057f19ddf20376">c5d5b0f6</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/70b378c21418ec6a3cc649f78d8d6c39fef56a34">70b378c2</a></span>)
             
         </div>
     </footer>
