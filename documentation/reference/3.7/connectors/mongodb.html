@@ -7,38 +7,339 @@
     <link rel="canonical" href="https://debezium.io/documentation/reference/stable/connectors/mongodb.html">
     <meta name="generator" content="Antora 3.1.7">
 <link rel="stylesheet" href="../../../debezium-antora/css/site.css">
+<link rel="stylesheet" href="../../../debezium-antora/css/dbz-antora.css">
 <link rel="stylesheet" href="../../../debezium-antora/css/debezium-antora.css">
 <link rel="stylesheet" href="../../../debezium-antora/css/highlightjs-dark.css">
-<link rel="stylesheet" href="https://static.jboss.org/css/rhbar.css">
-<script src="//static.jboss.org/theme/js/libs/jquery/jquery-1.9.1.js"></script>
+
+<meta name="theme-color" content="#090F1B">
+<script>
+  (function () {
+    var theme = 'dark';
+    try {
+      var stored = localStorage.getItem('dbz-theme');
+      if (stored === 'light' || stored === 'dark') theme = stored;
+    } catch (e) { /* private browsing */ }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  })();
+</script>
+
+<script src="../../../debezium-antora/js/vendor/jquery.min.js"></script>
 <script src="../../../debezium-antora/js/jquery.ba-floatingscrollbar.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K348B4S97X"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','G-K348B4S97X')</script>
 </head>
 <body class="article">
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="/">
-          <img src="/assets/images/color_white_debezium_type_600px.svg" style="height: 32px; margin-right: 14px;"/>
-      </a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item" href="/documentation/faq">FAQ</a>
-        <a class="navbar-item" href="/documentation">DOCUMENTATION</a>
-        <a class="navbar-item" href="/releases">RELEASES</a>
-        <a class="navbar-item" href="/community">COMMUNITY</a>
-        <a class="navbar-item" href="/community/users/">ADOPTERS</a>
-        <a class="navbar-item" href="/blog">BLOG</a>
+<a class="dbz-skip" href="#dbz-doc-main">Skip to content</a>
+<header class="dbz-nav" data-dbz-nav>
+  <div class="dbz-nav__inner">
+    <a class="dbz-nav__brand" href="/" aria-label="Debezium home">
+      <img class="dbz-nav__logo dbz-nav__logo--light" src="/assets/images/color_black_debezium_type_600px.svg" alt="Debezium" width="180" height="28">
+      <img class="dbz-nav__logo dbz-nav__logo--dark" src="/assets/images/color_white_debezium_type_600px.svg" alt="Debezium" width="180" height="28">
+    </a>
+    <nav class="dbz-nav__menu" aria-label="Main">
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Why Debezium<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/why/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">What change data capture gives you</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/why/use-cases/">
+            <span class="dbz-dropdown__label">Use Cases</span>
+            <span class="dbz-dropdown__desc">Cache invalidation, search indexing, microservices</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/ai/">
+            <span class="dbz-dropdown__label">Debezium &amp; AI</span>
+            <span class="dbz-dropdown__desc">Feeding real-time context to AI systems</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/databases/">
+            <span class="dbz-dropdown__label">Supported Databases</span>
+            <span class="dbz-dropdown__desc">Every source and sink connector</span>
+          </a>
+        </div></div>
       </div>
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Installation<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/installation/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">Choose the model that fits your stack</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/installation/platform/">
+            <span class="dbz-dropdown__label">Debezium Platform</span>
+            <span class="dbz-dropdown__desc">Managed pipelines on Kubernetes, recommended</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/installation/kafka-connect/">
+            <span class="dbz-dropdown__label">Kafka Connect</span>
+            <span class="dbz-dropdown__desc">The classic distributed installation</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/installation/server/">
+            <span class="dbz-dropdown__label">Debezium Server</span>
+            <span class="dbz-dropdown__desc">Standalone, no Kafka required</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/installation/kubernetes/">
+            <span class="dbz-dropdown__label">Operator for Debezium Server</span>
+            <span class="dbz-dropdown__desc">Operator-managed, cloud native</span>
+          </a>
+        </div></div>
+      </div>
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Developers<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/developers/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">Using Debezium from application code</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/developers/embedded/">
+            <span class="dbz-dropdown__label">Debezium Engine</span>
+            <span class="dbz-dropdown__desc">Debezium as a library inside your app</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/developers/#run-the-engine">
+            <span class="dbz-dropdown__label">Quarkus Extension</span>
+            <span class="dbz-dropdown__desc">Run the engine inside a Quarkus application</span>
+          </a>
+          <hr class="dbz-dropdown__rule">
+          <a class="dbz-dropdown__item" href="/developers/#framework-extensions">
+            <span class="dbz-dropdown__label">CDC patterns with Quarkus</span>
+            <span class="dbz-dropdown__desc">Outbox and Hibernate second-level cache</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/developers/#shape-the-events">
+            <span class="dbz-dropdown__label">Shape the events</span>
+            <span class="dbz-dropdown__desc">Custom converters and CloudEvents</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/developers/#observability">
+            <span class="dbz-dropdown__label">Observability and testing</span>
+            <span class="dbz-dropdown__desc">OpenTelemetry, OpenLineage, Testcontainers</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/developers/#community-projects">
+            <span class="dbz-dropdown__label">Community projects</span>
+            <span class="dbz-dropdown__desc">Built outside the project, such as pydbzengine</span>
+          </a>
+        </div></div>
+      </div>
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger is-active" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Learn<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/documentation/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">Explore CDC with Debezium</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/documentation/faq">
+            <span class="dbz-dropdown__label">FAQ</span>
+            <span class="dbz-dropdown__desc">Answers to common questions</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/documentation/online-resources">
+            <span class="dbz-dropdown__label">Resources on the Web</span>
+            <span class="dbz-dropdown__desc">Articles, blog posts and talks from around the web</span>
+          </a>
+          <hr class="dbz-dropdown__rule">
+          <div class="dbz-dropdown__section">Versions</div>
+          <div class="dbz-dropdown__versions">
+            <a class="dbz-version" href="/documentation/reference/3.7/">
+              <span class="dbz-version__number">3.7</span>
+              <span class="dbz-badge dbz-badge--stable">latest stable</span>
+            </a>
+            <a class="dbz-version" href="/documentation/reference/3.6/">
+              <span class="dbz-version__number">3.6</span>
+              <span class="dbz-badge dbz-badge--stable">stable</span>
+            </a>
+            <a class="dbz-version" href="/documentation/reference/2.7/">
+              <span class="dbz-version__number">2.7</span>
+              <span class="dbz-badge dbz-badge--stable">stable</span>
+            </a>
+          </div>
+        </div></div>
+      </div>
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Releases<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/releases/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">Details about recent releases</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/roadmap">
+            <span class="dbz-dropdown__label">Roadmap</span>
+            <span class="dbz-dropdown__desc">What is planned for upcoming releases</span>
+          </a>
+          <hr class="dbz-dropdown__rule">
+          <div class="dbz-dropdown__section">Versions</div>
+          <div class="dbz-dropdown__versions">
+            <a class="dbz-version" href="/releases/3.7/">
+              <span class="dbz-version__number">3.7</span>
+              <span class="dbz-badge dbz-badge--stable">latest stable</span>
+            </a>
+            <a class="dbz-version" href="/releases/3.6/">
+              <span class="dbz-version__number">3.6</span>
+              <span class="dbz-badge dbz-badge--stable">stable</span>
+            </a>
+            <a class="dbz-version" href="/releases/2.7/">
+              <span class="dbz-version__number">2.7</span>
+              <span class="dbz-badge dbz-badge--stable">stable</span>
+            </a>
+          </div>
+        </div></div>
+      </div>
+      <div class="dbz-dropdown" data-dbz-dropdown>
+        <button type="button" class="dbz-navlink dbz-dropdown__trigger" aria-expanded="false" aria-haspopup="true" data-dbz-dropdown-trigger>
+          Community<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-dropdown__panel"><div class="dbz-dropdown__card">
+          <a class="dbz-dropdown__item" href="/community/">
+            <span class="dbz-dropdown__label">Overview</span>
+            <span class="dbz-dropdown__desc">Get involved with the project</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/community/users">
+            <span class="dbz-dropdown__label">Adopters</span>
+            <span class="dbz-dropdown__desc">Who is using Debezium in production</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/community/contribute">
+            <span class="dbz-dropdown__label">Contribute</span>
+            <span class="dbz-dropdown__desc">Your first pull request</span>
+          </a>
+          <a class="dbz-dropdown__item" href="/community/governance">
+            <span class="dbz-dropdown__label">Governance</span>
+            <span class="dbz-dropdown__desc">How the project is run</span>
+          </a>
+          <hr class="dbz-dropdown__rule">
+          <a class="dbz-dropdown__item" href="https://debezium.zulipchat.com/#narrow/stream/302529-users" target="_blank" rel="noopener">
+            <span class="dbz-dropdown__label">Chat on Zulip<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span>
+          </a>
+          <a class="dbz-dropdown__item" href="https://groups.google.com/forum/#!forum/debezium" target="_blank" rel="noopener">
+            <span class="dbz-dropdown__label">Mailing List<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span>
+          </a>
+          <a class="dbz-dropdown__item" href="https://github.com/debezium/debezium" target="_blank" rel="noopener">
+            <span class="dbz-dropdown__label">GitHub<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></span>
+          </a>
+        </div></div>
+      </div>
+      <a class="dbz-navlink" href="/blog/">Blog</a>
+    </nav>
+    <div class="dbz-nav__controls">
+      <a class="dbz-iconbtn dbz-nav__github" href="https://github.com/debezium" target="_blank" rel="noopener" aria-label="Debezium on GitHub"><svg class="dbz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path stroke="none" fill="currentColor" d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.9 10.9c.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 1.7 2.7 1.2 3.4.9.1-.7.4-1.2.7-1.5-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg></a>
+      <button type="button" class="dbz-iconbtn" data-dbz-theme-toggle aria-pressed="true" aria-label="Switch to light theme">
+        <span class="dbz-theme-toggle__sun"><svg class="dbz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.9 4.9l1.4 1.4"/><path d="M17.7 17.7l1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.3 17.7l-1.4 1.4"/><path d="M19.1 4.9l-1.4 1.4"/></svg></span>
+        <span class="dbz-theme-toggle__moon"><svg class="dbz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span>
+      </button>
+      <a class="dbz-cta" href="/documentation/reference/stable/tutorials.html">Get Started</a>
+      <button type="button" class="dbz-iconbtn dbz-nav__burger" data-dbz-drawer-toggle aria-expanded="false" aria-controls="dbz-drawer" aria-label="Open menu"><svg class="dbz-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg></button>
     </div>
-  </nav>
-</header><div class="body">
-<div class="nav-container" data-component="reference" data-version="3.7">
+  </div>
+  <div class="dbz-drawer" id="dbz-drawer" data-dbz-drawer>
+    <nav class="dbz-drawer__nav" aria-label="Mobile">
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-1">
+          Why Debezium<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-1"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/why/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/why/use-cases/">Use Cases</a>
+          <a class="dbz-drawer__sublink" href="/ai/">Debezium &amp; AI</a>
+          <a class="dbz-drawer__sublink" href="/databases/">Supported Databases</a>
+        </div></div>
+      </div>
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-2">
+          Installation<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-2"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/installation/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/installation/platform/">Debezium Platform</a>
+          <a class="dbz-drawer__sublink" href="/installation/kafka-connect/">Kafka Connect</a>
+          <a class="dbz-drawer__sublink" href="/installation/server/">Debezium Server</a>
+          <a class="dbz-drawer__sublink" href="/installation/kubernetes/">Operator for Debezium Server</a>
+        </div></div>
+      </div>
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-3">
+          Developers<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-3"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/developers/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/developers/embedded/">Debezium Engine</a>
+          <a class="dbz-drawer__sublink" href="/developers/#run-the-engine">Quarkus Extension</a>
+          <a class="dbz-drawer__sublink" href="/developers/#framework-extensions">CDC patterns with Quarkus</a>
+          <a class="dbz-drawer__sublink" href="/developers/#shape-the-events">Shape the events</a>
+          <a class="dbz-drawer__sublink" href="/developers/#observability">Observability and testing</a>
+          <a class="dbz-drawer__sublink" href="/developers/#community-projects">Community projects</a>
+        </div></div>
+      </div>
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-4">
+          Learn<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-4"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/documentation/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/documentation/faq">FAQ</a>
+          <a class="dbz-drawer__sublink" href="/documentation/online-resources">Resources on the Web</a>
+          <div class="dbz-dropdown__section">Versions</div>
+          <a class="dbz-drawer__sublink dbz-version" href="/documentation/reference/3.7/">
+            <span class="dbz-version__number">3.7</span>
+            <span class="dbz-badge dbz-badge--stable">latest stable</span>
+          </a>
+          <a class="dbz-drawer__sublink dbz-version" href="/documentation/reference/3.6/">
+            <span class="dbz-version__number">3.6</span>
+            <span class="dbz-badge dbz-badge--stable">stable</span>
+          </a>
+          <a class="dbz-drawer__sublink dbz-version" href="/documentation/reference/2.7/">
+            <span class="dbz-version__number">2.7</span>
+            <span class="dbz-badge dbz-badge--stable">stable</span>
+          </a>
+        </div></div>
+      </div>
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-5">
+          Releases<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-5"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/releases/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/roadmap">Roadmap</a>
+          <div class="dbz-dropdown__section">Versions</div>
+          <a class="dbz-drawer__sublink dbz-version" href="/releases/3.7/">
+            <span class="dbz-version__number">3.7</span>
+            <span class="dbz-badge dbz-badge--stable">latest stable</span>
+          </a>
+          <a class="dbz-drawer__sublink dbz-version" href="/releases/3.6/">
+            <span class="dbz-version__number">3.6</span>
+            <span class="dbz-badge dbz-badge--stable">stable</span>
+          </a>
+          <a class="dbz-drawer__sublink dbz-version" href="/releases/2.7/">
+            <span class="dbz-version__number">2.7</span>
+            <span class="dbz-badge dbz-badge--stable">stable</span>
+          </a>
+        </div></div>
+      </div>
+      <div>
+        <button type="button" class="dbz-drawer__toggle" data-dbz-submenu-toggle aria-expanded="false" aria-controls="dbz-submenu-6">
+          Community<svg class="dbz-dropdown__caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="dbz-drawer__submenu" id="dbz-submenu-6"><div class="dbz-drawer__submenu-inner">
+          <a class="dbz-drawer__sublink" href="/community/">Overview</a>
+          <a class="dbz-drawer__sublink" href="/community/users">Adopters</a>
+          <a class="dbz-drawer__sublink" href="/community/contribute">Contribute</a>
+          <a class="dbz-drawer__sublink" href="/community/governance">Governance</a>
+          <a class="dbz-drawer__sublink" href="https://debezium.zulipchat.com/#narrow/stream/302529-users" target="_blank" rel="noopener">Chat on Zulip<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>
+          <a class="dbz-drawer__sublink" href="https://groups.google.com/forum/#!forum/debezium" target="_blank" rel="noopener">Mailing List<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>
+          <a class="dbz-drawer__sublink" href="https://github.com/debezium/debezium" target="_blank" rel="noopener">GitHub<svg class="dbz-icon-xs" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg></a>
+        </div></div>
+      </div>
+      <a class="dbz-drawer__link" href="/blog/">Blog</a>
+      <a class="dbz-drawer__cta" href="/documentation/reference/stable/tutorials.html">Get Started</a>
+    </nav>
+  </div>
+</header>
+<div class="body">
+<div class="nav-container" data-component="reference" data-version="stable">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
@@ -64,6 +365,9 @@
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../install.html">Installation</a>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../install-kafka-connect.html">Kafka Connect</a>
+  </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../postgres-plugins.html">PostgreSQL Decoding Plugins</a>
   </li>
@@ -150,6 +454,9 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="ingres.html">Ingres</a>
   </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="milvus.html">Milvus</a>
+  </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
@@ -182,6 +489,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/mongodb-event-flattening.html">MongoDB New Document State Extraction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/mongodb-relational-mapping.html">MongoDB Relational Mapping</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/event-changes.html">Event Changes</a>
@@ -224,6 +534,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/vector-to-json.html">Vector Data Types to JSON Types</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../transformations/neo4j-cud-converter.html">Neo4j CUD Converter</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../transformations/enforce-record-size.html">Enforce Record Size</a>
@@ -295,6 +608,9 @@
     <span class="nav-text">Debezium AI</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ai/debezium-ai-python.html">PyDebeziumAI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../ai/embeddings.html">Embeddings Transformation</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -352,11 +668,11 @@
         <li class="version">
           <a href="/documentation/reference/nightly/index.html">nightly</a>
         </li>
-        <li class="version">
-          <a href="/documentation/reference/3.6/index.html">3.6</a>
-        </li>
         <li class="version is-current">
           <a href="/documentation/reference/3.7/index.html">3.7</a>
+        </li>
+        <li class="version">
+          <a href="/documentation/reference/3.6/index.html">3.6</a>
         </li>
         <li class="version">
           <a href="/documentation/reference/3.5/index.html">3.5</a>
@@ -389,10 +705,10 @@
     </div>
   </aside>
 </div>
-<main role="main" class="main">
+<main role="main" class="main" id="dbz-doc-main">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../../stable/index.html" class="home-link"></a>
+  <a href="../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Debezium Documentation</a></li>
@@ -406,8 +722,8 @@
         <button class="version-menu-toggle versions-menu-current" title="Show other versions of page">3.7</button>
         <div class="version-menu">
                         <a class="version" href="/documentation/reference/connectors/mongodb.html" data-hash="true">nightly</a>
-                        <a class="version" href="/documentation/reference/stable/connectors/mongodb.html" data-hash="true">3.6</a>
-                        <a class="version is-current" href="/documentation/reference/3.7/connectors/mongodb.html" data-hash="true">3.7</a>
+                        <a class="version is-current" href="/documentation/reference/stable/connectors/mongodb.html" data-hash="true">3.7</a>
+                        <a class="version" href="/documentation/reference/3.6/connectors/mongodb.html" data-hash="true">3.6</a>
                         <a class="version" href="/documentation/reference/3.5/connectors/mongodb.html" data-hash="true">3.5</a>
                         <a class="version" href="/documentation/reference/3.4/connectors/mongodb.html" data-hash="true">3.4</a>
                         <a class="version" href="/documentation/reference/3.3/connectors/mongodb.html" data-hash="true">3.3</a>
@@ -443,12 +759,7 @@
 <div class="article-cell1">
 <article class="doc">
         
-    <div class="version-banner version-banner-development">
-    You are viewing documentation for the current development version of Debezium.
-    <br/>
-            If you want to view the latest stable version of this page, please go <a href=/documentation/reference/stable/index.html>here</a>.
-            
-</div>            <h1 class="page">Debezium connector for MongoDB</h1>
+    <!-- This partial is a placeholder -->            <h1 class="page">Debezium connector for MongoDB</h1>
         <div id="preamble">
 <div class="sectionbody">
 <div id="toc" class="toc">
@@ -613,6 +924,17 @@ Additional latency can also occur because change streams emit events only after 
 A change is majority committed when a majority of voting replica set members confirm that they have written the change to their journals.
 As a result, a secondary node can emit an event only after it receives confirmation that the change has been majority committed.</p>
 </div>
+<div class="paragraph">
+<p>When the connection string identifies a replica set and does not set <code>directConnection=true</code>, the connector periodically verifies that the member serving the change stream still satisfies the configured read preference.
+The verification interval is controlled by <a href="#mongodb-property-mongodb-heartbeat-frequency-ms"><code>mongodb.heartbeat.frequency.ms</code></a>, so the connector does not detect role changes instantaneously.
+After a replica set election, the MongoDB driver&#8217;s topology view must be updated and the next verification must run before the connector detects that the member&#8217;s role changed.
+During this interval, the connector might continue to receive change stream events from that member.
+If a replica set election causes that member to stop satisfying the read preference, the connector closes the change stream and resumes it on an eligible member from the last processed offset.
+For the exact <code>primary</code> and <code>secondary</code> modes, if no eligible member is available, change stream consumption waits while the connector task remains running.
+Consumption resumes from the last processed offset when an eligible member becomes available.
+The <code>primaryPreferred</code> and <code>secondaryPreferred</code> modes continue to use the fallback behavior defined by the MongoDB driver.
+When the connector connects to a sharded cluster, <code>mongos</code> is responsible for applying the read preference to the members of each shard.</p>
+</div>
 </div>
 </div>
 </div>
@@ -620,12 +942,13 @@ As a result, a secondary node can emit an event only after it receives confirmat
 <h2 id="how-the-mongodb-connector-works"><a class="anchor" href="#how-the-mongodb-connector-works"></a>How the MongoDB connector works</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>An overview of the MongoDB topologies that the connector supports is useful for planning your application.</p>
+<p>To optimally configure and run a Debezium MongoDB connector, it is helpful to understand the MongoDB topologies that the connector supports, how the connector uses logical names and performs snapshots and incremental snapshots, and how it streams change events to Kafka topics.</p>
 </div>
 <div class="sect2">
 <h3 id="supported-mongodb-topologies"><a class="anchor" href="#supported-mongodb-topologies"></a>Supported MongoDB topologies</h3>
 <div class="paragraph">
-<p>The MongoDB connector supports the following MongoDB topologies:</p>
+<p>The Debezium MongoDB connector can capture changes from a MongoDB replica set or a MongoDB sharded cluster.
+Understanding the differences between these deployment types helps you configure the connector&#8217;s connection string and capture scope correctly.</p>
 </div>
 <div id="mongodb-replicaset" class="dlist">
 <dl>
@@ -1342,7 +1665,7 @@ The value for snapshot events is <code>r</code>, signifying a <code>READ</code> 
 <div class="sect3">
 <h4 id="mongodb-triggering-an-incremental-snapshot-kafka"><a class="anchor" href="#mongodb-triggering-an-incremental-snapshot-kafka"></a>Using the Kafka signaling channel to trigger an incremental snapshot</h4>
 <div class="paragraph">
-<p>You can send a message to the <a href="../configuration/signalling.html#debezium-signaling-enabling-kafka-signaling-channel" class="xref page">configured Kafka topic</a> to request the connector to run an ad hoc incremental snapshot.</p>
+<p>To trigger an ad hoc incremental snapshot using the Kafka signaling channel, send an <code>execute-snapshot</code> message to the configured Kafka signaling topic.</p>
 </div>
 <div class="paragraph">
 <p>The key of the Kafka message must match the value of the <code>topic.prefix</code> connector configuration option.</p>
@@ -1567,7 +1890,7 @@ If you do not specify a <code>type</code> value, the signal fails to stop the in
 <div class="sect3">
 <h4 id="mongodb-stopping-an-incremental-snapshot-kafka"><a class="anchor" href="#mongodb-stopping-an-incremental-snapshot-kafka"></a>Using the Kafka signaling channel to stop an incremental snapshot</h4>
 <div class="paragraph">
-<p>You can send a signal message to the <a href="../configuration/signalling.html#debezium-signaling-enabling-kafka-signaling-channel" class="xref page">configured Kafka signaling topic</a> to stop an ad hoc incremental snapshot.</p>
+<p>To stop an in-progress incremental snapshot using the Kafka signaling channel, send a <code>stop-snapshot</code> message to the configured Kafka signaling topic.</p>
 </div>
 <div class="paragraph">
 <p>The key of the Kafka message must match the value of the <code>topic.prefix</code> connector configuration option.</p>
@@ -1625,7 +1948,8 @@ Value = `{"type":"stop-snapshot","data": {"data-collections": ["db1.table1", "db
 <div class="sect2">
 <h3 id="connector-custom-snapshot"><a class="anchor" href="#connector-custom-snapshot"></a>Custom snapshotter SPI</h3>
 <div class="paragraph">
-<p>For more advanced uses, you can fine-tune control of the snapshot by implementing one of the following interfaces:</p>
+<p>To customize snapshot behavior beyond what is available in the standard snapshot modes, you can implement one or more of the Debezium snapshotter SPI interfaces.
+These interfaces can control whether a snapshot runs, how data is queried, and whether tables are locked.</p>
 </div>
 <div class="dlist">
 <dl>
@@ -1790,7 +2114,7 @@ public interface SnapshotLock extends Configurable, Service {
 <div class="sect2">
 <h3 id="mongodb-blocking-snapshots"><a class="anchor" href="#mongodb-blocking-snapshots"></a>Blocking snapshots</h3>
 <div class="paragraph">
-<p>To provide more flexibility in managing snapshots, Debezium includes a supplementary ad hoc snapshot mechanism, known as a <em>blocking snapshot</em>.
+<p>A blocking snapshot lets you capture a complete, consistent snapshot of a collection on demand while the connector is running, temporarily pausing streaming until the snapshot completes.
 Blocking snapshots rely on the Debezium mechanism for <a href="../configuration/signalling.html#sending-signals-to-a-debezium-connector" class="xref page">sending signals to a Debezium connector</a>.</p>
 </div>
 <div class="paragraph">
@@ -2113,58 +2437,51 @@ This field provides information about every event in the form of a composite of 
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
- "schema": { <i class="conum" data-value="1"></i><b>(1)</b>
+ "schema": {
    ...
   },
- "payload": { <i class="conum" data-value="2"></i><b>(2)</b>
+ "payload": {
    ...
  },
- "schema": { <i class="conum" data-value="3"></i><b>(3)</b>
+ "schema": {
    ...
  },
- "payload": { <i class="conum" data-value="4"></i><b>(4)</b>
+ "payload": {
    ...
  },
 }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 5. Overview of change event basic content</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The first <code>schema</code> field is part of the event key. It specifies a Kafka Connect schema that describes what is in the event key&#8217;s <code>payload</code> portion. In other words, the first <code>schema</code> field describes the structure of the key for the document that was changed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>payload</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The first <code>payload</code> field is part of the event key. It has the structure described by the previous <code>schema</code> field and it contains the key for the document that was changed.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The second <code>schema</code> field is part of the event value. It specifies the Kafka Connect schema that describes what is in the event value&#8217;s <code>payload</code> portion. In other words, the second <code>schema</code> describes the structure of the document that was changed. Typically, this schema contains nested schemas.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>payload</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The second <code>payload</code> field is part of the event value. It has the structure described by the previous <code>schema</code> field and it contains the actual data for the document that was changed.</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>The following list describes the fields in the preceding change event example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>schema</code> (first)</dt>
+<dd>
+<p>The first <code>schema</code> field is part of the event key.
+It specifies a Kafka Connect schema that describes what is in the event key&#8217;s <code>payload</code> portion.
+In other words, the first <code>schema</code> field describes the structure of the key for the document that was changed.</p>
+</dd>
+<dt class="hdlist1"><code>payload</code> (first)</dt>
+<dd>
+<p>The first <code>payload</code> field is part of the event key.
+It has the structure described by the previous <code>schema</code> field and it contains the key for the document that was changed.</p>
+</dd>
+<dt class="hdlist1"><code>schema</code> (second)</dt>
+<dd>
+<p>The second <code>schema</code> field is part of the event value.
+It specifies the Kafka Connect schema that describes what is in the event value&#8217;s <code>payload</code> portion.
+In other words, the second <code>schema</code> describes the structure of the document that was changed.
+Typically, this schema contains nested schemas.</p>
+</dd>
+<dt class="hdlist1"><code>payload</code> (second)</dt>
+<dd>
+<p>The second <code>payload</code> field is part of the event value.
+It has the structure described by the previous <code>schema</code> field and it contains the actual data for the document that was changed.</p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>By default, the connector streams change event records to topics with names that are the same as the event&#8217;s originating collection. See <a href="#mongodb-topic-names">topic names</a>.</p>
 </div>
@@ -2212,11 +2529,11 @@ The value of this field is the document&#8217;s identifier represented as a stri
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "schema": { <i class="conum" data-value="1"></i><b>(1)</b>
+  "schema": {
     "type": "struct",
-    "name": "fulfillment.inventory.customers.Key", <i class="conum" data-value="2"></i><b>(2)</b>
-    "optional": false, <i class="conum" data-value="3"></i><b>(3)</b>
-    "fields": [ <i class="conum" data-value="4"></i><b>(4)</b>
+    "name": "fulfillment.inventory.customers.Key",
+    "optional": false,
+    "fields": [
       {
         "field": "id",
         "type": "string",
@@ -2224,39 +2541,27 @@ The value of this field is the document&#8217;s identifier represented as a stri
       }
     ]
   },
-  "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
+  "payload": {
     "id": "1004"
   }
 }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 6. Description of change event key</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The schema portion of the key specifies a Kafka Connect schema that describes what is in the key&#8217;s <code>payload</code> portion.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fulfillment.inventory.customers.Key</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Name of the schema that defines the structure of the key&#8217;s payload. This schema describes the structure of the key for the document that was changed. Key schema names have the format <em>connector-name</em>.<em>database-name</em>.<em>collection-name</em>.<code>Key</code>.
-In the preceding example, the <code>name</code> field includes the following values:</p>
+<div class="paragraph">
+<p>The following list describes the fields in the preceding change event key example:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>schema</code></dt>
+<dd>
+<p>The schema portion of the key specifies a Kafka Connect schema that describes what is in the key&#8217;s <code>payload</code> portion.</p>
+</dd>
+<dt class="hdlist1"><code>fulfillment.inventory.customers.Key</code></dt>
+<dd>
+<p>Name of the schema that defines the structure of the key&#8217;s payload.
+This schema describes the structure of the key for the document that was changed.
+Key schema names have the format <em>connector-name</em>.<em>database-name</em>.<em>collection-name</em>.<code>Key</code>.
+In the preceding example, the <code>name</code> field includes the following values:</p>
 <div class="dlist">
 <dl>
 <dt class="hdlist1"><code>fulfillment</code></dt>
@@ -2272,30 +2577,30 @@ In the preceding example, the <code>name</code> field includes the following val
 <p>The collection that contains the document that the operation updated.</p>
 </dd>
 </dl>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>optional</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates whether the event key must contain a value in its <code>payload</code> field. In this example, a value in the key&#8217;s payload is required. A value in the key&#8217;s payload field is optional when a document does not have a key.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fields</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies each field that is expected in the <code>payload</code>, including each field&#8217;s name, type, and whether it is required.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>payload</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the key for the document for which this change event was generated. In this example, the key contains a single <code>id</code> field of type <code>string</code> whose value is <code>1004</code>.</p></td>
-</tr>
-</tbody>
-</table>
+</div>
+</dd>
+<dt class="hdlist1"><code>schema.optional</code></dt>
+<dd>
+<p>Indicates whether the event key must contain a value in its <code>payload</code> field.
+In this example, a value in the key&#8217;s payload is required.
+A value in the key&#8217;s payload field is optional when a document does not have a key.</p>
+</dd>
+<dt class="hdlist1"><code>schema.fields</code></dt>
+<dd>
+<p>Specifies each field that is expected in the <code>payload</code>, including each field&#8217;s name, type, and whether it is required.</p>
+</dd>
+<dt class="hdlist1"><code>schema.payload</code></dt>
+<dd>
+<p>Contains the key for the document for which this change event was generated.
+In this example, the key contains a single <code>id</code> field of type <code>string</code> whose value is <code>1004</code>.</p>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>This example uses a document with an integer identifier, but any valid MongoDB document identifier works the same way, including a document identifier. For a document identifier, an event key&#8217;s <code>payload.id</code> value is a string that represents the updated document&#8217;s original <code>_id</code> field as a MongoDB extended JSON serialization that uses strict mode. The following table provides examples of how different types of <code>_id</code> fields are represented.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch code-wordbreak-col2 code-wordbreak-col3">
-<caption class="title">Table 7. Examples of representing document <code>_id</code> fields in event key payloads</caption>
+<caption class="title">Table 5. Examples of representing document <code>_id</code> fields in event key payloads</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 33.3333%;">
@@ -2388,18 +2693,22 @@ To use MongoDB Extended JSON v2 canonical representation, set <code>json.seriali
 <div class="sect2">
 <h3 id="mongodb-create-events"><a class="anchor" href="#mongodb-create-events"></a><em>create</em> events</h3>
 <div class="paragraph">
+<p>The connector emits a <code>create</code> event whenever a new document is inserted into a collection.
+The event payload contains the full state of the new document in the <code>after</code> field, along with source metadata that identifies the replica set, database, and collection.</p>
+</div>
+<div class="paragraph">
 <p>The following example shows the value portion of a change event that the connector generates for an operation that creates data in the <code>customers</code> collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
-    "schema": { <i class="conum" data-value="1"></i><b>(1)</b>
+    "schema": {
       "type": "struct",
       "fields": [
         {
           "type": "string",
           "optional": true,
-          "name": "io.debezium.data.Json", <i class="conum" data-value="2"></i><b>(2)</b>
+          "name": "io.debezium.data.Json",
           "version": 1,
           "field": "after"
         },
@@ -2461,7 +2770,7 @@ To use MongoDB Extended JSON v2 canonical representation, set <code>json.seriali
             },
             {
               "type": "string",
-              "optional": false,
+              "optional": true,
               "field": "collection"
             },
             {
@@ -2476,7 +2785,7 @@ To use MongoDB Extended JSON v2 canonical representation, set <code>json.seriali
             }
           ],
           "optional": false,
-          "name": "io.debezium.connector.mongo.Source", <i class="conum" data-value="3"></i><b>(3)</b>
+          "name": "io.debezium.connector.mongo.Source",
           "field": "source"
         },
         {
@@ -2501,12 +2810,12 @@ To use MongoDB Extended JSON v2 canonical representation, set <code>json.seriali
         }
       ],
       "optional": false,
-      "name": "dbserver1.inventory.customers.Envelope" <i class="conum" data-value="4"></i><b>(4)</b>
+      "name": "dbserver1.inventory.customers.Envelope"
       },
-    "payload": { <i class="conum" data-value="5"></i><b>(5)</b>
-      "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}", <i class="conum" data-value="6"></i><b>(6)</b>
-      "source": { <i class="conum" data-value="7"></i><b>(7)</b>
-        "version": "3.7.0.Alpha1",
+    "payload": {
+      "after": "{\"_id\" : {\"$numberLong\" : \"1004\"},\"first_name\" : \"Anne\",\"last_name\" : \"Kretchmar\",\"email\" : \"annek@noanswer.org\"}",
+      "source": {
+        "version": "3.7.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2519,85 +2828,70 @@ To use MongoDB Extended JSON v2 canonical representation, set <code>json.seriali
         "ord": 31,
         "h": 1546547425148721999
       },
-      "op": "c", <i class="conum" data-value="8"></i><b>(8)</b>
-      "ts_ms": 1558965515240, <i class="conum" data-value="9"></i><b>(9)</b>
-      "ts_us": 1558965515240142, <i class="conum" data-value="10"></i><b>(10)</b>
-      "ts_ns": 1558965515240142879, <i class="conum" data-value="11"></i><b>(11)</b>
+      "op": "c",
+      "ts_ms": 1558965515240,
+      "ts_us": 1558965515240142,
+      "ts_ns": 1558965515240142879,
     }
   }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 8. Descriptions of <em>create</em> event value fields</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>schema</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The value&#8217;s schema, which describes the structure of the value&#8217;s payload. A change event&#8217;s value schema is the same in every change event that the connector generates for a particular collection.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<div class="paragraph">
+<p>The following list describes select fields in the preceding <em>create</em> event value example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>schema</code></dt>
+<dd>
+<p>The value&#8217;s schema, which describes the structure of the value&#8217;s payload.
+A change event&#8217;s value schema is the same in every change event that the connector generates for a particular collection.</p>
+</dd>
+<dt class="hdlist1"><code>name</code> (io.debezium.data.Json)</dt>
+<dd>
 <p>In the <code>schema</code> section, each <code>name</code> field specifies the schema for a field in the value&#8217;s payload.</p>
-</div>
 <div class="paragraph">
-<p><code>io.debezium.data.Json</code> is the schema for the payload&#8217;s <code>after</code>, <code>patch</code>, and <code>filter</code> fields. This schema is specific to the <code>customers</code> collection. A <em>create</em> event is the only kind of event that contains an <code>after</code> field. An <em>update</em> event contains a <code>filter</code> field and a <code>patch</code> field. A <em>delete</em> event contains a <code>filter</code> field, but not an <code>after</code> field nor a <code>patch</code> field.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>io.debezium.connector.mongo.Source</code> is the schema for the payload&#8217;s <code>source</code> field. This schema is specific to the MongoDB connector. The connector uses it for all events that it generates.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p><code>dbserver1.inventory.customers.Envelope</code> is the schema for the overall structure of the payload, where <code>dbserver1</code> is the connector name, <code>inventory</code> is the database, and <code>customers</code> is the collection. This schema is specific to the collection.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>payload</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>The value&#8217;s actual data. This is the information that the change event is providing.</p>
+<p><code>io.debezium.data.Json</code> is the schema for the payload&#8217;s <code>after</code>, <code>patch</code>, and <code>filter</code> fields.
+This schema is specific to the <code>customers</code> collection.
+A <em>create</em> event is the only kind of event that contains an <code>after</code> field.
+An <em>update</em> event contains a <code>filter</code> field and a <code>patch</code> field.
+A <em>delete</em> event contains a <code>filter</code> field, but not an <code>after</code> field nor a <code>patch</code> field.</p>
 </div>
+</dd>
+<dt class="hdlist1"><code>name</code> (io.debezium.connector.mongo.Source)</dt>
+<dd>
+<p><code>io.debezium.connector.mongo.Source</code> is the schema for the payload&#8217;s <code>source</code> field.
+This schema is specific to the MongoDB connector.
+The connector uses it for all events that it generates.</p>
+</dd>
+<dt class="hdlist1"><code>name</code> (dbserver1.inventory.customers.Envelope)</dt>
+<dd>
+<p><code>dbserver1.inventory.customers.Envelope</code> is the schema for the overall structure of the payload, where <code>dbserver1</code> is the connector name, <code>inventory</code> is the database, and <code>customers</code> is the collection.
+This schema is specific to the collection.</p>
+</dd>
+<dt class="hdlist1"><code>payload</code></dt>
+<dd>
+<p>The value&#8217;s actual data.
+This is the information that the change event is providing.</p>
 <div class="paragraph">
-<p>It may appear that the JSON representations of the events are much larger than the documents they describe. This is because the JSON representation must include the schema and the payload portions of the message.
+<p>It may appear that the JSON representations of the events are much larger than the documents they describe.
+This is because the JSON representation must include the schema and the payload portions of the message.
 However, by using the <a href="../configuration/avro.html#avro-serialization" class="xref page">Avro converter</a>, you can significantly decrease the size of the messages that the connector streams to Kafka topics.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>after</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">An optional field that specifies the state of the document after the event occurred.
+</div>
+</dd>
+<dt class="hdlist1"><code>payload.after</code></dt>
+<dd>
+<p>An optional field that specifies the state of the document after the event occurred.
 In this example, the <code>after</code> field contains the values of the new document&#8217;s <code>_id</code>, <code>first_name</code>, <code>last_name</code>, and <code>email</code> fields.
 The <code>after</code> value is always a string.
 By convention, it contains a JSON representation of the document.
 MongoDB oplog entries contain the full state of a document only for _create_ events and also for <code>update</code> events, when the <code>capture.mode</code> option is set to <code>change_streams_update_full</code>;
-in other words, a <em>create</em> event is the only kind of event that contains an <em>after</em> field regardless of <code>capture.mode</code> option.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory field that describes the source metadata for the event. This field contains information that you can use to compare this event with other events, with regard to the origin of the events, the order in which the events occurred, and whether events were part of the same transaction. The source metadata includes:</p>
-</div>
+in other words, a <em>create</em> event is the only kind of event that contains an <em>after</em> field regardless of <code>capture.mode</code> option.</p>
+</dd>
+<dt class="hdlist1"><code>payload.source</code></dt>
+<dd>
+<p>Mandatory field that describes the source metadata for the event.
+This field contains information that you can use to compare this event with other events, with regard to the origin of the events, the order in which the events occurred, and whether events were part of the same transaction.
+The source metadata includes:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2625,14 +2919,13 @@ in other words, a <em>create</em> event is the only kind of event that contains 
 <p>Unique identifiers of the MongoDB session <code>lsid</code> and transaction number <code>txnNumber</code> in case the change was executed inside a transaction (change streams capture mode only).</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>op</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory string that describes the type of operation that caused the connector to generate the event. In this example, <code>c</code> indicates that the operation created a document. Valid values are:</p>
 </div>
+</dd>
+<dt class="hdlist1"><code>payload.source.op</code></dt>
+<dd>
+<p>Mandatory string that describes the type of operation that caused the connector to generate the event.
+In this example, <code>c</code> indicates that the operation created a document.
+Valid values are:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2648,40 +2941,26 @@ in other words, a <em>create</em> event is the only kind of event that contains 
 <p><code>r</code> = read (applies to only snapshots)</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ms</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
 </div>
+</dd>
+<dt class="hdlist1"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></dt>
+<dd>
+<p>Optional field that displays the time at which the connector processed the event in millisecond, microsecond, and nanosecond formats.
+The time is based on the system clock in the JVM running the Kafka Connect task.</p>
 <div class="paragraph">
-<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database. By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_us</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event, in microseconds.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ns</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event, in nanoseconds.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database.
+By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
+</div>
+</dd>
+</dl>
+</div>
 </div>
 <div class="sect2">
 <h3 id="mongodb-update-events"><a class="anchor" href="#mongodb-update-events"></a><em>update</em> events</h3>
+<div class="paragraph">
+<p>The connector emits an <code>update</code> event whenever an existing document in a collection is modified.
+The content of the event payload varies based on the value of the <code>capture.mode</code> connector property, which controls whether the full document state and pre-image are included.</p>
+</div>
 <div class="sect3">
 <h4 id="_change_streams_capture_mode"><a class="anchor" href="#_change_streams_capture_mode"></a>Change streams capture mode</h4>
 <div class="paragraph">
@@ -2713,19 +2992,19 @@ There is a new structured field <code>updateDescription</code> with a few additi
 <pre class="highlightjs highlight nowrap"><code class="language-json hljs" data-lang="json">{
     "schema": { ... },
     "payload": {
-      "op": "u", <i class="conum" data-value="1"></i><b>(1)</b>
-      "ts_ms": 1465491461815, <i class="conum" data-value="2"></i><b>(2)</b>
-      "ts_us": 1465491461815698, <i class="conum" data-value="2"></i><b>(2)</b>
-      "ts_ns": 1465491461815698142, <i class="conum" data-value="2"></i><b>(2)</b>
-      "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"unknown\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}", <i class="conum" data-value="3"></i><b>(3)</b>
-      "after":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}", <i class="conum" data-value="4"></i><b>(4)</b>
+      "op": "u",
+      "ts_ms": 1465491461815,
+      "ts_us": 1465491461815698,
+      "ts_ns": 1465491461815698142,
+      "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"unknown\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",
+      "after":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",
       "updateDescription": {
         "removedFields": null,
-        "updatedFields": "{\"first_name\": \"Anne Marie\"}", <i class="conum" data-value="5"></i><b>(5)</b>
+        "updatedFields": "{\"first_name\": \"Anne Marie\"}",
         "truncatedArrays": null
       },
-      "source": { <i class="conum" data-value="6"></i><b>(6)</b>
-        "version": "3.7.0.Alpha1",
+      "source": {
+        "version": "3.7.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2746,68 +3025,50 @@ There is a new structured field <code>updateDescription</code> with a few additi
   }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 9. Descriptions of <em>update</em> event value fields</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>op</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory string that describes the type of operation that caused the connector to generate the event. In this example, <code>u</code> indicates that the operation updated a document.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event.
+<div class="paragraph">
+<p>The following list describes select fields in the preceding <em>update</em> event value example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>payload.op</code></dt>
+<dd>
+<p>Mandatory string that describes the type of operation that caused the connector to generate the event.
+In this example, <code>u</code> indicates that the operation updated a document.</p>
+</dd>
+<dt class="hdlist1"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></dt>
+<dd>
+<p>Optional field that displays the time at which the connector processed the event in millisecond, microsecond, and nanosecond formats.
 The time is based on the system clock in the JVM running the Kafka Connect task.</p>
-</div>
 <div class="paragraph">
-<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database. By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>before</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.</p>
-<p class="tableblock">An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>after</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database.
+By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>payload.before</code></dt>
+<dd>
+<p>Contains the JSON string representation of the actual MongoDB document before change.</p>
+<div class="paragraph">
+<p>An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>payload.after</code></dt>
+<dd>
 <p>Contains the JSON string representation of the actual MongoDB document.</p>
-</div>
 <div class="paragraph">
-<p>An <em>update</em> event value does not contain an <code>after</code> field if the capture mode is not set to <code>change_streams_update_full</code></p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedFields</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the updated field values of the document.
-The connector serializes this field using the mode specified by the <a href="#mongodb-property-json-serialization-mode"><code>json.serialization.mode</code></a> connector property.
-In this example, the update changed the <code>first_name</code> field to a new value.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory field that describes the source metadata for the event. This field contains the same information as a <em>create</em> event for the same collection, but the values are different since this event is from a different position in the oplog. The source metadata includes:</p>
+<p>An <em>update</em> event value does not contain an <code>after</code> field if the capture mode is not set to <code>change_streams_update_full</code>.</p>
 </div>
+</dd>
+<dt class="hdlist1"><code>payload.updateDescription.updatedFields</code></dt>
+<dd>
+<p>Contains the JSON string representation of the updated field values of the document.
+The connector serializes this field using the mode specified by the <a href="#mongodb-property-json-serialization-mode"><code>json.serialization.mode</code></a> connector property.
+In this example, the update changed the <code>first_name</code> field to a new value.</p>
+</dd>
+<dt class="hdlist1"><code>payload.source</code></dt>
+<dd>
+<p>Mandatory field that describes the source metadata for the event.
+This field contains the same information as a <em>create</em> event for the same collection, but the values are different since this event is from a different position in the oplog.
+The source metadata includes:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2832,10 +3093,10 @@ In this example, the update changed the <code>first_name</code> field to a new v
 <p>Unique identifiers of the MongoDB session <code>lsid</code> and transaction number <code>txnNumber</code> in case the change was executed inside a transaction.</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
+</dd>
+</dl>
+</div>
 <div class="admonitionblock warning">
 <table>
 <tr>
@@ -2860,20 +3121,27 @@ It is thus possible if multiple updates are closely following one after the othe
 <div class="sect2">
 <h3 id="mongodb-delete-events"><a class="anchor" href="#mongodb-delete-events"></a><em>delete</em> events</h3>
 <div class="paragraph">
-<p>The value in a <em>delete</em> change event has the same <code>schema</code> portion as <em>create</em> and <em>update</em> events for the same collection. The <code>payload</code> portion in a <em>delete</em> event contains values that are different from <em>create</em> and <em>update</em> events for the same collection. In particular, a <em>delete</em> event contains neither an <code>after</code> value nor a <code>updateDescription</code> value. Here is an example of a <em>delete</em> event for a document in the <code>customers</code> collection:</p>
+<p>The connector emits a <code>delete</code> event whenever a document is removed from a collection.
+The event payload contains neither an <code>after</code> field nor an <code>updateDescription</code> field.</p>
+</div>
+<div class="paragraph">
+<p>The value in a <em>delete</em> change event has the same <code>schema</code> portion as <em>create</em> and <em>update</em> events for the same collection.
+The <code>payload</code> portion in a <em>delete</em> event contains values that are different from <em>create</em> and <em>update</em> events for the same collection.
+In particular, a <em>delete</em> event contains neither an <code>after</code> value nor a <code>updateDescription</code> value.
+Here is an example of a <em>delete</em> event for a document in the <code>customers</code> collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
     "schema": { ... },
     "payload": {
-      "op": "d", <i class="conum" data-value="1"></i><b>(1)</b>
-      "ts_ms": 1465495462115, <i class="conum" data-value="2"></i><b>(2)</b>
-      "ts_us": 1465495462115748, <i class="conum" data-value="2"></i><b>(2)</b>
-      "ts_ns": 1465495462115748263, <i class="conum" data-value="2"></i><b>(2)</b>
-      "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",<i class="conum" data-value="3"></i><b>(3)</b>
-      "source": { <i class="conum" data-value="4"></i><b>(4)</b>
-        "version": "3.7.0.Alpha1",
+      "op": "d",
+      "ts_ms": 1465495462115,
+      "ts_us": 1465495462115748,
+      "ts_ns": 1465495462115748263,
+      "before":"{\"_id\": {\"$numberLong\": \"1004\"},\"first_name\": \"Anne Marie\",\"last_name\": \"Kretchmar\",\"email\": \"annek@noanswer.org\"}",
+      "source": {
+        "version": "3.7.0.Final",
         "connector": "mongodb",
         "name": "fulfillment",
         "ts_ms": 1558965508000,
@@ -2890,51 +3158,37 @@ It is thus possible if multiple updates are closely following one after the othe
   }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 10. Descriptions of <em>delete</em> event value fields</caption>
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 20%;">
-<col style="width: 70%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Item</th>
-<th class="tableblock halign-left valign-top">Field name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>op</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory string that describes the type of operation. The <code>op</code> field value is <code>d</code>, signifying that this document was deleted.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ts_ms</code>, <code>ts_us</code>. <code>ts_ns</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Optional field that displays the time at which the connector processed the event.
-The time is based on the system clock in the JVM running the Kafka Connect task.</p>
-</div>
 <div class="paragraph">
-<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database. By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
-</div></div></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>before</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Contains the JSON string representation of the actual MongoDB document before change.</p>
-<p class="tableblock">An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>source</code></p></td>
-<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Mandatory field that describes the source metadata for the event. This field contains the same information as a <em>create</em> or <em>update</em> event for the same collection, but the values are different since this event is from a different position in the oplog. The source metadata includes:</p>
+<p>The following list describes select fields in the preceding <em>delete</em> event value example:</p>
 </div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>payload.op</code></dt>
+<dd>
+<p>Mandatory string that describes the type of operation.
+The <code>op</code> field value is <code>d</code>, signifying that this document was deleted.</p>
+</dd>
+<dt class="hdlist1"><code>ts_ms</code>, <code>ts_us</code>, <code>ts_ns</code></dt>
+<dd>
+<p>Optional field that displays the time at which the connector processed the event in millisecond, microsecond, and nanosecond formats.
+The time is based on the system clock in the JVM running the Kafka Connect task.</p>
+<div class="paragraph">
+<p>In the <code>source</code> object, <code>ts_ms</code> indicates the time that the change was made in the database.
+By comparing the value for <code>payload.source.ts_ms</code> with the value for <code>payload.ts_ms</code>, you can determine the lag between the source database update and Debezium.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>payload.before</code></dt>
+<dd>
+<p>Contains the JSON string representation of the actual MongoDB document before change.</p>
+<div class="paragraph">
+<p>An <em>update</em> event value does not contain a <code>before</code> field if the capture mode is not set to one of the <code>*_with_preimage</code> options.</p>
+</div>
+</dd>
+<dt class="hdlist1"><code>payload.source</code></dt>
+<dd>
+<p>Mandatory field that describes the source metadata for the event.
+This field contains the same information as a <em>create</em> or <em>update</em> event for the same collection, but the values are different since this event is from a different position in the oplog.
+The source metadata includes:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -2962,10 +3216,10 @@ The time is based on the system clock in the JVM running the Kafka Connect task.
 <p>Unique identifiers of the MongoDB session <code>lsid</code> and transaction number <code>txnNumber</code> in case the change was executed inside a transaction (change streams capture mode only).</p>
 </li>
 </ul>
-</div></div></td>
-</tr>
-</tbody>
-</table>
+</div>
+</dd>
+</dl>
+</div>
 <div class="paragraph">
 <p>MongoDB connector events are designed to work with <a href="https://kafka.apache.org/documentation/#compaction">Kafka log compaction</a>. Log compaction enables removal of some older messages as long as at least the most recent message for every key is kept. This lets Kafka reclaim storage space while ensuring that the topic contains a complete data set and can be used for reloading key-based state.</p>
 </div>
@@ -3057,6 +3311,9 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <h2 id="mongodb-deploying-a-connector"><a class="anchor" href="#mongodb-deploying-a-connector"></a>Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p>To capture change events from MongoDB, deploy the Debezium MongoDB connector to a Kafka Connect environment and configure it to connect to a MongoDB replica set or sharded cluster.</p>
+</div>
+<div class="paragraph">
 <p>To deploy a Debezium MongoDB connector, you install the Debezium MongoDB connector archive, configure the connector, and start the connector by adding its configuration to Kafka Connect.</p>
 </div>
 <div class="ulist">
@@ -3075,7 +3332,7 @@ If Debezium were to fail during this time, its last oplog position is likely to 
 <ol class="arabic">
 <li>
 <p>Download the
-<a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/3.7.0.Alpha1/debezium-connector-mongodb-3.7.0.Alpha1-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
+<a href="https://repo1.maven.org/maven2/io/debezium/debezium-connector-mongodb/3.7.0.Final/debezium-connector-mongodb-3.7.0.Final-plugin.tar.gz">connector&#8217;s plug-in archive</a>,</p>
 </li>
 <li>
 <p>Extract the JAR files into your Kafka Connect environment.</p>
@@ -3126,39 +3383,43 @@ Optionally, you can filter out collections that are not needed.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "name": "inventory-connector", <i class="conum" data-value="1"></i><b>(1)</b>
+  "name": "inventory-connector",
   "config": {
-    "connector.class": "io.debezium.connector.mongodb.MongoDbConnector", <i class="conum" data-value="2"></i><b>(2)</b>
-    "mongodb.connection.string": "mongodb://192.168.99.100:27017/?replicaSet=rs0", <i class="conum" data-value="3"></i><b>(3)</b>
-    "topic.prefix": "fullfillment", <i class="conum" data-value="4"></i><b>(4)</b>
-    "collection.include.list": "inventory[.]*" <i class="conum" data-value="5"></i><b>(5)</b>
+    "connector.class": "io.debezium.connector.mongodb.MongoDbConnector",
+    "mongodb.connection.string": "mongodb://192.168.99.100:27017/?replicaSet=rs0",
+    "topic.prefix": "fullfillment",
+    "collection.include.list": "inventory[.]*"
   }
 }</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The name of our connector when we register it with a Kafka Connect service.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The name of the MongoDB connector class.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>The connection string to use to connect to the MongoDB replica set.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>The <em>logical name</em> of the MongoDB replica set, which forms a namespace for generated events and is used in all the names of the Kafka topics to which the connector writes, the Kafka Connect schema names, and the namespaces of the corresponding Avro schema when the Avro converter is used.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>A list of regular expressions that match the collection namespaces (for example, &lt;dbName&gt;.&lt;collectionName&gt;) of all collections to be monitored. This is optional.</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>The following list describes select fields in the preceding connector configuration example:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><code>name</code></dt>
+<dd>
+<p>The name of our connector when we register it with a Kafka Connect service.</p>
+</dd>
+<dt class="hdlist1"><code>config.connector.class</code></dt>
+<dd>
+<p>The name of the MongoDB connector class.</p>
+</dd>
+<dt class="hdlist1"><code>config.mongodb.connection.string</code></dt>
+<dd>
+<p>The connection string to use to connect to the MongoDB replica set.</p>
+</dd>
+<dt class="hdlist1"><code>config.topic.prefix</code></dt>
+<dd>
+<p>The <em>logical name</em> of the MongoDB replica set, which forms a namespace for generated events and is used in all the names of the Kafka topics to which the connector writes, the Kafka Connect schema names, and the namespaces of the corresponding Avro schema when the Avro converter is used.</p>
+</dd>
+<dt class="hdlist1"><code>config.collection.include.list</code></dt>
+<dd>
+<p>A list of regular expressions that match the collection namespaces (for example, &lt;dbName&gt;.&lt;collectionName&gt;) of all collections to be monitored.
+This is optional.</p>
+</dd>
+</dl>
 </div>
 <div class="paragraph">
 <p>For the complete list of the configuration properties that you can set for the Debezium MongoDB connector,
@@ -3263,6 +3524,10 @@ Many properties have default values. Information about the properties is organiz
 </div>
 <div class="sect3">
 <h4 id="debezium-mongodb-connector-required-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-required-configuration-properties"></a>Required Debezium MongoDB connector configuration properties</h4>
+<div class="paragraph">
+<p>The following properties are required to run the Debezium MongoDB connector.
+You must supply values for all required properties that do not have a default value.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -3683,7 +3948,7 @@ For the complete list of BSON type representations, see the MongoDB documentatio
 </dl>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 11. Example DateTime representations for <code>json.serialization.mode</code> settings</caption>
+<caption class="title">Table 6. Example DateTime representations for <code>json.serialization.mode</code> settings</caption>
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -3833,8 +4098,22 @@ Because the <code>source</code> channel must be enabled to permit connectors to 
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
-<p>Specifies the database that the connector monitors for changes.
-This property applies only if the <a href="#mongodb-property-capture-scope"><code>capture.scope</code></a> is set to <code>database</code>.</p>
+<p>Specifies the database or collection that the connector monitors for changes, depending on the <a href="#mongodb-property-capture-scope"><code>capture.scope</code></a> value:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If <code>capture.scope</code> is set to <code>database</code>, set this property to the name of the database to capture, for example, <code>inventory</code>.</p>
+</li>
+<li>
+<p>If <code>capture.scope</code> is set to <code>collection</code>, set this property to the fully-qualified name of the single collection to capture, in the form <code><em>databaseName</em>.<em>collectionName</em></code>, for example, <code>inventory.orders</code>.
+With this scope, the connector captures only the collection that <code>capture.target</code> specifies; the <a href="#mongodb-property-collection-include-list"><code>collection.include.list</code></a> property cannot widen the capture to other collections.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This property is required when <code>capture.scope</code> is set to <code>database</code> or <code>collection</code>; the connector fails validation if the property is not set.
+The property is ignored when <code>capture.scope</code> is set to <code>deployment</code>.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -3953,6 +4232,10 @@ Set one of the following options:</p>
 </div>
 <div class="sect3">
 <h4 id="debezium-mongodb-connector-advanced-configuration-properties"><a class="anchor" href="#debezium-mongodb-connector-advanced-configuration-properties"></a>Debezium MongoDB connector advanced configuration properties</h4>
+<div class="paragraph">
+<p>The following advanced properties control connector behavior that rarely requires customization.
+The default values are suitable for most environments, but you can adjust them to optimize performance, tune snapshot behavior, or refine filtering.</p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 30%;">
@@ -4587,7 +4870,11 @@ Set the property to one of the following values:</p>
 </dd>
 <dt class="hdlist1"><code>split</code></dt>
 <dd>
-<p>Change events exceeding the maximum BSON size will be split using the <a href="https://www.mongodb.com/docs/v6.0/reference/operator/aggregation/changeStreamSplitLargeEvent/">$changeStreamSplitLargeEvent</a> aggregation. This option requires <strong>MongoDB 6.0.9 or newer</strong>.</p>
+<p>Change events exceeding the maximum BSON size will be split using the <a href="https://www.mongodb.com/docs/v6.0/reference/operator/aggregation/changeStreamSplitLargeEvent/">$changeStreamSplitLargeEvent</a> aggregation. This option requires <strong>MongoDB 6.0.9 or newer</strong>.
+The connector combines all fragments into a single change event and uses the last fragment&#8217;s resume token for its offset.
+When validating the saved resume token at startup, the connector applies the same full-document and pre-image options that it uses for streaming.
+The change stream used to determine the snapshot start position also uses these options.
+If its first event is split, the connector reads all fragments and records the last fragment&#8217;s token before copying collection data.</p>
 </dd>
 </dl>
 </div></div></td>
@@ -5060,7 +5347,7 @@ For more information, see <a href="#mongodb-streaming-metrics">Streaming metrics
 <p>The following table describes the Kafka <code>signal</code> properties.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 12. Kafka signals configuration properties</caption>
+<caption class="title">Table 7. Kafka signals configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -5144,7 +5431,7 @@ Each pair references the Kafka cluster that is used by the Debezium Kafka Connec
 <p>The following table describes properties that you can use to configure the Debezium sink <code>notification</code> channel.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 13. Sink notification configuration properties</caption>
+<caption class="title">Table 8. Sink notification configuration properties</caption>
 <colgroup>
 <col style="width: 33%;">
 <col style="width: 17%;">
@@ -5260,10 +5547,8 @@ If you specify multiple key-value pairs, all of the specified pairs are appended
 <p>The <strong>MBean</strong> is <code>debezium.mongodb:type=connector-metrics,context=snapshot,server=<em>&lt;topic.prefix&gt;</em>,task=<em>&lt;task.id&gt;</em></code>.</p>
 </div>
 <div class="paragraph">
-<p>Snapshot metrics are not exposed unless a snapshot operation is active, or if a snapshot has occurred since the last connector start.</p>
-</div>
-<div class="paragraph">
-<p>The following table lists the snapshot metrics that are available.</p>
+<p>The following table lists the JMX metrics that are available for monitoring Debezium snapshot operations, including row counts, table progress, duration, and queue capacity.
+Snapshot metrics are not exposed unless a snapshot operation is active, or a snapshot has occurred since the last connector start.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -5325,6 +5610,17 @@ If the snapshot is interrupted, and the connector task restarts, the metric coun
 </div></div></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>The total number of events that this connector has seen since last started or reset.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><a id="connectors-snaps-metric-totalnumberofreadeventsseen_mongodb"></a><a href="#connectors-snaps-metric-totalnumberofreadeventsseen_mongodb"><code>TotalNumberOfReadEventsSeen</code></a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p><code>long</code></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The total number of read events that this connector has seen since last started or reset.</p>
 </div></div></td>
 </tr>
 <tr>
@@ -5560,7 +5856,7 @@ Updates every 10,000 rows scanned and upon completing a table.</p>
 <p>The <strong>MBean</strong> is <code>debezium.mongodb:type=connector-metrics,context=streaming,server=<em>&lt;topic.prefix&gt;</em>,task=<em>&lt;task.id&gt;</em></code>.</p>
 </div>
 <div class="paragraph">
-<p>The following table lists the streaming metrics that are available.</p>
+<p>The following table lists the JMX metrics that are available for monitoring Debezium streaming operations, including event counts by type, lag behind the source, queue capacity, and connection status.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -6270,7 +6566,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 <div id="toc-rightbar"></div>    <footer class="footer">
         <div class="wrapper">
-            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/b09c64390bcd8b914c95b1a9274586d7b8995e8d">b09c6439</a></span>)
+            <div class="copyright">Copyright &copy; 2026 Debezium Community (Rev: <span class="truncated"><a href="https://github.com/debezium/debezium/commit/46e86f239564d688fe2a8892e5b17ef1d5be0c0d">46e86f23</a></span>)
             
         </div>
     </footer>
@@ -6323,28 +6619,7 @@ As a result, the secondary node that is elected as the new primary node might be
 
 </script>
 <script src="../../../debezium-antora/js/site.js"></script>
+<script src="../../../debezium-antora/js/dbz-antora.js"></script>
 <script async src="../../../debezium-antora/js/vendor/highlight.js"></script>
-
-<script type="text/javascript">
-  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-  try {
-    var pageTracker = _gat._getTracker("UA-10656779-1");
-    pageTracker._trackPageview();
-  } catch(err) {}
-</script>
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-76464546-1', 'auto');
-  ga('send', 'pageview');
-  ga('set', 'anonymizeIp', true);
-  ga('require', 'linkid', 'linkid.js');
-</script>
 </body>
 </html>
